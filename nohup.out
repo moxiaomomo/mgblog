@@ -1,0 +1,75 @@
+INFO  Start processing
+INFO  Files loaded in 558 ms
+INFO  0 files generated in 493 ms
+INFO  Hexo is watching for file changes. Press Ctrl+C to exit.
+INFO  Generated: archives/index.html
+INFO  Generated: archives/2017/index.html
+INFO  Generated: archives/2017/07/index.html
+INFO  Generated: 2017/07/22/aboutme-md/index.html
+INFO  Generated: 2017/07/22/hello-world/index.html
+INFO  Generated: index.html
+INFO  Generated: 2017/07/23/encode/base64/index.html
+ERROR Process failed: _posts/encode/base64.md
+YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key at line 2, column 5:
+    date: 2016-01-11 19:31:22
+        ^
+    at generateError (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:165:10)
+    at throwError (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:171:9)
+    at readBlockMapping (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1046:9)
+    at composeNode (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1332:12)
+    at readDocument (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1492:3)
+    at loadDocuments (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1548:5)
+    at Object.load (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1569:19)
+    at parseYAML (/www/mgblog/node_modules/hexo-front-matter/lib/front_matter.js:80:21)
+    at parse (/www/mgblog/node_modules/hexo-front-matter/lib/front_matter.js:56:12)
+    at /www/mgblog/node_modules/hexo/lib/plugins/processor/post.js:52:18
+    at tryCatcher (/www/mgblog/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/www/mgblog/node_modules/bluebird/js/release/promise.js:509:35)
+    at Promise._settlePromise (/www/mgblog/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/www/mgblog/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/www/mgblog/node_modules/bluebird/js/release/promise.js:693:18)
+    at Promise._fulfill (/www/mgblog/node_modules/bluebird/js/release/promise.js:638:18)
+    at PromiseArray._resolve (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:126:19)
+    at PromiseArray._promiseFulfilled (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:144:14)
+    at PromiseArray._iterate (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:114:31)
+    at PromiseArray.init [as _init] (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:78:10)
+    at Promise._settlePromise (/www/mgblog/node_modules/bluebird/js/release/promise.js:566:21)
+    at Promise._settlePromise0 (/www/mgblog/node_modules/bluebird/js/release/promise.js:614:10)
+ERROR Process failed: _posts/encode/base64.md
+YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key at line 2, column 5:
+    date: 2016-01-11 19:31:22
+        ^
+    at generateError (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:165:10)
+    at throwError (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:171:9)
+    at readBlockMapping (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1046:9)
+    at composeNode (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1332:12)
+    at readDocument (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1492:3)
+    at loadDocuments (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1548:5)
+    at Object.load (/www/mgblog/node_modules/js-yaml/lib/js-yaml/loader.js:1569:19)
+    at parseYAML (/www/mgblog/node_modules/hexo-front-matter/lib/front_matter.js:80:21)
+    at parse (/www/mgblog/node_modules/hexo-front-matter/lib/front_matter.js:56:12)
+    at /www/mgblog/node_modules/hexo/lib/plugins/processor/post.js:52:18
+    at tryCatcher (/www/mgblog/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/www/mgblog/node_modules/bluebird/js/release/promise.js:509:35)
+    at Promise._settlePromise (/www/mgblog/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/www/mgblog/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/www/mgblog/node_modules/bluebird/js/release/promise.js:693:18)
+    at Promise._fulfill (/www/mgblog/node_modules/bluebird/js/release/promise.js:638:18)
+    at PromiseArray._resolve (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:126:19)
+    at PromiseArray._promiseFulfilled (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:144:14)
+    at PromiseArray._iterate (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:114:31)
+    at PromiseArray.init [as _init] (/www/mgblog/node_modules/bluebird/js/release/promise_array.js:78:10)
+    at Promise._settlePromise (/www/mgblog/node_modules/bluebird/js/release/promise.js:566:21)
+    at Promise._settlePromise0 (/www/mgblog/node_modules/bluebird/js/release/promise.js:614:10)
+INFO  Deleted: 2017/07/23/encode/base64/index.html
+INFO  Generated: archives/index.html
+INFO  Generated: archives/2017/index.html
+INFO  Generated: archives/2017/07/index.html
+INFO  Generated: 2017/07/22/aboutme-md/index.html
+INFO  Generated: 2017/07/22/hello-world/index.html
+INFO  Generated: index.html
+INFO  Generated: archives/2016/index.html
+INFO  Generated: archives/2016/01/index.html
+INFO  Generated: 2016/01/11/encode/base64/index.html
+INFO  Generated: 2016/01/11/encode/base64/index.html
+INFO  Generated: 2016/01/11/encode/base64/index.html
