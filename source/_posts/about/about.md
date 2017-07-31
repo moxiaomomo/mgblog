@@ -1,6 +1,7 @@
 ---
 title: 关于本站
 date: 2017-07-22 22:31:49
+permalink: :title/
 tags:
 ---
 
