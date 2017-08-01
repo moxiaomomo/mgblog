@@ -14,6 +14,8 @@ Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值�
 命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品.<br>
 一致性协议采用 Raft 算法,用来保证服务的高可用. 使用 GOSSIP 协议管理成员和广播消息, 并且支持 ACL 访问控制.<br>
 
+<!--more-->
+
 ### 关于官方consul镜像
 
 关于官方consul镜像，三点说明:
