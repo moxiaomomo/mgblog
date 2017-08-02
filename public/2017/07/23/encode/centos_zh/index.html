@@ -15,16 +15,17 @@
 
 
 
-<meta name="description" content="人生很长, 编程当歌">
-<meta property="og:type" content="website">
-<meta property="og:title" content="moxiaomomo">
-<meta property="og:url" content="http://blog.moguang.com/archives/2017/index.html">
+<meta name="description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot; 刷新配置文件12source /etc/locale.confsource /etc/sysconfig/i18n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7 中文乱码问题">
+<meta property="og:url" content="http://blog.moguang.com/2017/07/23/encode/centos_zh/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="人生很长, 编程当歌">
+<meta property="og:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot; 刷新配置文件12source /etc/locale.confsource /etc/sysconfig/i18n">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-23T06:34:19.741Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="moxiaomomo">
-<meta name="twitter:description" content="人生很长, 编程当歌">
+<meta name="twitter:title" content="CentOS7 中文乱码问题">
+<meta name="twitter:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot; 刷新配置文件12source /etc/locale.confsource /etc/sysconfig/i18n">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2017 | moxiaomomo</title>
+<title>CentOS7 中文乱码问题 | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -66,8 +67,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -260,168 +261,170 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-encode/centos_zh" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2017/07/23/encode/centos_zh/" class="article-date">
+      <time datetime="2017-07-22T17:25:42.000Z" itemprop="datePublished">2017-07-23</time>
+</a>
+
+
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CentOS7 中文乱码问题
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/08/01/golang之map-set类型/" class="archive-article-date">
-      <time datetime="2017-08-01T11:13:13.000Z" itemprop="datePublished">08-01</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/01/golang之map-set类型/">golang之map/set类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
+    <div class="article-entry" itemprop="articleBody">
+      
           
+        <h2 id="修改-etc-locale-conf"><a href="#修改-etc-locale-conf" class="headerlink" title="修改/etc/locale.conf"></a>修改/etc/locale.conf</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"en_US.UTF-8"</span></div></pre></td></tr></table></figure>
+<h2 id="修改-etc-sysconfig-i18n"><a href="#修改-etc-sysconfig-i18n" class="headerlink" title="修改/etc/sysconfig/i18n"></a>修改/etc/sysconfig/i18n</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"zh_CN.UTF-8"</span></div></pre></td></tr></table></figure>
+<h2 id="刷新配置文件"><a href="#刷新配置文件" class="headerlink" title="刷新配置文件"></a>刷新配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /etc/locale.conf</div><div class="line"><span class="built_in">source</span> /etc/sysconfig/i18n</div></pre></td></tr></table></figure>
 
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    
   </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-07-23, 01:25:42</p>
+        <p><span>最后更新:</span>2017-07-23, 14:34:19</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/23/encode/centos_zh/" title="CentOS7 中文乱码问题">http://blog.moguang.com/2017/07/23/encode/centos_zh/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/07/23/encode/centos_zh/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/07/23/encode/base64/">
+                    python之encode/decode
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/02/golang之interface/">
+                    golang之interface
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-golang-array-slice">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/08/01/golang数组与切片/" class="archive-article-date">
-      <time datetime="2017-08-01T01:00:18.000Z" itemprop="datePublished">08-01</time>
-</a>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-locale-conf"><span class="toc-number">1.</span> <span class="toc-text">修改/etc/locale.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-sysconfig-i18n"><span class="toc-number">2.</span> <span class="toc-text">修改/etc/sysconfig/i18n</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷新配置文件"><span class="toc-number">3.</span> <span class="toc-text">刷新配置文件</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/01/golang数组与切片/">golang数组与切片</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"CentOS7 中文乱码问题　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
     
+
     
-    <article class="archive-article archive-type-consul">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/" class="archive-article-date">
-      <time datetime="2017-07-31T03:47:23.000Z" itemprop="datePublished">07-31</time>
-</a>
+</div>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/07/23/encode/base64/" class="archive-article-date">
-      <time datetime="2017-07-23T04:46:25.000Z" itemprop="datePublished">07-23</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/encode/base64/">python之encode/decode</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/07/23/encode/centos_zh/" class="archive-article-date">
-      <time datetime="2017-07-22T17:25:42.000Z" itemprop="datePublished">07-23</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/07/23/encode/base64/" title="上一篇: python之encode/decode">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/01/02/golang之interface/" title="下一篇: golang之interface">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/golang之map-set类型/">golang之map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/golang数组与切片/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang之interface/">golang之interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

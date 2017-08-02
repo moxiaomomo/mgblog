@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="关于ConsulConsul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Docker的Consul(官方镜像)集群部署指南">
+<meta property="og:url" content="http://blog.moguang.com/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="关于ConsulConsul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.moguang.com/img/consul_archi.png">
+<meta property="og:updated_time" content="2017-08-01T01:31:46.139Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Docker的Consul(官方镜像)集群部署指南">
+<meta name="twitter:description" content="关于ConsulConsul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品">
+<meta name="twitter:image" content="http://blog.moguang.com/img/consul_archi.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>基于Docker的Consul(官方镜像)集群部署指南 | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="consul-基于Docker的Consul-官方镜像-集群部署指南" class="article article-type-consul" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/" class="article-date">
+      <time datetime="2017-07-31T03:47:23.000Z" itemprop="datePublished">2017-07-31</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于Docker的Consul(官方镜像)集群部署指南
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="关于Consul"><a href="#关于Consul" class="headerlink" title="关于Consul"></a>关于Consul</h3><p>Consul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.<br><br>Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. <br><br>Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.<br><br>命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品.<br><br>一致性协议采用 Raft 算法,用来保证服务的高可用. 使用 GOSSIP 协议管理成员和广播消息, 并且支持 ACL 访问控制.<br></p>
+<a id="more"></a>
+<h3 id="关于官方consul镜像"><a href="#关于官方consul镜像" class="headerlink" title="关于官方consul镜像"></a>关于官方consul镜像</h3><p>关于官方consul镜像，三点说明:</p>
+<ul>
+<li>想对于其他版本镜像，其stars和pull数量是最多的, pull达到10M+;</li>
+<li>官方文档可读性相对不够好, 有些绕;</li>
+<li>目前官方镜像更新进度基本与consul最新版本保持一致。</li>
+</ul>
+<h3 id="多机部署consul-0-8-5版本操作参考"><a href="#多机部署consul-0-8-5版本操作参考" class="headerlink" title="多机部署consul:0.8.5版本操作参考"></a>多机部署consul:0.8.5版本操作参考</h3><h5 id="部分参数说明"><a href="#部分参数说明" class="headerlink" title="部分参数说明"></a>部分参数说明</h5><ul>
+<li><strong><em>–net=host</em></strong> docker参数, 使得docker容器越过了net namespace的隔离，免去手动指定端口映射的步骤</li>
+<li><strong><em>-server</em></strong> consul支持以server或client的模式运行, server是服务发现模块的核心, client主要用于转发请求</li>
+<li><strong><em>-advertise</em></strong> 将本机私有IP传递到consul</li>
+<li><strong><em>-bootstrap-expect</em></strong> 指定consul将等待几个节点连通，成为一个完整的集群</li>
+<li><strong><em>-retry-join</em></strong> 指定要加入的consul节点地址，失败会重试, 可多次指定不同的地址</li>
+<li><strong><em>-client</em></strong> consul绑定在哪个client地址上，这个地址提供HTTP、DNS、RPC等服务，默认是127.0.0.1</li>
+<li><strong><em>-bind</em></strong> 该地址用来在集群内部的通讯，集群内的所有节点到地址都必须是可达的，默认是0.0.0.0</li>
+<li><strong><em>allow_stale</em></strong> 设置为true, 表明可以从consul集群的任一server节点获取dns信息, false则表明每次请求都会经过consul server leader</li>
+</ul>
+<h5 id="集群的多机部署参考"><a href="#集群的多机部署参考" class="headerlink" title="集群的多机部署参考"></a>集群的多机部署参考</h5><ul>
+<li><p>多中心部署结构图</p>
+<p><img src="/img/consul_archi.png" width="700" height="700" alt="consul部署模式" align="center/"><br><br>生产环境下, 一般一个宿主host一个consul节点；<br><br>server节点建议一个数据中心部署3-5个, client节点可部署任意节点。</p>
+</li>
+<li><p>启动consul server节点, 在对应的机器上root权限下执行以下脚本(需修改节点列表: nodes=(…) ):</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line">conf_dir=/opt/consul/conf</div><div class="line">mkdir -p <span class="variable">$&#123;conf_dir&#125;</span></div><div class="line"></div><div class="line">nodes=(</div><div class="line">10.220.16.133</div><div class="line">10.220.16.134</div><div class="line">10.220.16.163</div><div class="line">)</div><div class="line">consul_ver=0.8.5</div><div class="line">retry_interval=15s</div><div class="line">contain_svr_name=consul_server</div><div class="line"></div><div class="line">privIP=$(/sbin/ifconfig eth0 | sed -n <span class="string">'s/.*inet \(addr:\)\?\([0-9.]\&#123;7,15\&#125;\) .*/\2/p'</span>)</div><div class="line"><span class="keyword">if</span> [[ !(<span class="string">"<span class="variable">$&#123;nodes[@]&#125;</span>"</span> =~ <span class="variable">$privIP</span>) ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"Current node:<span class="variable">$&#123;privIP&#125;</span> not in configured server nodes.\n"</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">svr_runing=$(docker ps -a | grep <span class="string">"<span class="variable">$&#123;contain_svr_name&#125;</span>"</span> | egrep <span class="string">"Up [About]|[0-9]&#123;1,&#125;"</span>)</div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;svr_runing&#125;</span> != <span class="string">""</span> ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"Current container of consul server has been running.\n"</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    svr_exists=$(docker ps -a | grep <span class="string">"<span class="variable">$&#123;contain_svr_name&#125;</span>"</span>)</div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$&#123;svr_exists&#125;</span> != <span class="string">""</span> ]];</div><div class="line">    <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> -e <span class="string">"Now try to start the container as it stopped...\n"</span></div><div class="line">        docker start <span class="variable">$&#123;svr_exists&#125;</span></div><div class="line">        sleep 2</div><div class="line">        docker ps -a grep <span class="string">"<span class="variable">$&#123;contain_svr_name&#125;</span>"</span></div><div class="line">        <span class="built_in">exit</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> -e <span class="string">"To start a new container for consul...\n"</span></div><div class="line"><span class="built_in">echo</span> -e <span class="string">"To initialize configuration...\n"</span></div><div class="line"></div><div class="line">nodels=<span class="string">""</span></div><div class="line"><span class="keyword">for</span> host <span class="keyword">in</span> <span class="variable">$&#123;nodes[*]&#125;</span></div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$nodels</span> != <span class="string">""</span> ]];</div><div class="line">    <span class="keyword">then</span></div><div class="line">        nodels=<span class="variable">$nodels</span>,</div><div class="line">    <span class="keyword">fi</span></div><div class="line">    nodels=<span class="variable">$nodels</span><span class="string">"\"<span class="variable">$host</span>\""</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line">config=<span class="string">"&#123;\n</span></div><div class="line">\"datacenter\": \"dc_dl\",\n</div><div class="line">\"retry_join\": [<span class="variable">$&#123;nodels&#125;</span>],\n</div><div class="line">\"retry_interval\": \"<span class="variable">$&#123;retry_interval&#125;</span>\",\n</div><div class="line">\"rejoin_after_leave\": true,\n</div><div class="line">\"start_join\": [<span class="variable">$&#123;nodels&#125;</span>],\n</div><div class="line">\"bootstrap_expect\": 1,\n</div><div class="line">\"server\": true,\n</div><div class="line">\"ui\": true,\n</div><div class="line">\"dns_config\": &#123;\"allow_stale\": true, \"max_stale\": \"5s\"&#125;,\n</div><div class="line">\"node_name\": \"<span class="variable">$HOSTNAME</span>\"\n</div><div class="line">&#125;\n"</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$config</span></div><div class="line"><span class="built_in">echo</span> -e <span class="variable">$&#123;config&#125;</span> &gt; <span class="variable">$&#123;conf_dir&#125;</span>/server.json</div><div class="line"><span class="built_in">echo</span> -e <span class="variable">$&#123;config&#125;</span></div><div class="line"></div><div class="line">docker run -d -v <span class="variable">$&#123;conf_dir&#125;</span>:<span class="variable">$&#123;conf_dir&#125;</span> \</div><div class="line">    --name <span class="variable">$&#123;contain_svr_name&#125;</span> \</div><div class="line">    --net=host consul:<span class="variable">$&#123;consul_ver&#125;</span> agent \</div><div class="line">    -config-dir=<span class="variable">$&#123;conf_dir&#125;</span> \</div><div class="line">    -client=0.0.0.0 \</div><div class="line">    -<span class="built_in">bind</span>=<span class="variable">$&#123;privIP&#125;</span> \</div><div class="line">    -advertise=<span class="variable">$&#123;privIP&#125;</span></div><div class="line"></div><div class="line">sleep 2</div><div class="line"></div><div class="line">svr_runing=$(docker ps -a | grep <span class="string">"<span class="variable">$&#123;contain_svr_name&#125;</span>"</span> | egrep <span class="string">"Up [About]|[0-9]&#123;1,&#125;"</span>)</div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;svr_runing&#125;</span> == <span class="string">""</span> ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"\nError: docker-consul failed to start...\n"</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"><span class="built_in">echo</span> -e <span class="string">"\nOK: docker-consul has started as background server.\n"</span></div></pre></td></tr></table></figure>
+<ul>
+<li>启动consul client节点(任意数量或不部署), 在需要部署的机器上执行(需修改svrnodes列表):</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line">conf_dir=/opt/consul/conf</div><div class="line">mkdir -p <span class="variable">$&#123;conf_dir&#125;</span></div><div class="line"></div><div class="line">svrnodes=(</div><div class="line">10.220.16.133</div><div class="line">10.220.16.134</div><div class="line">10.220.16.163</div><div class="line">)</div><div class="line">privIP=$(/sbin/ifconfig eth0 | sed -n <span class="string">'s/.*inet \(addr:\)\?\([0-9.]\&#123;7,15\&#125;\) .*/\2/p'</span>)</div><div class="line">consul_ver=0.8.5</div><div class="line">retry_interval=15s</div><div class="line">contain_cli_name=consul_client</div><div class="line"></div><div class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$&#123;svrnodes[@]&#125;</span>"</span> =~ <span class="variable">$privIP</span> ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"Current node:<span class="variable">$&#123;privIP&#125;</span> is configured for server consul, not to run client mode.\n"</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">svr_runing=$(docker ps -a | grep <span class="string">"<span class="variable">$&#123;contain_cli_name&#125;</span>"</span> | egrep <span class="string">"Up [About]|[0-9]&#123;1,&#125;"</span>)</div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;svr_runing&#125;</span> != <span class="string">""</span> ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"Current container of consul client has been running.\n"</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    svr_exists=$(docker ps -a | grep <span class="string">"<span class="variable">$&#123;contain_cli_name&#125;</span>"</span>)</div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$&#123;svr_exists&#125;</span> != <span class="string">""</span> ]];</div><div class="line">    <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> -e <span class="string">"Now try to start the container as it stopped...\n"</span></div><div class="line">        docker start <span class="variable">$&#123;svr_exists&#125;</span></div><div class="line">        sleep 2</div><div class="line">        docker ps -a grep <span class="string">"<span class="variable">$&#123;contain_cli_name&#125;</span>"</span></div><div class="line">        <span class="built_in">exit</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> -e <span class="string">"To start a new container for consul...\n"</span></div><div class="line"><span class="built_in">echo</span> -e <span class="string">"To initialize configuration...\n"</span></div><div class="line"></div><div class="line">nodels=<span class="string">""</span></div><div class="line"><span class="keyword">for</span> host <span class="keyword">in</span> <span class="variable">$&#123;svrnodes[*]&#125;</span></div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="keyword">if</span> [[ <span class="variable">$nodels</span> != <span class="string">""</span> ]];</div><div class="line">    <span class="keyword">then</span></div><div class="line">        nodels=<span class="variable">$nodels</span>,</div><div class="line">    <span class="keyword">fi</span></div><div class="line">    nodels=<span class="variable">$nodels</span><span class="string">"\"<span class="variable">$host</span>\""</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line">config=<span class="string">"&#123;\n</span></div><div class="line">\"retry_join\": [<span class="variable">$&#123;nodels&#125;</span>],\n</div><div class="line">\"retry_interval\": \"<span class="variable">$&#123;retry_interval&#125;</span>\",\n</div><div class="line">\"rejoin_after_leave\": true,\n</div><div class="line">\"start_join\": [<span class="variable">$&#123;nodels&#125;</span>],\n</div><div class="line">\"server\": false,\n</div><div class="line">\"ui\": true,\n</div><div class="line">\"node_name\": \"<span class="variable">$HOSTNAME</span>\"\n</div><div class="line">&#125;\n"</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$config</span></div><div class="line"><span class="built_in">echo</span> -e <span class="variable">$&#123;config&#125;</span> &gt; <span class="variable">$&#123;conf_dir&#125;</span>/client.json</div><div class="line"><span class="built_in">echo</span> -e <span class="variable">$&#123;config&#125;</span></div><div class="line"></div><div class="line">docker run -d -v <span class="variable">$&#123;conf_dir&#125;</span>:<span class="variable">$&#123;conf_dir&#125;</span> \</div><div class="line">    --name <span class="variable">$&#123;contain_cli_name&#125;</span> \</div><div class="line">    --net=host consul:<span class="variable">$&#123;consul_ver&#125;</span> agent \</div><div class="line">    -config-dir=<span class="variable">$&#123;conf_dir&#125;</span> \</div><div class="line">    -client=0.0.0.0 \</div><div class="line">    -advertise=<span class="variable">$&#123;privIP&#125;</span></div><div class="line"></div><div class="line">sleep 2</div><div class="line"></div><div class="line">svr_runing=$(docker ps -a | grep <span class="string">"<span class="variable">$&#123;contain_cli_name&#125;</span>"</span> | egrep <span class="string">"Up [About]|[0-9]&#123;1,&#125;"</span>)</div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;svr_runing&#125;</span> == <span class="string">""</span> ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"\nError: docker-consul client node failed to start...\n"</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"><span class="built_in">echo</span> -e <span class="string">"\nOK: docker-consul has started as a client node.\n"</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>检查集群的状态</p>
+<p>通过webUI地址: <strong><em>http://&lt;其中一个节点ip&gt;:8500/ui/</em></strong>可查看集群状态，正常情况下会显示<strong><em>3 passing</em></strong>。<br><br>通过docker命令行:<br></p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">root@hadoop:~<span class="comment"># docker exec -it consul_server consul members</span></div><div class="line">Node                          Address             Status  Type    Build  Protocol  DC</div><div class="line">hadoop.slave01.fs.115cdn.net  10.220.16.133:8301  alive   server  0.8.5  2         dc1</div><div class="line">hadoop.slave02.fs.115cdn.net  10.220.16.134:8301  alive   server  0.8.5  2         dc1</div><div class="line">hadoop.slave03.fs.115cdn.net  10.220.16.163:8301  alive   server  0.8.5  2         dc1</div><div class="line">hadoop.slave04.fs.115cdn.net  10.220.16.125:8301  alive   client  0.8.5  2         dc1</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-07-31, 11:47:23</p>
+        <p><span>最后更新:</span>2017-08-01, 09:31:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/" title="基于Docker的Consul(官方镜像)集群部署指南">http://blog.moguang.com/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/08/01/golang数组与切片/">
+                    golang数组与切片
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/07/23/encode/base64/">
+                    python之encode/decode
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于Consul"><span class="toc-number">1.</span> <span class="toc-text">关于Consul</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于官方consul镜像"><span class="toc-number">2.</span> <span class="toc-text">关于官方consul镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多机部署consul-0-8-5版本操作参考"><span class="toc-number">3.</span> <span class="toc-text">多机部署consul:0.8.5版本操作参考</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#部分参数说明"><span class="toc-number">3.0.1.</span> <span class="toc-text">部分参数说明</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#集群的多机部署参考"><span class="toc-number">3.0.2.</span> <span class="toc-text">集群的多机部署参考</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"基于Docker的Consul(官方镜像)集群部署指南　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/01/golang数组与切片/" title="上一篇: golang数组与切片">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/07/23/encode/base64/" title="下一篇: python之encode/decode">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/golang之map-set类型/">golang之map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/01/golang数组与切片/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang之interface/">golang之interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 4;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
