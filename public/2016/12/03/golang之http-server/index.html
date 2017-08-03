@@ -15,17 +15,20 @@
 
 
 
-<meta name="description" content="本站主要记录了我的一些技术笔记， 及生活上的一些感悟。 Life is short, let’s programing.">
+<meta name="description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
+<meta name="keywords" content="golang http">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于本站">
-<meta property="og:url" content="http://blog.moguang.com/2015/07/22/about/about/index.html">
+<meta property="og:title" content="golang之http server">
+<meta property="og:url" content="http://blog.moguang.com/2016/12/03/golang之http-server/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="本站主要记录了我的一些技术笔记， 及生活上的一些感悟。 Life is short, let’s programing.">
+<meta property="og:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-02T07:28:30.881Z">
+<meta property="og:image" content="http://blog.moguang.com/img/golang_http.png">
+<meta property="og:updated_time" content="2017-08-03T06:16:57.848Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于本站">
-<meta name="twitter:description" content="本站主要记录了我的一些技术笔记， 及生活上的一些感悟。 Life is short, let’s programing.">
+<meta name="twitter:title" content="golang之http server">
+<meta name="twitter:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
+<meta name="twitter:image" content="http://blog.moguang.com/img/golang_http.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>关于本站 | moxiaomomo</title>
+<title>golang之http server | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -261,11 +264,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-about/about" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-golang之http-server" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/07/22/about/about/" class="article-date">
-      <time datetime="2015-07-22T14:31:49.000Z" itemprop="datePublished">2015-07-22</time>
+      <a href="/2016/12/03/golang之http-server/" class="article-date">
+      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
 </a>
 
 
@@ -280,7 +283,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于本站
+      golang之http server
     </h1>
   
 
@@ -290,6 +293,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -297,8 +304,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>本站主要记录了我的一些技术笔记， 及生活上的一些感悟。</p>
-<p>Life is short, let’s programing.</p>
+        <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
+<a id="more"></a>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"io"</span></div><div class="line">    <span class="string">"net/http"</span></div><div class="line">    <span class="string">"log"</span></div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">LogicServer</span><span class="params">(w http.ResponseWriter, req *http.Request)</span></span> &#123;</div><div class="line">    io.WriteString(w, <span class="string">"I'm logic server."</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    http.HandleFunc(<span class="string">"/test"</span>, LogicServer)</div><div class="line">    err := http.ListenAndServe(<span class="string">":8888"</span>, <span class="literal">nil</span>)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        log.Fatal(<span class="string">"ListenAndServe Err:"</span>, err)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xiaomo@XIAOMO:~$ curl <span class="string">"http://127.0.0.1:8888/test"</span></div><div class="line">I<span class="string">'m logic server.xiaomo</span></div></pre></td></tr></table></figure></p>
+<h3 id="golang-http包的执行流程"><a href="#golang-http包的执行流程" class="headerlink" title="golang http包的执行流程"></a>golang http包的执行流程</h3><p>参考:<a href="https://astaxie.gitbooks.io/build-web-application-with-golang/content/zh/03.3.html" title="http" target="_blank" rel="external">Go如何使得Web工作</a><br><img src="/img/golang_http.png" alt="http包运行机制"></p>
+<h3 id="结合goroutine处理并发"><a href="#结合goroutine处理并发" class="headerlink" title="结合goroutine处理并发"></a>结合goroutine处理并发</h3><p>在golang中, 为了实现高并发与高性能, 处理连接的读写事件使用了goroutine机制。因此, 对于每个请求都能保持独立性, 相互没有阻塞, 能高效响应网络请求事件。</p>
 
       
     </div>
@@ -307,13 +318,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2015/07/22/about/about/">关于本站</a></p>
+        <p><span>本文标题:</span><a href="/2016/12/03/golang之http-server/">golang之http server</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2015-07-22, 22:31:49</p>
-        <p><span>最后更新:</span>2017-08-02, 15:28:30</p>
+        <p><span>发布时间:</span>2016-12-03, 14:11:45</p>
+        <p><span>最后更新:</span>2017-08-03, 14:16:57</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2015/07/22/about/about/" title="关于本站">http://blog.moguang.com/2015/07/22/about/about/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2015/07/22/about/about/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/03/golang之http-server/" title="golang之http server">http://blog.moguang.com/2016/12/03/golang之http-server/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/12/03/golang之http-server/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -326,11 +337,17 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/01/02/golang之interface/">
-                    golang之interface
+                <a href="/2017/01/30/golang之array-slice/">
+                    golang数组与切片
                 </a>
             </div>
         
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/03/03/golang之goroutine小结/">
+                    golang之goroutine小结
+                </a>
+            </div>
         
     </nav>
 
@@ -340,7 +357,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单示例"><span class="toc-number">1.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#golang-http包的执行流程"><span class="toc-number">2.</span> <span class="toc-text">golang http包的执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合goroutine处理并发"><span class="toc-number">3.</span> <span class="toc-text">结合goroutine处理并发</span></a></li></ol>
         
     </div>
     <style>
@@ -376,7 +393,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"关于本站　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"golang之http server　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -396,7 +413,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/01/02/golang之interface/" title="上一篇: golang之interface">
+            <a href="/2017/01/30/golang之array-slice/" title="上一篇: golang数组与切片">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -404,7 +421,9 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/03/03/golang之goroutine小结/" title="下一篇: golang之goroutine小结">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
