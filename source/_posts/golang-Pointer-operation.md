@@ -12,7 +12,7 @@ Golang保留了指针类型,支持指针操作。
 unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。
 
 uintptr类型可以转换为整数。
-<!--moer->
+<!--moer-->
 ### 指针使用示例
 
 ```golang
