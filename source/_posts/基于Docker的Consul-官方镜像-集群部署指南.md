@@ -2,7 +2,7 @@
 layout: consul
 title: 基于Docker的Consul(官方镜像)集群部署指南
 date: 2017-07-31 11:47:23
-tags:
+tags: consul
 ---
 
 

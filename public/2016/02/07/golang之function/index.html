@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="Golang保留了指针类型,支持指针操作。 可以使用操作符&amp;amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。 unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。 uintptr类型可以转换为整数。">
+<meta name="description" content="基本用法golang函数是不支持嵌套(但是可以使用匿名函数实现嵌套)、默认参数、重载, 但支持:  不定长度的变参 多返回值(类似python的返回元组?) 显式命名返回值参数 匿名函数 函数闭包">
 <meta name="keywords" content="golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[golang]Pointer operation">
-<meta property="og:url" content="http://blog.moguang.com/2017/04/05/golang-Pointer-operation/index.html">
+<meta property="og:title" content="golang之function">
+<meta property="og:url" content="http://blog.moguang.com/2016/02/07/golang之function/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="Golang保留了指针类型,支持指针操作。 可以使用操作符&amp;amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。 unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。 uintptr类型可以转换为整数。">
+<meta property="og:description" content="基本用法golang函数是不支持嵌套(但是可以使用匿名函数实现嵌套)、默认参数、重载, 但支持:  不定长度的变参 多返回值(类似python的返回元组?) 显式命名返回值参数 匿名函数 函数闭包">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-05T11:46:21.916Z">
+<meta property="og:updated_time" content="2017-08-07T02:08:29.018Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[golang]Pointer operation">
-<meta name="twitter:description" content="Golang保留了指针类型,支持指针操作。 可以使用操作符&amp;amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。 unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。 uintptr类型可以转换为整数。">
+<meta name="twitter:title" content="golang之function">
+<meta name="twitter:description" content="基本用法golang函数是不支持嵌套(但是可以使用匿名函数实现嵌套)、默认参数、重载, 但支持:  不定长度的变参 多返回值(类似python的返回元组?) 显式命名返回值参数 匿名函数 函数闭包">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>[golang]Pointer operation | moxiaomomo</title>
+<title>golang之function | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +262,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-golang-Pointer-operation" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-golang之function" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/05/golang-Pointer-operation/" class="article-date">
-      <time datetime="2017-04-05T11:35:16.000Z" itemprop="datePublished">2017-04-05</time>
+      <a href="/2016/02/07/golang之function/" class="article-date">
+      <time datetime="2016-02-07T02:07:46.000Z" itemprop="datePublished">2016-02-07</time>
 </a>
 
 
@@ -281,7 +281,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [golang]Pointer operation
+      golang之function
     </h1>
   
 
@@ -302,12 +302,29 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Golang保留了指针类型,支持指针操作。</p>
-<p>可以使用操作符&amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。</p>
-<p>unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。</p>
-<p>uintptr类型可以转换为整数。<br><a id="more"></a></p>
-<h3 id="指针使用示例"><a href="#指针使用示例" class="headerlink" title="指针使用示例"></a>指针使用示例</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">    <span class="string">"unsafe"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</div><div class="line">    Id <span class="keyword">int</span></div><div class="line">    Name <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    i := <span class="number">10</span></div><div class="line">    <span class="keyword">var</span> p *<span class="keyword">int</span> = &amp;i  <span class="comment">//取地址</span></div><div class="line">    fmt.Println(*p) <span class="comment">// 取值</span></div><div class="line"></div><div class="line">    user := &amp;User&#123;<span class="number">1</span>, <span class="string">"xiaomo"</span>&#125;</div><div class="line">    user.Id = <span class="number">100</span>  <span class="comment">//直接对指针对象的成员赋值</span></div><div class="line">    fmt.Println(user)</div><div class="line"></div><div class="line">    user2 := *user  <span class="comment">//拷贝对象</span></div><div class="line">    user2.Id = <span class="number">200</span></div><div class="line">    user2.Name = <span class="string">"xiaomomo"</span></div><div class="line">    fmt.Println(user, user2)</div><div class="line"></div><div class="line">    up := unsafe.Pointer(p)  <span class="comment">// 转为通用指针类型</span></div><div class="line">    uptr := <span class="keyword">uintptr</span>(up)      <span class="comment">// 转为uintptr指针类型</span></div><div class="line">    fmt.Println(up, uptr)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>###运行效果如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~/gopro<span class="comment"># go build main.go</span></div><div class="line">root@XIAOMO:~/gopro<span class="comment"># ./main</span></div><div class="line">10</div><div class="line">&amp;&#123;100 xiaomo&#125;</div><div class="line">&amp;&#123;100 xiaomo&#125; &#123;200 xiaomomo&#125;</div><div class="line">0xc210000070 833492090992</div></pre></td></tr></table></figure></p>
+        <h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>golang函数是不支持嵌套(但是可以使用匿名函数实现嵌套)、默认参数、重载, 但支持:</p>
+<ul>
+<li>不定长度的变参</li>
+<li>多返回值(类似python的返回元组?)</li>
+<li>显式命名返回值参数</li>
+<li>匿名函数</li>
+<li>函数闭包</li>
+</ul>
+<a id="more"></a>
+<p>以下是一些基本用法示例:<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 一般用法, 无返回值</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcName1</span><span class="params">(input1 type1)</span></span>&#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 多参数, 一个返回值</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcName2</span><span class="params">(input1 type1, input2 type2)</span> <span class="params">(output1 type1)</span></span> &#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">    <span class="keyword">return</span> value1</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 多参数, 多返回值</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcName3</span><span class="params">(input1 type1, input2 type2)</span> <span class="params">(output1 type1, output2 type2)</span></span> &#123;</div><div class="line">    <span class="comment">//do something</span></div><div class="line">    <span class="keyword">return</span> value1, value2</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 传入参数同类型</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcName4</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> i*j</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 命名返回参数</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcName5</span><span class="params">(a, b <span class="keyword">int</span>)</span> <span class="params">(x, y <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">    x = a+b</div><div class="line">    y = a*b</div><div class="line">    <span class="keyword">return</span>          <span class="comment">// 返回 x, y</span></div><div class="line">    <span class="comment">// return x, y  // 返回的结果和函数头声明一样: x,y,  可以不写</span></div><div class="line">    <span class="comment">// return y, x  // 返回的结果就是y,x 而不是x, y</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><h4 id="1-传递可变参数"><a href="#1-传递可变参数" class="headerlink" title="1.传递可变参数"></a>1.传递可变参数</h4><ul>
+<li>可变参数实际为一个slice, 必须作为一个形参放在最后的位置.</li>
+<li>python中变参可用**dict方式传递; golang中需要用 … 来展开, 否则会被当做一个参数传递</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testListArg</span><span class="params">(x <span class="keyword">int</span>, args ...<span class="keyword">string</span>)</span></span> &#123;</div><div class="line">    str := <span class="string">""</span></div><div class="line">    <span class="keyword">for</span> _, s := <span class="keyword">range</span> args &#123;</div><div class="line">        str += s</div><div class="line">    &#125;</div><div class="line">    fmt.Printf(<span class="string">"%v %v\n"</span>, x, str)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    a := []<span class="keyword">string</span>&#123;<span class="string">"a"</span>, <span class="string">"d"</span>, <span class="string">"v"</span>, <span class="string">"m"</span>&#125;</div><div class="line">    testListArg(<span class="number">5</span>, a...)</div><div class="line">    testListArg(<span class="number">6</span>, a[:<span class="number">3</span>]...)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>演示效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~/gopro<span class="comment"># go build main.go</span></div><div class="line">root@XIAOMO:~/gopro<span class="comment"># ./main</span></div><div class="line">5 advm</div><div class="line">6 adv</div></pre></td></tr></table></figure></p>
+<h4 id="2-传递指针类型"><a href="#2-传递指针类型" class="headerlink" title="2.传递指针类型"></a>2.传递指针类型</h4><ul>
+<li>string, slice, map的传递实际为指针方式传递, 无需取值后显式传递指针</li>
+<li>C/C++指针通过 -&gt; 来获取指针对象成员, golang则通过 . 来实现操作。</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">testPointer</span><span class="params">(user *User)</span></span> &#123;</div><div class="line">    fmt.Printf(<span class="string">"name: %v, id: %v\n"</span>, (*user).name, (*user).id)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    user := User&#123;name:<span class="string">"xiaomo"</span>,id:<span class="number">1</span>&#125;</div><div class="line">    testPointer(&amp;user)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-匿名函数与闭包"><a href="#3-匿名函数与闭包" class="headerlink" title="3.匿名函数与闭包"></a>3.匿名函数与闭包</h4><p>匿名方法经常和闭包配套使用<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">// 匿名方法</span></div><div class="line"><span class="keyword">var</span> f1 = <span class="function"><span class="keyword">func</span><span class="params">(a,b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> (a+b)*<span class="number">2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 匿名方法与闭包</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">(name <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">    f_inner := <span class="function"><span class="keyword">func</span> <span class="params">(x,y <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">        <span class="keyword">return</span> x+y</div><div class="line">    &#125;</div><div class="line">    sum := f_inner(<span class="number">7</span>, <span class="number">8</span>)</div><div class="line">    fmt.Printf(<span class="string">"name:%v sum:%v\n"</span>, name, sum)</div><div class="line"></div><div class="line">    <span class="comment">// 匿名函数访问外部方法局部变量</span></div><div class="line">    extra := <span class="number">15</span></div><div class="line">    f_inner2 := <span class="function"><span class="keyword">func</span><span class="params">(x,y <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">        <span class="keyword">return</span> x+y+extra</div><div class="line">    &#125;</div><div class="line">    sum2 := f_inner2(<span class="number">9</span>, <span class="number">10</span>)</div><div class="line">    fmt.Printf(<span class="string">"name:%v sum2:%v\n"</span>, name, sum2)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    res := f1(<span class="number">3</span>,<span class="number">4</span>)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, res)</div><div class="line"></div><div class="line">    f2(<span class="string">"xiaomo"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>演示效果:<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~/gopro# <span class="keyword">go</span> build main.<span class="keyword">go</span></div><div class="line">root@XIAOMO:~/gopro# ./main</div><div class="line"><span class="number">14</span></div><div class="line">name:xiaomo sum:<span class="number">15</span></div><div class="line">name:xiaomo sum2:<span class="number">34</span></div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -316,13 +333,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/05/golang-Pointer-operation/">[golang]Pointer operation</a></p>
+        <p><span>本文标题:</span><a href="/2016/02/07/golang之function/">golang之function</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2017-04-05, 19:35:16</p>
-        <p><span>最后更新:</span>2017-08-05, 19:46:21</p>
+        <p><span>发布时间:</span>2016-02-07, 10:07:46</p>
+        <p><span>最后更新:</span>2017-08-07, 10:08:29</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/05/golang-Pointer-operation/" title="[golang]Pointer operation">http://blog.moguang.com/2017/04/05/golang-Pointer-operation/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/04/05/golang-Pointer-operation/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/02/07/golang之function/" title="golang之function">http://blog.moguang.com/2016/02/07/golang之function/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/02/07/golang之function/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -335,15 +352,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/23/encode/centos_zh/">
-                    CentOS7 中文乱码问题
+                <a href="/2016/03/03/golang之goroutine小结/">
+                    golang之goroutine小结
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/09/golang之gRPC/">
-                    golang之gRPC
+                <a href="/2016/01/02/golang之interface/">
+                    golang之interface
                 </a>
             </div>
         
@@ -355,7 +372,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针使用示例"><span class="toc-number">1.</span> <span class="toc-text">指针使用示例</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本用法"><span class="toc-number">1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数传递"><span class="toc-number">2.</span> <span class="toc-text">参数传递</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-传递可变参数"><span class="toc-number">2.1.</span> <span class="toc-text">1.传递可变参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-传递指针类型"><span class="toc-number">2.2.</span> <span class="toc-text">2.传递指针类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-匿名函数与闭包"><span class="toc-number">2.3.</span> <span class="toc-text">3.匿名函数与闭包</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -391,7 +408,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"[golang]Pointer operation　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"golang之function　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -411,7 +428,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/23/encode/centos_zh/" title="上一篇: CentOS7 中文乱码问题">
+            <a href="/2016/03/03/golang之goroutine小结/" title="上一篇: golang之goroutine小结">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -419,7 +436,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/02/09/golang之gRPC/" title="下一篇: golang之gRPC">
+            <a href="/2016/01/02/golang之interface/" title="下一篇: golang之interface">
                 <i class="fa fa-angle-right"></i>
             </a>
         

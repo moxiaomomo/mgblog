@@ -16,6 +16,7 @@
 
 
 <meta name="description" content="关于ConsulConsul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品">
+<meta name="keywords" content="consul">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于Docker的Consul(官方镜像)集群部署指南">
 <meta property="og:url" content="http://blog.moguang.com/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/index.html">
@@ -23,7 +24,7 @@
 <meta property="og:description" content="关于ConsulConsul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.moguang.com/img/consul_archi.png">
-<meta property="og:updated_time" content="2017-08-01T01:31:46.139Z">
+<meta property="og:updated_time" content="2017-08-07T02:13:38.394Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Docker的Consul(官方镜像)集群部署指南">
 <meta name="twitter:description" content="关于ConsulConsul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品">
@@ -99,7 +100,7 @@
 <div class="intrude-less">
     <header id="header" class="inner">
         <a href="/" class="profilepic">
-            <img src="/img/avatar.png" class="animated zoomIn">
+            <img src="/img/avatar3.jpg" class="animated zoomIn">
         </a>
         <hgroup>
           <h1 class="header-author"><a href="/">默默磨墨</a></h1>
@@ -186,7 +187,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
                     </div>
                 </section>
                 
@@ -226,7 +227,7 @@
     <div class="intrude-less">
         <header id="header" class="inner">
             <a href="/" class="profilepic">
-                <img src="/img/avatar.png" class="animated zoomIn">
+                <img src="/img/avatar3.jpg" class="animated zoomIn">
             </a>
             <hgroup>
               <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
@@ -292,6 +293,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/consul/">consul</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -346,7 +351,7 @@
         <p><span>本文标题:</span><a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
         <p><span>发布时间:</span>2017-07-31, 11:47:23</p>
-        <p><span>最后更新:</span>2017-08-01, 09:31:46</p>
+        <p><span>最后更新:</span>2017-08-07, 10:13:38</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/" title="基于Docker的Consul(官方镜像)集群部署指南">http://blog.moguang.com/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -444,7 +449,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/golang-Pointer-operation/">[golang]Pointer operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang之map-set类型/">golang之map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang之array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang之http-server/">golang之http server</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang之channel/">golang之channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang之goroutine小结/">golang之goroutine小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang之interface/">golang之interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/golang-Pointer-operation/">[golang]Pointer operation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang之gRPC/">golang之gRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang之map-set类型/">golang之map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang之array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang之http-server/">golang之http server</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang之channel/">golang之channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang之goroutine小结/">golang之goroutine小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang之function/">golang之function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang之interface/">golang之interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
 
 
 

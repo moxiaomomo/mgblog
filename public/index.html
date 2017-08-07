@@ -101,7 +101,7 @@
 <div class="intrude-less">
     <header id="header" class="inner">
         <a href="/" class="profilepic">
-            <img src="/img/avatar.png" class="animated zoomIn">
+            <img src="/img/avatar3.jpg" class="animated zoomIn">
         </a>
         <hgroup>
           <h1 class="header-author"><a href="/">默默磨墨</a></h1>
@@ -188,7 +188,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
                     </div>
                 </section>
                 
@@ -228,7 +228,7 @@
     <div class="intrude-less">
         <header id="header" class="inner">
             <a href="/" class="profilepic">
-                <img src="/img/avatar.png" class="animated zoomIn">
+                <img src="/img/avatar3.jpg" class="animated zoomIn">
             </a>
             <hgroup>
               <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
@@ -306,6 +306,10 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/consul/">consul</a></li></ul>
+    </div>
+
       
         <p class="article-more-link">
           <a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/#more">阅读全文 >></a>
@@ -492,6 +496,70 @@
       
         <p class="article-more-link">
           <a href="/2017/04/05/golang-Pointer-operation/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang之gRPC" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/09/golang之gRPC/" class="article-date">
+      <time datetime="2017-02-09T02:10:53.000Z" itemprop="datePublished">2017-02-09</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/09/golang之gRPC/">golang之gRPC</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h4 id="关于gRPC"><a href="#关于gRPC" class="headerlink" title="关于gRPC"></a>关于gRPC</h4><p>gRPC是google公司面向移动应用, 基于http2.0协议标准而设计, 基于Protocol Buffers而开发的一种开源RPC框架。<br><br>ProtoBuf可以用于通讯协议、数据存储等一些语言/平台无关的数据序列化, 号称高性能, 通用性强, 具体可以看下这里的分析：<br><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/" target="_blank" rel="external">Google Protocol Buffer 的使用和原理</a><br><br>gRPC提供了一种相对简单的方法来精确地定义服务, 和为ios/andoird/后台服务自动生成可靠的数据结构功能库; 通过它可以节省带宽和CPU资源, 降低TCP连接次数, 和延长电池寿命。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/09/golang之gRPC/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -818,71 +886,6 @@
       
         <p class="article-more-link">
           <a href="/2016/03/03/golang之goroutine小结/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang之interface" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/02/golang之interface/" class="article-date">
-      <time datetime="2016-01-02T07:22:43.000Z" itemprop="datePublished">2016-01-02</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/02/golang之interface/">golang之interface</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h1><p>第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。<br><br>那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。<br><br>想着现在可以亲自试一番, 想想多少都有些激动。</p>
-<h3 id="什么是interface"><a href="#什么是interface" class="headerlink" title="什么是interface"></a>什么是interface</h3><ul>
-<li>在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。</li>
-<li>interface定义了一组方法, 如果某个对象实现了某个interface的所有方法， 则我们可以认为这个对象实现了这个接口。</li>
-<li>由此可见, 不像C++、java， golang实现接口并不需要显式的implements。。。WTF</li>
-</ul>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2016/01/02/golang之interface/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
