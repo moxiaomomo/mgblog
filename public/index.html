@@ -188,7 +188,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
                     </div>
                 </section>
                 
@@ -266,6 +266,70 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-mysql/mysql_concurrent_query" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/06/mysql/mysql_concurrent_query/" class="article-date">
+      <time datetime="2017-08-06T07:22:43.000Z" itemprop="datePublished">2017-08-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="场景说明"><a href="#场景说明" class="headerlink" title="场景说明"></a>场景说明</h3><p>假设有一个mysql表被水平切分，分散到多个host中，每个host拥有n个切分表。<br>如果需要并发去访问这些表，快速得到查询结果， 应该怎么做呢？<br>这里提供一种方案，利用python3的asyncio异步io库及aiomysql异步库去实现这个需求。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/08/06/mysql/mysql_concurrent_query/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="consul-基于Docker的Consul-官方镜像-集群部署指南" class="article article-type-consul" itemscope itemprop="blogPost">
   
@@ -447,77 +511,10 @@
 
 
   
-    <article id="post-golang-Pointer-operation" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang_gRPC" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/05/golang-Pointer-operation/" class="article-date">
-      <time datetime="2017-04-05T11:35:16.000Z" itemprop="datePublished">2017-04-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/05/golang-Pointer-operation/">[golang]Pointer operation</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>Golang保留了指针类型,支持指针操作。</p>
-<p>可以使用操作符&amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。</p>
-<p>unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。</p>
-<p>uintptr类型可以转换为整数。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/04/05/golang-Pointer-operation/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang之gRPC" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/02/09/golang之gRPC/" class="article-date">
+      <a href="/2017/02/09/golang/golang_gRPC/" class="article-date">
       <time datetime="2017-02-09T02:10:53.000Z" itemprop="datePublished">2017-02-09</time>
 </a>
 
@@ -533,7 +530,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/09/golang之gRPC/">golang之gRPC</a>
+      <a class="article-title" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a>
     </h1>
   
 
@@ -559,7 +556,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/02/09/golang之gRPC/#more">阅读全文 >></a>
+          <a href="/2017/02/09/golang/golang_gRPC/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -578,10 +575,10 @@
 
 
   
-    <article id="post-golang之map-set类型" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang_map-set" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/02/01/golang之map-set类型/" class="article-date">
+      <a href="/2017/02/01/golang/golang_map-set/" class="article-date">
       <time datetime="2017-02-01T11:13:13.000Z" itemprop="datePublished">2017-02-01</time>
 </a>
 
@@ -597,7 +594,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/01/golang之map-set类型/">golang之map/set类型</a>
+      <a class="article-title" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a>
     </h1>
   
 
@@ -621,9 +618,13 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
       
         <p class="article-more-link">
-          <a href="/2017/02/01/golang之map-set类型/#more">阅读全文 >></a>
+          <a href="/2017/02/01/golang/golang_map-set/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -642,10 +643,10 @@
 
 
   
-    <article id="golang-array-slice-golang之array-slice" class="article article-type-golang-array-slice" itemscope itemprop="blogPost">
+    <article id="[golang]array-slice-golang/golang_array-slice" class="article article-type-[golang]array-slice" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/01/30/golang之array-slice/" class="article-date">
+      <a href="/2017/01/30/golang/golang_array-slice/" class="article-date">
       <time datetime="2017-01-30T01:00:18.000Z" itemprop="datePublished">2017-01-30</time>
 </a>
 
@@ -661,7 +662,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/30/golang之array-slice/">golang数组与切片</a>
+      <a class="article-title" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a>
     </h1>
   
 
@@ -671,11 +672,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1.基础特性"></a>1.基础特性</h4><ul>
-<li>array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度</li>
-<li>数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝</li>
-<li>作为函数的传递参数, 实际也是数组的一份拷贝; 效率也就比传递指针低</li>
-<li>数组长度也是Type一部分, 如[4]int和[2]int类型不一样</li>
+              <h3 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1)基础特性"></a>1)基础特性</h4><ul>
+<li>array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度;</li>
+<li>数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝;</li>
+<li>作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低;</li>
+<li>数组长度也是Type一部分, 如[4]int和[2]int类型不一样.</li>
 </ul>
           
       
@@ -686,9 +687,13 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
       
         <p class="article-more-link">
-          <a href="/2017/01/30/golang之array-slice/#more">阅读全文 >></a>
+          <a href="/2017/01/30/golang/golang_array-slice/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -707,10 +712,10 @@
 
 
   
-    <article id="post-golang之http-server" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/12/03/golang之http-server/" class="article-date">
+      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
       <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
 </a>
 
@@ -726,7 +731,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/03/golang之http-server/">golang之http server</a>
+      <a class="article-title" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a>
     </h1>
   
 
@@ -747,12 +752,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang-http/">golang http</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/12/03/golang之http-server/#more">阅读全文 >></a>
+          <a href="/2016/12/03/golang/golang_http-server/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -771,10 +776,74 @@
 
 
   
-    <article id="post-golang之channel" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang_pointer" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/04/golang之channel/" class="article-date">
+      <a href="/2016/04/05/golang/golang_pointer/" class="article-date">
+      <time datetime="2016-04-05T11:35:16.000Z" itemprop="datePublished">2016-04-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="关于golang指针类型"><a href="#关于golang指针类型" class="headerlink" title="关于golang指针类型"></a>关于golang指针类型</h3><p>Golang保留了指针类型,支持指针操作。<br><br>可以使用操作符&amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。<br><br>unsafe.Pointer可以与任意指针类型转换, 可以将unsafe.Pointer转换为uintptr,然后做指针运算。<br><br>uintptr类型可以转换为整数。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/04/05/golang/golang_pointer/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang_channel" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/04/golang/golang_channel/" class="article-date">
       <time datetime="2016-03-04T01:00:11.000Z" itemprop="datePublished">2016-03-04</time>
 </a>
 
@@ -790,7 +859,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/04/golang之channel/">golang之channel</a>
+      <a class="article-title" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a>
     </h1>
   
 
@@ -821,71 +890,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/03/04/golang之channel/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang之goroutine小结" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/03/golang之goroutine小结/" class="article-date">
-      <time datetime="2016-03-03T01:34:55.000Z" itemprop="datePublished">2016-03-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/03/golang之goroutine小结/">golang之goroutine小结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>关于gorountine的特性, 我还是借鉴以下这篇文章来学习和总结一下, 至于一些用法在下一节channel再进行小结。</p>
-<p>源地址:<br><a href="http://www.infoq.com/cn/articles/knowledge-behind-goroutine" title="goroutine" target="_blank" rel="external">goroutine背后的系统知识</a></p>
-<p>节选(goroutine的特性):</p>
-<blockquote>
-<p>1.Go语言通过goroutine提供了目前为止所有(我所了解的)语言里对于并发编程的最清晰最直接的支持，Go语言的文档里对其特性也描述的非常全面甚至超过了，在这里，基于我们上面的系统知识介绍，列举一下goroutine的特性，算是小结：<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2016/03/03/golang之goroutine小结/#more">阅读全文 >></a>
+          <a href="/2016/03/04/golang/golang_channel/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
