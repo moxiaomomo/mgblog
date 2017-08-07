@@ -1,7 +1,7 @@
 ---
-title: golang之goroutine小结
+title: [golang]goroutine学习小结
 date: 2016-03-03 09:34:55
-tags:
+tags: golang
 ---
 
 关于gorountine的特性, 我还是借鉴以下这篇文章来学习和总结一下, 至于一些用法在下一节channel再进行小结。

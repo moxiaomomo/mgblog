@@ -1,5 +1,5 @@
 ---
-title: golang之channel
+title: [golang]channel管道类型
 date: 2016-03-04 09:00:11
 tags: golang
 ---
@@ -139,4 +139,3 @@ msg in channel 2	cur_loop:3
 msg in channel 1	cur_loop:3
 ```
 由结果可见, 每个channel中的消息都能尽快的被读取, 而不会因为一个channel的阻塞而导致了其他channel的消息无法被读取。
-

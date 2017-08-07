@@ -1,16 +1,13 @@
 ---
-title: '[golang]Pointer operation'
-date: 2017-04-05 19:35:16
+title: '[golang]指针类型'
+date: 2016-04-05 19:35:16
 tags: golang
 ---
 
-
-Golang保留了指针类型,支持指针操作。
-
-可以使用操作符&取变量地址，使用操作符*通过指针变量间接访问目标对象。
-
-unsafe.Pointer可以与任意指针类型转换。可以将unsafe.Pointer转换为uintptr,然后做指针运算。
-
+### 关于golang指针类型
+Golang保留了指针类型,支持指针操作。<br>
+可以使用操作符&取变量地址，使用操作符*通过指针变量间接访问目标对象。<br>
+unsafe.Pointer可以与任意指针类型转换, 可以将unsafe.Pointer转换为uintptr,然后做指针运算。<br>
 uintptr类型可以转换为整数。
 <!--more-->
 ### 指针使用示例

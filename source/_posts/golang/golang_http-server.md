@@ -1,7 +1,7 @@
 ---
-title: golang之http server
+title: [golang]HTTP webserver
 date: 2016-12-03 14:11:45
-tags: golang http
+tags: golang
 ---
 
 ### 简单示例

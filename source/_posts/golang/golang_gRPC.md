@@ -1,5 +1,5 @@
 ---
-title: golang之gRPC
+title: [golang]gRPC通信协议
 date: 2017-02-09 10:10:53
 tags: golang
 ---
@@ -45,6 +45,7 @@ service Data {
 上面定义了一个服务Data，有一个API叫GetUser，接收参数类型UserRq, 返回参数类型UserRp。
 
 <br>在proto中, service可以定义server， 有四种实现方式:(参考http://www.jianshu.com/p/774b38306c30)
+
 - rpc GetFeature(Point) returns (Feature) {}
   <br>类似普通的函数调用，客户端发送请求Point到服务器，服务器返回相应Feature.
 

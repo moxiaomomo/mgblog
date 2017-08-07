@@ -1,26 +1,25 @@
 ---
-title: golang之interface
+title: [golang]interface
 date: 2016-01-02 15:22:43
-tags:
+tags: golang
 ---
 
-# interface
 
 第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。<br>
 那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。<br>
-想着现在可以亲自试一番, 想想多少都有些激动。
+现在计划写个demo， 重新学习一下interface的设计模式。
 
 ### 什么是interface
 - 在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。
 - interface定义了一组方法, 如果某个对象实现了某个interface的所有方法， 则我们可以认为这个对象实现了这个接口。
-- 由此可见, 不像C++、java， golang实现接口并不需要显式的implements。。。WTF
+- 由此可见, 不像C++、java， golang实现接口并不需要显式的implements。。。
 
 <!--more-->
 
 ### interface的一些基础特性
-- interface类型不包含任何的成员变量, 只有方法
-- interface类型进行类型转换时, 默认返回的是对象拷贝; 如果需要修改源对象, 需使用指针。
-- interface类型可以嵌套, 但不支持两个对象互相嵌套
+- interface类型不包含任何的成员变量, 只有方法;
+- interface类型进行类型转换时, 默认返回的是对象拷贝; 如果需要修改源对象, 需使用指针;
+- interface类型可以嵌套, 但不支持两个对象互相嵌套.
 
 
 ### 接口的定义与实现
@@ -92,7 +91,8 @@ root@XIAOMO:~/gopro# ./interface
 salary:10000000
 name:xiaomo
 ```
-上例中, 定义了接口Human, 内部有三个方法: GetName(), GetAge(), GetGender(); 结构Employee除了实现这三个方法外, 还是实现了GetSalary()方法。 因此, 对象Employee实现Human接口。
+上例中, 定义了接口Human, 内部有三个方法: GetName(), GetAge(), GetGender(); <br>
+结构Employee除了实现这三个方法外, 还实现了GetSalary()方法。 因此, 对象Employee实现Human接口。
 
 Employee可以转换为Human类型, 作为形参传入printName()函数; 实现了多态调用。
 
@@ -151,5 +151,5 @@ func Println(args ...interface{})
 ```
 
 ### 总结
-golang的接口和其他语言的接口区别还是比较大。 按标准说法，就是一般语言的接口是侵入式的， 需要显式的implement；而golang是非侵入式的, 实现某个接口并不需要从该接口继承，而只需要实现该接口的所有方法。
-这其中的好处，还是要在实际项目中好好体会。。。
+golang的接口和其他语言的接口区别还是比较大, 显得别具一格。
+其他大部分语言的接口是侵入式的， 需要显式的implement；而golang是非侵入式的, 实现某个接口并不需要从该接口继承，而只需要实现该接口的所有方法。
