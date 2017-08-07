@@ -1,5 +1,5 @@
 ---
-title: [golang]channel管道类型
+title: '[golang]channel管道类型'
 date: 2016-03-04 09:00:11
 tags: golang
 ---

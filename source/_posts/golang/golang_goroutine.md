@@ -1,5 +1,5 @@
 ---
-title: [golang]goroutine学习小结
+title: '[golang]goroutine学习小结'
 date: 2016-03-03 09:34:55
 tags: golang
 ---

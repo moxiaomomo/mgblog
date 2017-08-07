@@ -1,5 +1,5 @@
 ---
-title: [golang]function
+title: '[golang]function'
 date: 2016-02-07 10:07:46
 tags: golang
 ---

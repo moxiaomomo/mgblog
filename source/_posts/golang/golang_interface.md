@@ -1,5 +1,5 @@
 ---
-title: [golang]interface
+title: '[golang]interface'
 date: 2016-01-02 15:22:43
 tags: golang
 ---

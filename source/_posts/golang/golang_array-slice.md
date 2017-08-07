@@ -1,5 +1,5 @@
 ---
-layout: [golang]array-slice
+layout: '[golang]array-slice'
 title: golang数组与切片
 date: 2017-01-30 09:00:18
 tags: golang

@@ -1,6 +1,6 @@
 
 ---
-title: [mysql]python3并发访问分布式mysql表
+title: '[mysql]python3并发访问分布式mysql表'
 date: 2017-08-06 15:22:43
 tags: mysql
 ---

@@ -1,5 +1,5 @@
 ---
-title: [golang]gRPC通信协议
+title: '[golang]gRPC通信协议'
 date: 2017-02-09 10:10:53
 tags: golang
 ---

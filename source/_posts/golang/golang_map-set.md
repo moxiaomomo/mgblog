@@ -1,5 +1,5 @@
 ---
-title: [golang]map/set类型
+title: '[golang]map/set类型'
 date: 2017-02-01 19:13:13
 tags: golang
 ---
