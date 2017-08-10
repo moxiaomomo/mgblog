@@ -836,11 +836,11 @@
 
 
   
-    <article id="post-golang/golang-异常处理" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang-工作池workerpool" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/10/golang/golang-异常处理/" class="article-date">
-      <time datetime="2016-03-10T05:53:30.000Z" itemprop="datePublished">2016-03-10</time>
+      <a href="/2016/03/15/golang/golang-工作池workerpool/" class="article-date">
+      <time datetime="2016-03-15T10:19:32.000Z" itemprop="datePublished">2016-03-15</time>
 </a>
 
 
@@ -855,7 +855,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a>
+      <a class="article-title" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a>
     </h1>
   
 
@@ -865,7 +865,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="关于异常处理"><a href="#关于异常处理" class="headerlink" title="关于异常处理"></a>关于异常处理</h3><p>golang并不支持try-catch-finally机制，而是通过panic和defer函数来处理运行时异常。<br><br>一般情况下，golang中使用多值来返回错误；个别情况下才需要用到Exception异常处理: defer, panic, recover。</p>
+              <p>在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。</p>
+<p>创建一个goroutine工作池, 是一个比较合理的解决方案。</p>
+<h3 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h3>
           
       
     </div>
@@ -881,7 +883,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/03/10/golang/golang-异常处理/#more">阅读全文 >></a>
+          <a href="/2016/03/15/golang/golang-工作池workerpool/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

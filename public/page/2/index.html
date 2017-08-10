@@ -263,6 +263,134 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-golang/golang-json-rpc" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/12/golang/golang-json-rpc/" class="article-date">
+      <time datetime="2016-03-12T10:09:09.000Z" itemprop="datePublished">2016-03-12</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h4 id="关于JSON-RPC"><a href="#关于JSON-RPC" class="headerlink" title="关于JSON-RPC"></a>关于JSON-RPC</h4><p>JSON-RPC是一个远程调用协议, 还是轻量级的, 简单易用。<br>在请求远程调用的时候, 我们可以这样定义请求体:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"jsonrpc"</span>: <span class="string">"2.0"</span>,</div><div class="line">    <span class="attr">"method"</span>: <span class="string">"login"</span>,</div><div class="line">    <span class="attr">"params"</span>: &#123;<span class="attr">"name"</span>:<span class="string">"momo"</span>, <span class="attr">"passwd"</span>:<span class="string">"xxxxxx"</span>&#125;,</div><div class="line">    <span class="attr">"id"</span>: <span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/03/12/golang/golang-json-rpc/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-异常处理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/10/golang/golang-异常处理/" class="article-date">
+      <time datetime="2016-03-10T05:53:30.000Z" itemprop="datePublished">2016-03-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="关于异常处理"><a href="#关于异常处理" class="headerlink" title="关于异常处理"></a>关于异常处理</h3><p>golang并不支持try-catch-finally机制，而是通过panic和defer函数来处理运行时异常。<br><br>一般情况下，golang中使用多值来返回错误；个别情况下才需要用到Exception异常处理: defer, panic, recover。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/03/10/golang/golang-异常处理/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-golang/golang_channel" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

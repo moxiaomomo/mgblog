@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。 创建一个goroutine工作池, 是一个比较合理的解决方案。 示例1">
+<meta name="keywords" content="golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[golang]工作池workerpool">
+<meta property="og:url" content="http://blog.moguang.com/2016/03/15/golang/golang-工作池workerpool/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。 创建一个goroutine工作池, 是一个比较合理的解决方案。 示例1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-10T10:20:36.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[golang]工作池workerpool">
+<meta name="twitter:description" content="在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。 创建一个goroutine工作池, 是一个比较合理的解决方案。 示例1">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>[golang]工作池workerpool | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar3.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar3.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-golang/golang-工作池workerpool" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/15/golang/golang-工作池workerpool/" class="article-date">
+      <time datetime="2016-03-15T10:19:32.000Z" itemprop="datePublished">2016-03-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [golang]工作池workerpool
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。</p>
+<p>创建一个goroutine工作池, 是一个比较合理的解决方案。</p>
+<h3 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h3><a id="more"></a>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">	<span class="string">"log"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">const</span> (</div><div class="line">	<span class="comment">// PoolSize defines the pool size</span></div><div class="line">	PoolSize = <span class="number">10</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">// Jobs jobs channel</span></div><div class="line"><span class="keyword">var</span> Jobs <span class="keyword">chan</span> <span class="keyword">string</span> = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">30</span>)</div><div class="line"><span class="keyword">var</span> Result <span class="keyword">chan</span> <span class="keyword">string</span> = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">30</span>)</div><div class="line"></div><div class="line"><span class="comment">// Working do working</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">Working</span><span class="params">(workID <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	log.Printf(<span class="string">"Initiate worker %v..."</span>, workID)</div><div class="line">	<span class="keyword">for</span> j := <span class="keyword">range</span> Jobs &#123;</div><div class="line">		log.Printf(<span class="string">"work id: %v, receive msg: %v"</span>, workID, j)</div><div class="line">		Result &lt;- fmt.Sprintf(<span class="string">"%v is done..."</span>, j)</div><div class="line">		time.Sleep(time.Second * <span class="number">1</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// InitWorkerPool initialize worker pool</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitWorkerPool</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; PoolSize; j++ &#123;</div><div class="line">		<span class="keyword">go</span> Working(j)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	InitWorkerPool()</div><div class="line">	<span class="comment">// to generate jobs</span></div><div class="line">	time.Sleep(time.Second * <span class="number">2</span>)</div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">20</span>; i++ &#123;</div><div class="line">		job := fmt.Sprintf(<span class="string">"JobID %v"</span>, i)</div><div class="line">		Jobs &lt;- job</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">close</span>(Jobs)</div><div class="line"></div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">20</span>; i++ &#123;</div><div class="line">		log.Printf(<span class="string">"working result: %v"</span>, &lt;-Result)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">2016/04/12 14:18:58 Initiate worker 0...</div><div class="line">2016/04/12 14:18:58 Initiate worker 1...</div><div class="line">2016/04/12 14:18:58 Initiate worker 2...</div><div class="line">2016/04/12 14:18:58 Initiate worker 3...</div><div class="line">2016/04/12 14:18:58 Initiate worker 4...</div><div class="line">2016/04/12 14:18:58 Initiate worker 5...</div><div class="line">2016/04/12 14:18:58 Initiate worker 6...</div><div class="line">2016/04/12 14:18:58 Initiate worker 7...</div><div class="line">2016/04/12 14:18:58 Initiate worker 8...</div><div class="line">2016/04/12 14:18:58 Initiate worker 9...</div><div class="line">2016/04/12 14:19:00 work id: 9, receive msg: JobID 0</div><div class="line">2016/04/12 14:19:00 work id: 0, receive msg: JobID 1</div><div class="line">2016/04/12 14:19:00 work id: 1, receive msg: JobID 2</div><div class="line">2016/04/12 14:19:00 work id: 2, receive msg: JobID 3</div><div class="line">2016/04/12 14:19:00 work id: 3, receive msg: JobID 4</div><div class="line">2016/04/12 14:19:00 work id: 4, receive msg: JobID 5</div><div class="line">2016/04/12 14:19:00 work id: 5, receive msg: JobID 6</div><div class="line">2016/04/12 14:19:00 work id: 6, receive msg: JobID 7</div><div class="line">2016/04/12 14:19:00 work id: 7, receive msg: JobID 8</div><div class="line">2016/04/12 14:19:00 work id: 8, receive msg: JobID 9</div><div class="line">2016/04/12 14:19:00 working result: JobID 0 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 1 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 2 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 3 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 4 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 5 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 6 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 7 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 8 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:00 working result: JobID 9 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 work id: 8, receive msg: JobID 10</div><div class="line">2016/04/12 14:19:01 work id: 9, receive msg: JobID 11</div><div class="line">2016/04/12 14:19:01 work id: 0, receive msg: JobID 12</div><div class="line">2016/04/12 14:19:01 work id: 1, receive msg: JobID 13</div><div class="line">2016/04/12 14:19:01 work id: 2, receive msg: JobID 14</div><div class="line">2016/04/12 14:19:01 work id: 3, receive msg: JobID 15</div><div class="line">2016/04/12 14:19:01 work id: 4, receive msg: JobID 16</div><div class="line">2016/04/12 14:19:01 work id: 5, receive msg: JobID 17</div><div class="line">2016/04/12 14:19:01 work id: 6, receive msg: JobID 18</div><div class="line">2016/04/12 14:19:01 work id: 7, receive msg: JobID 19</div><div class="line">2016/04/12 14:19:01 working result: JobID 10 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 11 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 12 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 13 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 14 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 15 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 16 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 17 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 18 is <span class="keyword">done</span>...</div><div class="line">2016/04/12 14:19:01 working result: JobID 19 is <span class="keyword">done</span>...</div></pre></td></tr></table></figure></p>
+<p>由上可以见, 程序中同时最多有10个工作任务在运行。</p>
+<h3 id="示例2-更规范的用法"><a href="#示例2-更规范的用法" class="headerlink" title="示例2, 更规范的用法"></a>示例2, 更规范的用法</h3><p>我们引入同步锁, 并把工作池定义成一个结构体WorkPool， 包含poolSize和tasks成员, 并实现WorkPool.Run方法:<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">	<span class="string">"log"</span></div><div class="line">	<span class="string">"sync"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">// WorkPool worker pool definition</span></div><div class="line"><span class="keyword">type</span> WorkPool <span class="keyword">struct</span> &#123;</div><div class="line">	poolSize <span class="keyword">int</span></div><div class="line">	tasks    <span class="keyword">chan</span> <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Run initialize worker pool, ready to run tasks</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wp *WorkPool)</span> <span class="title">Run</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">var</span> wg sync.WaitGroup</div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; wp.poolSize; i++ &#123;</div><div class="line">		wg.Add(<span class="number">1</span>)</div><div class="line">		taskID := i</div><div class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">			log.Printf(<span class="string">"Initiate worker %v..."</span>, taskID)</div><div class="line">			<span class="keyword">for</span> j := <span class="keyword">range</span> wp.tasks &#123;</div><div class="line">				log.Printf(<span class="string">"work id: %v, receive msg: %v"</span>, taskID, j)</div><div class="line">				time.Sleep(time.Second * <span class="number">1</span>)</div><div class="line">			&#125;</div><div class="line">			wg.Done()</div><div class="line">		&#125;()</div><div class="line">	&#125;</div><div class="line">	wg.Wait()</div><div class="line">	log.Println(<span class="string">"WorkPool is destroyed."</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	tasks := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">20</span>)</div><div class="line"></div><div class="line">	<span class="comment">// to generate jobs</span></div><div class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		time.Sleep(time.Second * <span class="number">2</span>)</div><div class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">30</span>; i++ &#123;</div><div class="line">			job := fmt.Sprintf(<span class="string">"jobID %v"</span>, i)</div><div class="line">			tasks &lt;- job</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// if not close tasks, will cause deadlock</span></div><div class="line">		<span class="built_in">close</span>(tasks)</div><div class="line">	&#125;()</div><div class="line"></div><div class="line">	wp := WorkPool&#123;</div><div class="line">		poolSize: <span class="number">10</span>,</div><div class="line">		tasks:    tasks,</div><div class="line">	&#125;</div><div class="line">	wp.Run()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">2016/04/12 15:01:03 Initiate worker 9...</div><div class="line">2016/04/12 15:01:03 Initiate worker 0...</div><div class="line">2016/04/12 15:01:03 Initiate worker 1...</div><div class="line">2016/04/12 15:01:03 Initiate worker 2...</div><div class="line">2016/04/12 15:01:03 Initiate worker 3...</div><div class="line">2016/04/12 15:01:03 Initiate worker 4...</div><div class="line">2016/04/12 15:01:03 Initiate worker 5...</div><div class="line">2016/04/12 15:01:03 Initiate worker 6...</div><div class="line">2016/04/12 15:01:03 Initiate worker 7...</div><div class="line">2016/04/12 15:01:03 Initiate worker 8...</div><div class="line">2016/04/12 15:01:05 work id: 8, receive msg: jobID 0</div><div class="line">2016/04/12 15:01:05 work id: 9, receive msg: jobID 1</div><div class="line">2016/04/12 15:01:05 work id: 0, receive msg: jobID 2</div><div class="line">2016/04/12 15:01:05 work id: 1, receive msg: jobID 3</div><div class="line">2016/04/12 15:01:05 work id: 2, receive msg: jobID 4</div><div class="line">2016/04/12 15:01:05 work id: 3, receive msg: jobID 5</div><div class="line">2016/04/12 15:01:05 work id: 4, receive msg: jobID 6</div><div class="line">2016/04/12 15:01:05 work id: 5, receive msg: jobID 7</div><div class="line">2016/04/12 15:01:05 work id: 6, receive msg: jobID 8</div><div class="line">2016/04/12 15:01:05 work id: 7, receive msg: jobID 9</div><div class="line">2016/04/12 15:01:06 work id: 7, receive msg: jobID 10</div><div class="line">2016/04/12 15:01:06 work id: 8, receive msg: jobID 11</div><div class="line">2016/04/12 15:01:06 work id: 9, receive msg: jobID 12</div><div class="line">2016/04/12 15:01:06 work id: 0, receive msg: jobID 13</div><div class="line">2016/04/12 15:01:06 work id: 1, receive msg: jobID 14</div><div class="line">2016/04/12 15:01:06 work id: 2, receive msg: jobID 15</div><div class="line">2016/04/12 15:01:06 work id: 3, receive msg: jobID 16</div><div class="line">2016/04/12 15:01:06 work id: 4, receive msg: jobID 17</div><div class="line">2016/04/12 15:01:06 work id: 5, receive msg: jobID 18</div><div class="line">2016/04/12 15:01:06 work id: 6, receive msg: jobID 19</div><div class="line">2016/04/12 15:01:07 work id: 6, receive msg: jobID 20</div><div class="line">2016/04/12 15:01:07 work id: 7, receive msg: jobID 21</div><div class="line">2016/04/12 15:01:07 work id: 8, receive msg: jobID 22</div><div class="line">2016/04/12 15:01:07 work id: 9, receive msg: jobID 23</div><div class="line">2016/04/12 15:01:07 work id: 0, receive msg: jobID 24</div><div class="line">2016/04/12 15:01:07 work id: 1, receive msg: jobID 25</div><div class="line">2016/04/12 15:01:07 work id: 2, receive msg: jobID 26</div><div class="line">2016/04/12 15:01:07 work id: 3, receive msg: jobID 27</div><div class="line">2016/04/12 15:01:07 work id: 4, receive msg: jobID 28</div><div class="line">2016/04/12 15:01:07 work id: 5, receive msg: jobID 29</div><div class="line">2016/04/12 15:01:08 WorkPool is destroyed.</div></pre></td></tr></table></figure></p>
+<p>由上可见, 同时最多只有10个任务在执行；调用close(tasks)后, 所有工作任务完成, 工作池销毁, 主进程退出。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2016-03-15, 18:19:32</p>
+        <p><span>最后更新:</span>2017-08-10, 18:20:36</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/03/15/golang/golang-工作池workerpool/" title="[golang]工作池workerpool">http://blog.moguang.com/2016/03/15/golang/golang-工作池workerpool/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/03/15/golang/golang-工作池workerpool/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/04/05/golang/golang_pointer/">
+                    [golang]指针类型
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/03/12/golang/golang-json-rpc/">
+                    [golang]json-rpc
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例1"><span class="toc-number">1.</span> <span class="toc-text">示例1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例2-更规范的用法"><span class="toc-number">2.</span> <span class="toc-text">示例2, 更规范的用法</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"[golang]工作池workerpool　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/04/05/golang/golang_pointer/" title="上一篇: [golang]指针类型">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/03/12/golang/golang-json-rpc/" title="下一篇: [golang]json-rpc">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2017 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
