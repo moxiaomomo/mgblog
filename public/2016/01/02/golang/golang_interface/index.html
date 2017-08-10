@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。现在计划写个demo， 重新学习一下interface的设计模式。 什么是interface 在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。 interface定义了一">
+<meta name="keywords" content="golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[golang]interface">
+<meta property="og:url" content="http://blog.moguang.com/2016/01/02/golang/golang_interface/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。现在计划写个demo， 重新学习一下interface的设计模式。 什么是interface 在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。 interface定义了一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-07T05:47:10.146Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[golang]interface">
+<meta name="twitter:description" content="第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。现在计划写个demo， 重新学习一下interface的设计模式。 什么是interface 在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。 interface定义了一">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>[golang]interface | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar3.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar3.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-golang/golang_interface" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/02/golang/golang_interface/" class="article-date">
+      <time datetime="2016-01-02T07:22:43.000Z" itemprop="datePublished">2016-01-02</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [golang]interface
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。<br><br>那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。<br><br>现在计划写个demo， 重新学习一下interface的设计模式。</p>
+<h3 id="什么是interface"><a href="#什么是interface" class="headerlink" title="什么是interface"></a>什么是interface</h3><ul>
+<li>在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。</li>
+<li>interface定义了一组方法, 如果某个对象实现了某个interface的所有方法， 则我们可以认为这个对象实现了这个接口。</li>
+<li>由此可见, 不像C++、java， golang实现接口并不需要显式的implements。。。</li>
+</ul>
+<a id="more"></a>
+<h3 id="interface的一些基础特性"><a href="#interface的一些基础特性" class="headerlink" title="interface的一些基础特性"></a>interface的一些基础特性</h3><ul>
+<li>interface类型不包含任何的成员变量, 只有方法;</li>
+<li>interface类型进行类型转换时, 默认返回的是对象拷贝; 如果需要修改源对象, 需使用指针;</li>
+<li>interface类型可以嵌套, 但不支持两个对象互相嵌套.</li>
+</ul>
+<h3 id="接口的定义与实现"><a href="#接口的定义与实现" class="headerlink" title="接口的定义与实现"></a>接口的定义与实现</h3><p>一个例子<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> Human <span class="keyword">interface</span> &#123;</div><div class="line">    GetName() <span class="keyword">string</span></div><div class="line">    GetAge() <span class="keyword">int</span></div><div class="line">    GetGender() <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 定义struct Employee</span></div><div class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span> &#123;</div><div class="line">    name   <span class="keyword">string</span></div><div class="line">    age    <span class="keyword">int</span></div><div class="line">    salary <span class="keyword">int</span></div><div class="line">    gender <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 定义struct Employee 的方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *Employee)</span> <span class="title">GetName</span><span class="params">()</span> <span class="title">string</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> self.name</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *Employee)</span> <span class="title">GetAge</span><span class="params">()</span> <span class="title">int</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> self.age</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *Employee)</span> <span class="title">GetGender</span><span class="params">()</span> <span class="title">string</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> self.gender</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self *Employee)</span> <span class="title">GetSalary</span><span class="params">()</span> <span class="title">int</span></span> &#123;</div><div class="line">    <span class="keyword">return</span> self.salary</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 参数为Human类型</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printName</span><span class="params">(p Human)</span></span> &#123;</div><div class="line">    name := p.GetName()</div><div class="line">    fmt.Printf(<span class="string">"name:%v\n"</span>, name)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    varEmployee := Employee&#123;</div><div class="line">        name:   <span class="string">"xiaomo"</span>,</div><div class="line">        age:    <span class="number">30</span>,</div><div class="line">        salary: <span class="number">10000000</span>,</div><div class="line">        gender: <span class="string">"Male"</span>,</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 访问GetSalary方法</span></div><div class="line">    s := varEmployee.GetSalary()</div><div class="line">    fmt.Printf(<span class="string">"salary:%v\n"</span>, s)</div><div class="line"></div><div class="line">    <span class="comment">// 子集转为超集类型Human, 作为参数传入函数中</span></div><div class="line">    <span class="keyword">var</span> p Human = &amp;varEmployee</div><div class="line">    printName(p)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>演示效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~/gopro<span class="comment"># go build interface.go</span></div><div class="line">root@XIAOMO:~/gopro<span class="comment"># ./interface</span></div><div class="line">salary:10000000</div><div class="line">name:xiaomo</div></pre></td></tr></table></figure></p>
+<p>上例中, 定义了接口Human, 内部有三个方法: GetName(), GetAge(), GetGender(); <br><br>结构Employee除了实现这三个方法外, 还实现了GetSalary()方法。 因此, 对象Employee实现Human接口。</p>
+<p>Employee可以转换为Human类型, 作为形参传入printName()函数; 实现了多态调用。</p>
+<h3 id="接口的嵌套"><a href="#接口的嵌套" class="headerlink" title="接口的嵌套"></a>接口的嵌套</h3><p>一个接口可以嵌套另一个接口，根据上面的代码再修改一下， 修改部分如下:<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 嵌套接口Human, 那么User除了有PrintInfo()外， 也拥有了Human的所有方法</span></div><div class="line"><span class="keyword">type</span> User <span class="keyword">interface</span> &#123;</div><div class="line">    Human</div><div class="line">    PrintInfo()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 实现PrintInfo()方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(self * Employee)</span> <span class="title">PrintInfo</span><span class="params">()</span></span> &#123;</div><div class="line">    fmt.Printf(<span class="string">"name:%v age:%v salary:%v gender:%v\n"</span>,</div><div class="line">        self.name, self.age, self.salary, self.gender)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    varEmployee := Employee&#123;</div><div class="line">        name:   <span class="string">"xiaomo"</span>,</div><div class="line">        age:    <span class="number">50</span>,</div><div class="line">        salary: <span class="number">100000000</span>,</div><div class="line">        gender: <span class="string">"Male"</span>,</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 访问GetSalary方法</span></div><div class="line">    s := varEmployee.GetSalary()</div><div class="line">    fmt.Printf(<span class="string">"salary:%v\n"</span>, s)</div><div class="line"></div><div class="line">    <span class="comment">// 子集转为超集类型Human, 作为参数传入函数中</span></div><div class="line">    <span class="keyword">var</span> p Human = &amp;varEmployee</div><div class="line">    printName(p)</div><div class="line"></div><div class="line">    <span class="comment">// Employee转换为User类型</span></div><div class="line">    <span class="keyword">var</span> u User = &amp;varEmployee</div><div class="line">    <span class="comment">// 这时可以调用User的GetName()方法</span></div><div class="line">    fmt.Printf(<span class="string">"user_name:%v\n"</span>, u.GetName())</div><div class="line">    <span class="comment">// 调用User的PrintInfo()方法</span></div><div class="line">    u.PrintInfo()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="空接口-Any类型"><a href="#空接口-Any类型" class="headerlink" title="空接口(Any类型)"></a>空接口(Any类型)</h3><p>golang中所有对象都满足空接口interface{}, 因此interface{}可以指向任何类型的对象。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> i1 <span class="keyword">interface</span>&#123;&#125; = <span class="number">100</span>      <span class="comment">// 将int类型赋值给interface&#123;&#125;</span></div><div class="line"><span class="keyword">var</span> i2 <span class="keyword">interface</span>&#123;&#125; = <span class="string">"ok"</span>     <span class="comment">// 将string类型赋值给interface&#123;&#125;</span></div><div class="line"><span class="keyword">var</span> i3 <span class="keyword">interface</span>&#123;&#125; = &amp;i2      <span class="comment">// 将*interface&#123;&#125;类型赋值给interface&#123;&#125;</span></div><div class="line"><span class="keyword">var</span> i4 <span class="keyword">interface</span>&#123;&#125; = <span class="keyword">struct</span>&#123; X <span class="keyword">int</span> &#125;&#123;<span class="number">1</span>&#125;   <span class="comment">// 将struct类型赋值给interface&#123;&#125;</span></div><div class="line"><span class="keyword">var</span> i5 <span class="keyword">interface</span>&#123;&#125; = &amp;<span class="keyword">struct</span>&#123; X <span class="keyword">int</span> &#125;&#123;<span class="number">1</span>&#125;  <span class="comment">// 将*struct类型赋值给interfae&#123;&#125;</span></div></pre></td></tr></table></figure>
+<p>当一个方法需要接受任意类型的对象时, 我们将其参数声明为interface{}空类型。如fmt库中的各种print方法就使用了这种方式:<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">Printf</span><span class="params">(fmt <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;)</span></span></div><div class="line"><span class="title">func</span> <span class="title">Println</span><span class="params">(args ...<span class="keyword">interface</span>&#123;&#125;)</span></div></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>golang的接口和其他语言的接口区别还是比较大, 显得别具一格。<br>其他大部分语言的接口是侵入式的， 需要显式的implement；而golang是非侵入式的, 实现某个接口并不需要从该接口继承，而只需要实现该接口的所有方法。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/01/02/golang/golang_interface/">[golang]interface</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2016-01-02, 15:22:43</p>
+        <p><span>最后更新:</span>2017-08-07, 13:47:10</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/02/golang/golang_interface/" title="[golang]interface">http://blog.moguang.com/2016/01/02/golang/golang_interface/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/01/02/golang/golang_interface/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/02/07/golang/golang_function/">
+                    [golang]function
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2015/07/22/about/about/">
+                    关于本站
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是interface"><span class="toc-number">1.</span> <span class="toc-text">什么是interface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#interface的一些基础特性"><span class="toc-number">2.</span> <span class="toc-text">interface的一些基础特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的定义与实现"><span class="toc-number">3.</span> <span class="toc-text">接口的定义与实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的嵌套"><span class="toc-number">4.</span> <span class="toc-text">接口的嵌套</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空接口-Any类型"><span class="toc-number">5.</span> <span class="toc-text">空接口(Any类型)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"[golang]interface　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/02/07/golang/golang_function/" title="上一篇: [golang]function">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2015/07/22/about/about/" title="下一篇: 关于本站">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2017 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

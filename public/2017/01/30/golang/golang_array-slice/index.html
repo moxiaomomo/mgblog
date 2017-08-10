@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="array类型1)基础特性 array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度; 数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝; 作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低; 数组长度也是Type一部分, 如[4]int和[2]int类型不一样.">
+<meta name="keywords" content="golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang数组与切片">
+<meta property="og:url" content="http://blog.moguang.com/2017/01/30/golang/golang_array-slice/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="array类型1)基础特性 array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度; 数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝; 作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低; 数组长度也是Type一部分, 如[4]int和[2]int类型不一样.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-07T05:47:10.146Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang数组与切片">
+<meta name="twitter:description" content="array类型1)基础特性 array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度; 数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝; 作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低; 数组长度也是Type一部分, 如[4]int和[2]int类型不一样.">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>golang数组与切片 | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar3.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar3.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="[golang]array-slice-golang/golang_array-slice" class="article article-type-[golang]array-slice" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/30/golang/golang_array-slice/" class="article-date">
+      <time datetime="2017-01-30T01:00:18.000Z" itemprop="datePublished">2017-01-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang数组与切片
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1)基础特性"></a>1)基础特性</h4><ul>
+<li>array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度;</li>
+<li>数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝;</li>
+<li>作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低;</li>
+<li>数组长度也是Type一部分, 如[4]int和[2]int类型不一样.</li>
+</ul>
+<a id="more"></a>
+<h4 id="2-声明与初始化"><a href="#2-声明与初始化" class="headerlink" title="2)声明与初始化"></a>2)声明与初始化</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="comment">// 只声明, 不作初始化</span></div><div class="line"><span class="keyword">var</span> a1 [<span class="number">3</span>]<span class="keyword">int</span>         <span class="comment">//一维, [0 0 0]</span></div><div class="line"><span class="keyword">var</span> a2 [<span class="number">2</span>][<span class="number">2</span>]<span class="keyword">int</span>      <span class="comment">//二维, [[0,0],[0,0]]</span></div><div class="line"></div><div class="line"><span class="comment">// 声明并初始化</span></div><div class="line"><span class="keyword">var</span> b1 [<span class="number">5</span>]<span class="keyword">int</span> = [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</div><div class="line"><span class="keyword">var</span> b2 [<span class="number">4</span>]<span class="keyword">string</span> = [<span class="number">4</span>]<span class="keyword">string</span>&#123;<span class="string">"Red"</span>, <span class="string">"Blue"</span>, <span class="string">"Green"</span>, <span class="string">"Yellow"</span>&#125;</div><div class="line"><span class="keyword">var</span> b3 [<span class="number">2</span>][<span class="number">2</span>]<span class="keyword">int</span> = [<span class="number">2</span>][<span class="number">2</span>]<span class="keyword">int</span>&#123;[<span class="number">2</span>]<span class="keyword">int</span>&#123;<span class="number">5</span>,<span class="number">6</span>&#125;, [<span class="number">2</span>]<span class="keyword">int</span>&#123;<span class="number">7</span>,<span class="number">8</span>&#125;&#125;</div><div class="line"><span class="comment">// 不能在顶层进行快速声明和初始化, 需用: var b4 [3]string = ...</span></div><div class="line"><span class="comment">//b4 := [3]string&#123;"a", "b", "c"&#125;</span></div><div class="line"></div><div class="line"><span class="comment">// 几种常用初始化方法(在函数内使用)</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">arrInFunc</span><span class="params">()</span></span>&#123;</div><div class="line">    a := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;    <span class="comment">// 所有元素赋值</span></div><div class="line">    b := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;    <span class="comment">// 前三个元素赋值，其他默认0</span></div><div class="line">    c := [<span class="number">15</span>]<span class="keyword">int</span>&#123;<span class="number">10</span>:<span class="number">3</span>&#125;    <span class="comment">// 指定第11个元素初始化为3，其他默认0</span></div><div class="line">    d := [...]<span class="keyword">int</span>&#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;  <span class="comment">// 编译器自动推断长度</span></div><div class="line">    e := [...]<span class="keyword">int</span>&#123;<span class="number">0</span>:<span class="number">1</span>, <span class="number">1</span>:<span class="number">2</span>, <span class="number">5</span>:<span class="number">7</span>&#125; <span class="comment">//自动推断长度</span></div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, a)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, b)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, c)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, d)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, e)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    arrInFunc()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>main.go演示效果如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~/gopro<span class="comment"># ./main</span></div><div class="line">[1 2 3]</div><div class="line">[1 2 3 0 0]</div><div class="line">[0 0 0 0 0 0 0 0 0 0 3 0 0 0 0]</div><div class="line">[4 5 6]</div><div class="line">[1 2 0 0 0 7]</div></pre></td></tr></table></figure></p>
+<h4 id="3-元素访问"><a href="#3-元素访问" class="headerlink" title="3)元素访问"></a>3)元素访问</h4><p>main.go示例<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">accessElem</span><span class="params">()</span></span> &#123;</div><div class="line">    array := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">9</span>&#125;</div><div class="line"></div><div class="line">    <span class="comment">// 通过下标访问</span></div><div class="line">    <span class="keyword">for</span> i:=<span class="number">0</span>; i &lt; <span class="built_in">len</span>(array); i++ &#123;</div><div class="line">        fmt.Println(i, array[i])</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 迭代方式访问</span></div><div class="line">    <span class="keyword">for</span> i, v := <span class="keyword">range</span> array &#123;</div><div class="line">        fmt.Println(i, v)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 使用new创建数组,零值填充, 返回数组指针</span></div><div class="line">    p := <span class="built_in">new</span>([<span class="number">5</span>]<span class="keyword">int</span>)</div><div class="line">    fmt.Println(*p)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    accessElem()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>示例演示效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~/gopro<span class="comment"># ./main</span></div><div class="line">0 1</div><div class="line">1 3</div><div class="line">2 9</div><div class="line">0 1</div><div class="line">1 3</div><div class="line">2 9</div><div class="line">[0 0 0 0 0]</div></pre></td></tr></table></figure></p>
+<h4 id="4-在函数中传递数组"><a href="#4-在函数中传递数组" class="headerlink" title="4)在函数中传递数组"></a>4)在函数中传递数组</h4><p>和C++类似, 函数参数传递中可以传值或传指针:</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 传值, 每次调用foo1, 系统将分配16字节内存在栈上</span></div><div class="line"><span class="comment">// 函数运行结束时, 会弹栈并释放16字节内存</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo1</span><span class="params">(arr [16]<span class="keyword">int</span>)</span></span> &#123;</div><div class="line">   <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> a [<span class="number">16</span>]<span class="keyword">int</span></div><div class="line">foo1(a)</div><div class="line"></div><div class="line"><span class="comment">// 传指针, 每次调用foo2, 系统将只分配指针需要的内存空间</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo2</span><span class="params">(arr *[16]<span class="keyword">int</span>)</span></span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> b [<span class="number">16</span>]<span class="keyword">int</span></div><div class="line">foo2(&amp;b)</div></pre></td></tr></table></figure>
+<h3 id="slice类型"><a href="#slice类型" class="headerlink" title="slice类型"></a>slice类型</h3><h4 id="1-基础特性-1"><a href="#1-基础特性-1" class="headerlink" title="1)基础特性"></a>1)基础特性</h4><ul>
+<li>slice是一种动态数组, 可以认为是指向数组的指针; 但其并不只是指针，本身有其数据结构, 该结构包含三个元素:<ul>
+<li>指向原生数组的指针(pointer)</li>
+<li>数组切片的元素个数(len)</li>
+<li>数组切片已分配的空间(cap)</li>
+</ul>
+</li>
+<li>slice作为一个引用类型, 声明是不需要指定长度;</li>
+<li>增长操作通过内建方法append实现, 内部实现自动扩容.</li>
+</ul>
+<h4 id="2-创建和初始化"><a href="#2-创建和初始化" class="headerlink" title="2)创建和初始化"></a>2)创建和初始化</h4><p>main.go<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">createSlice</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="comment">// 通过array创建slice, 用法神似python</span></div><div class="line">    arr := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</div><div class="line">    sli1 := arr[:<span class="number">3</span>]  <span class="comment">// 切出前三个元素</span></div><div class="line">    sli2 := arr[:<span class="number">4</span>]  <span class="comment">// 切出前四个元素</span></div><div class="line">    sli1[<span class="number">1</span>] = <span class="number">8</span></div><div class="line">    sli2[<span class="number">1</span>] = <span class="number">9</span></div><div class="line">    <span class="comment">// 将打印 9 9 9, 可见修改的是同一个元素</span></div><div class="line">    <span class="built_in">println</span>(arr[<span class="number">1</span>], sli1[<span class="number">1</span>], sli2[<span class="number">1</span>])</div><div class="line"></div><div class="line">    <span class="comment">// 通过make创建slice</span></div><div class="line">    sli3 := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">3</span>)</div><div class="line">    sli4 := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">4</span>, <span class="number">8</span>) <span class="comment">//初始4个元素，预留8个元素的空间</span></div><div class="line">    sli5 := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;  <span class="comment">//初始化赋值</span></div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, sli3)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, sli4)</div><div class="line">    fmt.Printf(<span class="string">"%v\n"</span>, sli5)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    createSlice()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-元素访问-1"><a href="#3-元素访问-1" class="headerlink" title="3)元素访问"></a>3)元素访问</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">useSlice</span><span class="params">()</span></span> &#123;</div><div class="line">    slice := []<span class="keyword">int</span>&#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>&#125;</div><div class="line">    <span class="keyword">for</span> index, value := <span class="keyword">range</span> slice &#123;</div><div class="line">        fmt.Printf(<span class="string">"Index: %d  Value: %d\n"</span>, index, value)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(slice); i++ &#123;</div><div class="line">        fmt.Printf(<span class="string">"Index: %d  Value: %d\n"</span>, i, slice[i])</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    useSlice()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-在函数间传递slice"><a href="#4-在函数间传递slice" class="headerlink" title="4)在函数间传递slice"></a>4)在函数间传递slice</h4><p>由于slice是指向底层数组的指针, 在函数间传递slice是开销很小的。<br>在64位机器中, slice对象占24个字节, 三个元素分别占8个字节。<br>作为参数在函数中传递的方式和数组类似。</p>
+<h3 id="关于new与make的区别探讨"><a href="#关于new与make的区别探讨" class="headerlink" title="关于new与make的区别探讨"></a>关于new与make的区别探讨</h3><p>主要区别:</p>
+<ul>
+<li>new可以用来创建各种类型对象, 也即是各类型的空间分配;</li>
+<li>make用来处理内建类型(slice, channel, map等)的内存分配.</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-01-30, 09:00:18</p>
+        <p><span>最后更新:</span>2017-08-07, 13:47:10</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/01/30/golang/golang_array-slice/" title="golang数组与切片">http://blog.moguang.com/2017/01/30/golang/golang_array-slice/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/01/30/golang/golang_array-slice/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/02/01/golang/golang_map-set/">
+                    [golang]map/set类型
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/12/03/golang/golang_http-server/">
+                    [golang]HTTP webserver
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#array类型"><span class="toc-number">1.</span> <span class="toc-text">array类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基础特性"><span class="toc-number">1.1.</span> <span class="toc-text">1)基础特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-声明与初始化"><span class="toc-number">1.2.</span> <span class="toc-text">2)声明与初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-元素访问"><span class="toc-number">1.3.</span> <span class="toc-text">3)元素访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-在函数中传递数组"><span class="toc-number">1.4.</span> <span class="toc-text">4)在函数中传递数组</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slice类型"><span class="toc-number">2.</span> <span class="toc-text">slice类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-基础特性-1"><span class="toc-number">2.1.</span> <span class="toc-text">1)基础特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-创建和初始化"><span class="toc-number">2.2.</span> <span class="toc-text">2)创建和初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-元素访问-1"><span class="toc-number">2.3.</span> <span class="toc-text">3)元素访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-在函数间传递slice"><span class="toc-number">2.4.</span> <span class="toc-text">4)在函数间传递slice</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于new与make的区别探讨"><span class="toc-number">3.</span> <span class="toc-text">关于new与make的区别探讨</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"golang数组与切片　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/02/01/golang/golang_map-set/" title="上一篇: [golang]map/set类型">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/12/03/golang/golang_http-server/" title="下一篇: [golang]HTTP webserver">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2017 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

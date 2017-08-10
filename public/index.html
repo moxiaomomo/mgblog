@@ -40,8 +40,6 @@
 
 
 
-    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
-
 
 
     <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
@@ -55,8 +53,6 @@
 <link rel="stylesheet" href="/css/style.css">
 
 
-    <style> .article { opacity: 0;} </style>
-
 
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
@@ -69,7 +65,7 @@
 <script>
     var yiliaConfig = {
         fancybox: true,
-        animate: true,
+        animate: false,
         isHome: true,
         isPost: false,
         isArchive: false,
@@ -840,11 +836,11 @@
 
 
   
-    <article id="post-golang/golang_channel" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang-异常处理" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/04/golang/golang_channel/" class="article-date">
-      <time datetime="2016-03-04T01:00:11.000Z" itemprop="datePublished">2016-03-04</time>
+      <a href="/2016/03/10/golang/golang-异常处理/" class="article-date">
+      <time datetime="2016-03-10T05:53:30.000Z" itemprop="datePublished">2016-03-10</time>
 </a>
 
 
@@ -859,7 +855,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a>
+      <a class="article-title" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a>
     </h1>
   
 
@@ -869,12 +865,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在unix系统中, 管道是进程间通信的一种方式。那golang的channel和系统的管道有什么区别？</p>
-<h3 id="什么是channel"><a href="#什么是channel" class="headerlink" title="什么是channel"></a>什么是channel</h3><p>官方文档有个channel的定义:</p>
-<blockquote>
-<p>   A channel provides a mechanism for concurrently executing functions to communicate<br>   by sending and receiving values of a specified element type.<br>   The value of an uninitialized channel is nil.</p>
-</blockquote>
-<p>channel应该可以理解为: 一种为并行执行而提供函数间通信的机制, 通过传递send和recieve特定类型的值来实现。没有初始化值的channel对象, 默认为nil。<br>
+              <h3 id="关于异常处理"><a href="#关于异常处理" class="headerlink" title="关于异常处理"></a>关于异常处理</h3><p>golang并不支持try-catch-finally机制，而是通过panic和defer函数来处理运行时异常。<br><br>一般情况下，golang中使用多值来返回错误；个别情况下才需要用到Exception异常处理: defer, panic, recover。</p>
           
       
     </div>
@@ -890,7 +881,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/03/04/golang/golang_channel/#more">阅读全文 >></a>
+          <a href="/2016/03/10/golang/golang-异常处理/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
