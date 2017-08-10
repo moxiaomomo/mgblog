@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
-<meta name="keywords" content="golang">
+<meta name="description" content="1. 内建方法map内建map方法可以通过一个序列的方式来实现函数之间的映射, 并且串行执行。如:12345678910import timefrom datetime import datetimedef add(x, y):    print datetime.now(), &quot;enter add func...&quot;    time.sleep(2)    print datetime.now()">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[golang]HTTP webserver">
-<meta property="og:url" content="http://blog.moguang.com/2016/12/03/golang/golang_http-server/index.html">
+<meta property="og:title" content="[python]map function">
+<meta property="og:url" content="http://blog.moguang.com/2016/04/05/python/python-map-function/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
+<meta property="og:description" content="1. 内建方法map内建map方法可以通过一个序列的方式来实现函数之间的映射, 并且串行执行。如:12345678910import timefrom datetime import datetimedef add(x, y):    print datetime.now(), &quot;enter add func...&quot;    time.sleep(2)    print datetime.now()">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://blog.moguang.com/img/golang_http.png">
-<meta property="og:updated_time" content="2017-08-07T05:47:10.146Z">
+<meta property="og:updated_time" content="2017-08-10T15:23:45.225Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[golang]HTTP webserver">
-<meta name="twitter:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
-<meta name="twitter:image" content="http://blog.moguang.com/img/golang_http.png">
+<meta name="twitter:title" content="[python]map function">
+<meta name="twitter:description" content="1. 内建方法map内建map方法可以通过一个序列的方式来实现函数之间的映射, 并且串行执行。如:12345678910import timefrom datetime import datetimedef add(x, y):    print datetime.now(), &quot;enter add func...&quot;    time.sleep(2)    print datetime.now()">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>[golang]HTTP webserver | moxiaomomo</title>
+<title>[python]map function | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +260,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python/python-map-function" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
-      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
+      <a href="/2016/04/05/python/python-map-function/" class="article-date">
+      <time datetime="2016-04-05T15:19:29.000Z" itemprop="datePublished">2016-04-05</time>
 </a>
 
 
@@ -281,7 +279,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [golang]HTTP webserver
+      [python]map function
     </h1>
   
 
@@ -292,7 +290,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -302,12 +300,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
+        <h3 id="1-内建方法map"><a href="#1-内建方法map" class="headerlink" title="1. 内建方法map"></a>1. 内建方法map</h3><p>内建map方法可以通过一个序列的方式来实现函数之间的映射, 并且串行执行。如:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"enter add func..."</span></div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"leave add func..."</span></div><div class="line">    <span class="keyword">return</span> x+y</div><div class="line"></div><div class="line">map(add, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</div></pre></td></tr></table></figure></p>
+<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">2016-04-05 15:01:49.382314 enter add func...</div><div class="line">2016-04-05 15:01:51.383387 leave add func...</div><div class="line">2016-04-05 15:01:51.383471 enter add func...</div><div class="line">2016-04-05 15:01:53.385584 leave add func...</div><div class="line">2016-04-05 15:01:53.385676 enter add func...</div><div class="line">2016-04-05 15:01:55.387388 leave add func...</div><div class="line">[5, 7, 9]</div></pre></td></tr></table></figure></p>
+<p>由上可见, 调用map, 相当于顺序调用了add(1,4), add(2,5)， add(3,6)方法; 一行代码实现了方法的迭代调用, 简单快捷。<br>那如果再优化一下，实现并行调用add方法， 应该怎么做呢？在python里也好实现, 利用multiprocessing模块就可以。</p>
 <a id="more"></a>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"io"</span></div><div class="line">    <span class="string">"net/http"</span></div><div class="line">    <span class="string">"log"</span></div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">LogicServer</span><span class="params">(w http.ResponseWriter, req *http.Request)</span></span> &#123;</div><div class="line">    io.WriteString(w, <span class="string">"I'm logic server."</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    http.HandleFunc(<span class="string">"/test"</span>, LogicServer)</div><div class="line">    err := http.ListenAndServe(<span class="string">":8888"</span>, <span class="literal">nil</span>)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        log.Fatal(<span class="string">"ListenAndServe Err:"</span>, err)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xiaomo@XIAOMO:~$ curl <span class="string">"http://127.0.0.1:8888/test"</span></div><div class="line">I<span class="string">'m logic server.xiaomo</span></div></pre></td></tr></table></figure></p>
-<h3 id="golang-http包的执行流程"><a href="#golang-http包的执行流程" class="headerlink" title="golang http包的执行流程"></a>golang http包的执行流程</h3><p>参考:<a href="https://astaxie.gitbooks.io/build-web-application-with-golang/content/zh/03.3.html" title="http" target="_blank" rel="external">Go如何使得Web工作</a><br><img src="/img/golang_http.png" alt="http包运行机制"></p>
-<h3 id="结合goroutine处理并发"><a href="#结合goroutine处理并发" class="headerlink" title="结合goroutine处理并发"></a>结合goroutine处理并发</h3><p>在golang中, 为了实现高并发与高性能, 处理连接的读写事件使用了goroutine机制。因此, 对于每个请求都能保持独立性, 相互没有阻塞, 能高效响应网络请求事件。</p>
+<h3 id="2-multiprocessing模块与map方法"><a href="#2-multiprocessing模块与map方法" class="headerlink" title="2. multiprocessing模块与map方法"></a>2. multiprocessing模块与map方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> partial</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"enter add func..."</span></div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"leave add func..."</span></div><div class="line">    <span class="keyword">return</span> x+y</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_wrap</span><span class="params">(args)</span>:</span></div><div class="line">    <span class="keyword">return</span> add(*args)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    pool = ThreadPool(<span class="number">4</span>) <span class="comment"># 池的大小为4</span></div><div class="line">    <span class="keyword">print</span> pool.map(add_wrap, [(<span class="number">1</span>,<span class="number">2</span>),(<span class="number">3</span>,<span class="number">4</span>),(<span class="number">5</span>,<span class="number">6</span>)])</div><div class="line">    <span class="comment">#close the pool and wait for the work to finish</span></div><div class="line">    pool.close()</div><div class="line">    pool.join()</div></pre></td></tr></table></figure>
+<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">2016-04-05 15:10:23.690059 enter add func...</div><div class="line">2016-04-05 15:10:23.690406 enter add func...</div><div class="line">2016-04-05 15:10:23.690906 enter add func...</div><div class="line">2016-04-05 15:10:25.693250 leave add func...</div><div class="line">2016-04-05 15:10:25.693409 leave add func...</div><div class="line">2016-04-05 15:10:25.693458 leave add func...</div><div class="line">[3, 7, 11]</div></pre></td></tr></table></figure></p>
+<p>由上可以见， 我们已经实现了并行执行add方法</p>
+<h3 id="3-关于multiprocessing中pool的大小与性能"><a href="#3-关于multiprocessing中pool的大小与性能" class="headerlink" title="3. 关于multiprocessing中pool的大小与性能"></a>3. 关于multiprocessing中pool的大小与性能</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</div></pre></td></tr></table></figure>
+<p>以上Pool和ThreadPool模块, 一个基于进程工作, 一个基于线程工作。<br><br>一般来说, 使用进程池(multiprocessing pool)来执行CPU密集型的任务, 这样可以利用到多核的好处， 理论上(池越大)核越多速度越快; <br>使用线程池(threading)来处理IO型任务, 则有个最佳线程池大小, 要根据实际情况来调节这个池的size(线程过多时, 切换线程的开销将严重影响性能)。</p>
 
       
     </div>
@@ -316,13 +317,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></p>
+        <p><span>本文标题:</span><a href="/2016/04/05/python/python-map-function/">[python]map function</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2016-12-03, 14:11:45</p>
-        <p><span>最后更新:</span>2017-08-07, 13:47:10</p>
+        <p><span>发布时间:</span>2016-04-05, 23:19:29</p>
+        <p><span>最后更新:</span>2017-08-10, 23:23:45</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/12/03/golang/golang_http-server/" title="[golang]HTTP webserver">http://blog.moguang.com/2016/12/03/golang/golang_http-server/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/12/03/golang/golang_http-server/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/05/python/python-map-function/" title="[python]map function">http://blog.moguang.com/2016/04/05/python/python-map-function/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/04/05/python/python-map-function/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -335,15 +336,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/01/30/golang/golang_array-slice/">
-                    golang数组与切片
+                <a href="/2016/12/03/golang/golang_http-server/">
+                    [golang]HTTP webserver
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/04/05/python/python-map-function/">
-                    [python]map function
+                <a href="/2016/04/05/golang/golang_pointer/">
+                    [golang]指针类型
                 </a>
             </div>
         
@@ -355,7 +356,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单示例"><span class="toc-number">1.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#golang-http包的执行流程"><span class="toc-number">2.</span> <span class="toc-text">golang http包的执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合goroutine处理并发"><span class="toc-number">3.</span> <span class="toc-text">结合goroutine处理并发</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-内建方法map"><span class="toc-number">1.</span> <span class="toc-text">1. 内建方法map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-multiprocessing模块与map方法"><span class="toc-number">2.</span> <span class="toc-text">2. multiprocessing模块与map方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-关于multiprocessing中pool的大小与性能"><span class="toc-number">3.</span> <span class="toc-text">3. 关于multiprocessing中pool的大小与性能</span></a></li></ol>
         
     </div>
     <style>
@@ -391,7 +392,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"[golang]HTTP webserver　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"[python]map function　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -411,7 +412,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/01/30/golang/golang_array-slice/" title="上一篇: golang数组与切片">
+            <a href="/2016/12/03/golang/golang_http-server/" title="上一篇: [golang]HTTP webserver">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -419,7 +420,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/04/05/python/python-map-function/" title="下一篇: [python]map function">
+            <a href="/2016/04/05/golang/golang_pointer/" title="下一篇: [golang]指针类型">
                 <i class="fa fa-angle-right"></i>
             </a>
         
