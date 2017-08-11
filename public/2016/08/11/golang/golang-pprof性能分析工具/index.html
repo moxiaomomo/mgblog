@@ -15,17 +15,22 @@
 
 
 
-<meta name="description" content="python之encode/decode12345678910# coding: utf-8import base64to_enc = &apos;sampledata&apos;enc_res = base64.b64encode(to_enc)print enc_resdec_res = base64.b64decode(enc_res)print dec_res 运行效果如下: 123root@XIAOMO:/">
+<meta name="description" content="1. 关于pprofpprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。 2. 源码示例">
+<meta name="keywords" content="golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python之encode&#x2F;decode">
-<meta property="og:url" content="http://blog.moguang.com/2017/07/23/encode/base64/index.html">
+<meta property="og:title" content="[golang]pprof性能分析工具">
+<meta property="og:url" content="http://blog.moguang.com/2016/08/11/golang/golang-pprof性能分析工具/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="python之encode/decode12345678910# coding: utf-8import base64to_enc = &apos;sampledata&apos;enc_res = base64.b64encode(to_enc)print enc_resdec_res = base64.b64decode(enc_res)print dec_res 运行效果如下: 123root@XIAOMO:/">
+<meta property="og:description" content="1. 关于pprofpprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。 2. 源码示例">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-23T06:36:17.117Z">
+<meta property="og:image" content="http://blog.moguang.com/img/golang_pprof.png">
+<meta property="og:image" content="http://blog.moguang.com/img/golang_pprof_heap.png">
+<meta property="og:image" content="http://blog.moguang.com/img/golang_pprof_cpu.png">
+<meta property="og:updated_time" content="2017-08-11T11:00:14.151Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python之encode&#x2F;decode">
-<meta name="twitter:description" content="python之encode/decode12345678910# coding: utf-8import base64to_enc = &apos;sampledata&apos;enc_res = base64.b64encode(to_enc)print enc_resdec_res = base64.b64decode(enc_res)print dec_res 运行效果如下: 123root@XIAOMO:/">
+<meta name="twitter:title" content="[golang]pprof性能分析工具">
+<meta name="twitter:description" content="1. 关于pprofpprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。 2. 源码示例">
+<meta name="twitter:image" content="http://blog.moguang.com/img/golang_pprof.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -55,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>python之encode/decode | moxiaomomo</title>
+<title>[golang]pprof性能分析工具 | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -259,11 +264,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-encode/base64" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-golang/golang-pprof性能分析工具" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/23/encode/base64/" class="article-date">
-      <time datetime="2017-07-23T04:46:25.000Z" itemprop="datePublished">2017-07-23</time>
+      <a href="/2016/08/11/golang/golang-pprof性能分析工具/" class="article-date">
+      <time datetime="2016-08-11T10:53:57.000Z" itemprop="datePublished">2016-08-11</time>
 </a>
 
 
@@ -278,7 +283,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python之encode/decode
+      [golang]pprof性能分析工具
     </h1>
   
 
@@ -288,6 +293,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -295,9 +304,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="python之encode-decode"><a href="#python之encode-decode" class="headerlink" title="python之encode/decode"></a>python之encode/decode</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding: utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> base64</div><div class="line"></div><div class="line">to_enc = <span class="string">'sampledata'</span></div><div class="line">enc_res = base64.b64encode(to_enc)</div><div class="line"><span class="keyword">print</span> enc_res</div><div class="line"></div><div class="line">dec_res = base64.b64decode(enc_res)</div><div class="line"><span class="keyword">print</span> dec_res</div></pre></td></tr></table></figure>
-<p>运行效果如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:/tmp<span class="comment"># python27 b64.py</span></div><div class="line">c2FtcGxlZGF0YQ==</div><div class="line">sampledata</div></pre></td></tr></table></figure>
+        <h3 id="1-关于pprof"><a href="#1-关于pprof" class="headerlink" title="1. 关于pprof"></a>1. 关于pprof</h3><p>pprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。</p>
+<h3 id="2-源码示例"><a href="#2-源码示例" class="headerlink" title="2. 源码示例"></a>2. 源码示例</h3><a id="more"></a>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"flag"</span></div><div class="line">	<span class="string">"log"</span></div><div class="line">	<span class="string">"net/http"</span></div><div class="line">	_ <span class="string">"net/http/pprof"</span></div><div class="line">	<span class="string">"sync"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">Counter</span><span class="params">(wg *sync.WaitGroup)</span></span> &#123;</div><div class="line">	time.Sleep(time.Second)</div><div class="line"></div><div class="line">	<span class="keyword">var</span> counter <span class="keyword">int</span></div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++ &#123;</div><div class="line">		time.Sleep(time.Millisecond * <span class="number">200</span>)</div><div class="line">		counter++</div><div class="line">	&#125;</div><div class="line">	wg.Done()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	flag.Parse()</div><div class="line"></div><div class="line">	<span class="comment">//远程获取pprof数据</span></div><div class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		log.Println(http.ListenAndServe(<span class="string">"localhost:8080"</span>, <span class="literal">nil</span>))</div><div class="line">	&#125;()</div><div class="line"></div><div class="line">	<span class="keyword">var</span> wg sync.WaitGroup</div><div class="line">	wg.Add(<span class="number">10</span>)</div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</div><div class="line">		<span class="keyword">go</span> Counter(&amp;wg)</div><div class="line">	&#125;</div><div class="line">	wg.Wait()</div><div class="line"></div><div class="line">	<span class="comment">// sleep 10mins, 在程序退出之前可以查看性能参数.</span></div><div class="line">	time.Sleep(<span class="number">60</span> * time.Second)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-编译运行"><a href="#3-编译运行" class="headerlink" title="3. 编译运行"></a>3. 编译运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">go run test_pprof.go</div></pre></td></tr></table></figure>
+<h3 id="4-通过网页查看overview"><a href="#4-通过网页查看overview" class="headerlink" title="4. 通过网页查看overview"></a>4. 通过网页查看overview</h3><p><img src="/img/golang_pprof.png" alt="golang pprof"></p>
+<h3 id="5-通过终端命令查看各参数"><a href="#5-通过终端命令查看各参数" class="headerlink" title="5. 通过终端命令查看各参数"></a>5. 通过终端命令查看各参数</h3><p><strong>查看堆栈信息</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:~<span class="comment"># go tool pprof http://localhost:8080/debug/pprof/heap</span></div><div class="line">Fetching profile from http://localhost:8080/debug/pprof/heap</div><div class="line">Saved profile <span class="keyword">in</span> /root/pprof/pprof.localhost:8080.inuse_objects.inuse_space.003.pb.gz</div><div class="line">Entering interactive mode (<span class="built_in">type</span> <span class="string">"help"</span> <span class="keyword">for</span> commands)</div><div class="line">(pprof) top10</div><div class="line">1069.45kB of 1069.45kB total (  100%)</div><div class="line">Showing top 10 nodes out of 11 (cum &gt;= 512.19kB)</div><div class="line">      flat  flat%   sum%        cum   cum%</div><div class="line">  557.26kB 52.11% 52.11%   557.26kB 52.11%  html.init</div><div class="line">  512.19kB 47.89%   100%   512.19kB 47.89%  runtime.malg</div><div class="line">         0     0%   100%   557.26kB 52.11%  html/template.init</div><div class="line">         0     0%   100%   557.26kB 52.11%  main.init</div><div class="line">         0     0%   100%   557.26kB 52.11%  net/http/pprof.init</div><div class="line">         0     0%   100%   557.26kB 52.11%  runtime.goexit</div><div class="line">         0     0%   100%   557.26kB 52.11%  runtime.main</div><div class="line">         0     0%   100%   512.19kB 47.89%  runtime.mcommoninit</div><div class="line">         0     0%   100%   512.19kB 47.89%  runtime.mpreinit</div><div class="line">         0     0%   100%   512.19kB 47.89%  runtime.rt0_go</div><div class="line">(pprof) web</div></pre></td></tr></table></figure></p>
+<p>top10命令查看了堆栈空间最大的10个函数调用;<br><br>web明令则生成了很详细的图, 如下:<br><br><img src="/img/golang_pprof_heap.png" alt="golang pprof"></p>
+<p><br><strong>查看cpu性能信息</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">root@xiaomo:~$ go tool pprof http://localhost:8080/debug/pprof/profile</div><div class="line">Fetching profile from http://localhost:8080/debug/pprof/profile</div><div class="line">Please <span class="built_in">wait</span>... (30s)</div><div class="line">Saved profile <span class="keyword">in</span> /home/xiaomo/pprof/pprof.pprof.localhost:8080.samples.cpu.001.pb.gz</div><div class="line">Entering interactive mode (<span class="built_in">type</span> <span class="string">"help"</span> <span class="keyword">for</span> commands)</div><div class="line">(pprof) web</div></pre></td></tr></table></figure></p>
+<p>输入命令web后生成详细结果，如下图所示:<br><br><img src="/img/golang_pprof_cpu.png" alt="pprof_cpu"></p>
 
       
     </div>
@@ -306,13 +321,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/23/encode/base64/">python之encode/decode</a></p>
+        <p><span>本文标题:</span><a href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2017-07-23, 12:46:25</p>
-        <p><span>最后更新:</span>2017-07-23, 14:36:17</p>
+        <p><span>发布时间:</span>2016-08-11, 18:53:57</p>
+        <p><span>最后更新:</span>2017-08-11, 19:00:14</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/23/encode/base64/" title="python之encode/decode">http://blog.moguang.com/2017/07/23/encode/base64/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/07/23/encode/base64/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/08/11/golang/golang-pprof性能分析工具/" title="[golang]pprof性能分析工具">http://blog.moguang.com/2016/08/11/golang/golang-pprof性能分析工具/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/08/11/golang/golang-pprof性能分析工具/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -325,15 +340,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">
-                    基于Docker的Consul(官方镜像)集群部署指南
+                <a href="/2016/12/03/golang/golang_http-server/">
+                    [golang]HTTP webserver
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/07/23/encode/centos_zh/">
-                    CentOS7 中文乱码问题
+                <a href="/2016/04/05/python/python-map-function/">
+                    [python]map function
                 </a>
             </div>
         
@@ -345,7 +360,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#python之encode-decode"><span class="toc-number">1.</span> <span class="toc-text">python之encode/decode</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-关于pprof"><span class="toc-number">1.</span> <span class="toc-text">1. 关于pprof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-源码示例"><span class="toc-number">2.</span> <span class="toc-text">2. 源码示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-编译运行"><span class="toc-number">3.</span> <span class="toc-text">3. 编译运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-通过网页查看overview"><span class="toc-number">4.</span> <span class="toc-text">4. 通过网页查看overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-通过终端命令查看各参数"><span class="toc-number">5.</span> <span class="toc-text">5. 通过终端命令查看各参数</span></a></li></ol>
         
     </div>
     <style>
@@ -381,7 +396,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"python之encode/decode　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"[golang]pprof性能分析工具　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -401,7 +416,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/" title="上一篇: 基于Docker的Consul(官方镜像)集群部署指南">
+            <a href="/2016/12/03/golang/golang_http-server/" title="上一篇: [golang]HTTP webserver">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -409,7 +424,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/23/encode/centos_zh/" title="下一篇: CentOS7 中文乱码问题">
+            <a href="/2016/04/05/python/python-map-function/" title="下一篇: [python]map function">
                 <i class="fa fa-angle-right"></i>
             </a>
         
