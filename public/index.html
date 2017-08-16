@@ -184,7 +184,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark-hadoop/">spark, hadoop</a></li></ul>
                     </div>
                 </section>
                 
@@ -708,6 +708,79 @@
 
 
   
+    <article id="post-deployment-spark-on-yarn" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/16/deployment-spark-on-yarn/" class="article-date">
+      <time datetime="2016-12-16T15:10:04.000Z" itemprop="datePublished">2016-12-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/16/deployment-spark-on-yarn/">[deployment]spark on yarn</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="安装包准备"><a href="#安装包准备" class="headerlink" title="安装包准备"></a>安装包准备</h3><ul>
+<li><p>Oracle JDK<br><br>  安装了elasticSearch的系统应该已经配置好了JDK环境; 推荐JDK7</p>
+</li>
+<li><p>scala开发环境<br><br>  spark依赖于scala运行, scala是开发spark统计程序的官方语言; 推荐安装scala-2.11版本</p>
+</li>
+<li><p>hadoop集群<br><br>  hadoop-yarn为spark运算提供资源管理及hdfs存储; 推荐apache hadoop-2.7.3版本</p>
+</li>
+<li><p>spark集群<br><br>  用于分布式运算; 推荐apache spark 2.0.2版本</p>
+</li>
+<li><p>ES-Hadoop插件<br><br>  es-hadoop作为hadoop/spark集成elasticSearch的插件使用; 推荐es-hadoop_5.1.1版本</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark-hadoop/">spark, hadoop</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/12/16/deployment-spark-on-yarn/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -836,74 +909,9 @@
 
 
   
-    <article id="post-golang/golang-pprof性能分析工具" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/11/golang/golang-pprof性能分析工具/" class="article-date">
-      <time datetime="2016-08-11T10:53:57.000Z" itemprop="datePublished">2016-08-11</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="1-关于pprof"><a href="#1-关于pprof" class="headerlink" title="1. 关于pprof"></a>1. 关于pprof</h3><p>pprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。</p>
-<h3 id="2-源码示例"><a href="#2-源码示例" class="headerlink" title="2. 源码示例"></a>2. 源码示例</h3>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/11/golang/golang-pprof性能分析工具/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
