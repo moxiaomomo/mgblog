@@ -263,6 +263,131 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-python/python-upload-download-large-file" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/19/python/python-upload-download-large-file/" class="article-date">
+      <time datetime="2017-08-19T14:39:53.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>对于大文件上传下载，可以通过requests库来流式处理，示例如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(url, local_fpath)</span>:</span></div><div class="line">    headers = &#123;</div><div class="line">        <span class="string">'content-type'</span>: <span class="string">'application/octet-stream'</span>,</div><div class="line">        <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">with</span> open(local_fpath, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</div><div class="line">        r = requests.post(url, headers=headers, data=f)</div><div class="line">        <span class="comment"># deal with r.headers.xxx</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url, local_fpath)</span>:</span></div><div class="line">    headers = &#123;</div><div class="line">        <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    r = requests.get(url, stream=<span class="keyword">True</span>, headers=headers)</div><div class="line">    <span class="keyword">with</span> open(local_fpath, <span class="string">"wb"</span>) <span class="keyword">as</span> fd:</div><div class="line">        <span class="keyword">for</span> chunk <span class="keyword">in</span> r.iter_content(chunk_size=<span class="number">10240</span>):</div><div class="line">            <span class="keyword">if</span> chunk:</div><div class="line">                fd.write(chunk)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-python/python-pika-broken-pipe" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/19/python/python-pika-broken-pipe/" class="article-date">
+      <time datetime="2017-08-19T10:46:21.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在消费rabbitMQ队列时, 每次进入回调函数内需要进行一些比较耗时的操作;操作完成后给rabbitMQ server发送ack信号以dequeue本条消息。<br><br>问题就发生在发送ack操作时, 程序提示链接已被断开或socket error。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/08/19/python/python-pika-broken-pipe/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-mysql/mysql_concurrent_query" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -763,134 +888,6 @@
       
         <p class="article-more-link">
           <a href="/2016/12/16/deployment-spark-on-yarn/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
-      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/12/03/golang/golang_http-server/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-network/network-transport-layer" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/15/network/network-transport-layer/" class="article-date">
-      <time datetime="2016-08-15T03:33:04.000Z" itemprop="datePublished">2016-08-15</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/network/network-transport-layer/">network transport layer</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>UDP包结构, 如图所示:<br><br><img src="/img/udppackage.png" alt="UDP包结"><br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/15/network/network-transport-layer/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

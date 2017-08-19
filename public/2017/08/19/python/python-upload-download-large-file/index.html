@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
-<meta name="keywords" content="golang">
+<meta name="description" content="对于大文件上传下载，可以通过requests库来流式处理，示例如下: 123456789101112131415161718192021import requestsdef upload(url, local_fpath):    headers = &amp;#123;        &apos;content-type&apos;: &apos;application/octet-stream&apos;,        # ...">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[golang]HTTP webserver">
-<meta property="og:url" content="http://blog.moguang.com/2016/12/03/golang/golang_http-server/index.html">
+<meta property="og:title" content="python upload&#x2F;download large file">
+<meta property="og:url" content="http://blog.moguang.com/2017/08/19/python/python-upload-download-large-file/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
+<meta property="og:description" content="对于大文件上传下载，可以通过requests库来流式处理，示例如下: 123456789101112131415161718192021import requestsdef upload(url, local_fpath):    headers = &amp;#123;        &apos;content-type&apos;: &apos;application/octet-stream&apos;,        # ...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://blog.moguang.com/img/golang_http.png">
-<meta property="og:updated_time" content="2017-08-07T05:47:10.146Z">
+<meta property="og:updated_time" content="2017-08-19T14:41:55.737Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[golang]HTTP webserver">
-<meta name="twitter:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
-<meta name="twitter:image" content="http://blog.moguang.com/img/golang_http.png">
+<meta name="twitter:title" content="python upload&#x2F;download large file">
+<meta name="twitter:description" content="对于大文件上传下载，可以通过requests库来流式处理，示例如下: 123456789101112131415161718192021import requestsdef upload(url, local_fpath):    headers = &amp;#123;        &apos;content-type&apos;: &apos;application/octet-stream&apos;,        # ...">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>[golang]HTTP webserver | moxiaomomo</title>
+<title>python upload/download large file | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +260,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python/python-upload-download-large-file" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
-      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
+      <a href="/2017/08/19/python/python-upload-download-large-file/" class="article-date">
+      <time datetime="2017-08-19T14:39:53.000Z" itemprop="datePublished">2017-08-19</time>
 </a>
 
 
@@ -281,7 +279,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [golang]HTTP webserver
+      python upload/download large file
     </h1>
   
 
@@ -292,7 +290,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -302,12 +300,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
-<a id="more"></a>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"io"</span></div><div class="line">    <span class="string">"net/http"</span></div><div class="line">    <span class="string">"log"</span></div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">LogicServer</span><span class="params">(w http.ResponseWriter, req *http.Request)</span></span> &#123;</div><div class="line">    io.WriteString(w, <span class="string">"I'm logic server."</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    http.HandleFunc(<span class="string">"/test"</span>, LogicServer)</div><div class="line">    err := http.ListenAndServe(<span class="string">":8888"</span>, <span class="literal">nil</span>)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        log.Fatal(<span class="string">"ListenAndServe Err:"</span>, err)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xiaomo@XIAOMO:~$ curl <span class="string">"http://127.0.0.1:8888/test"</span></div><div class="line">I<span class="string">'m logic server.xiaomo</span></div></pre></td></tr></table></figure></p>
-<h3 id="golang-http包的执行流程"><a href="#golang-http包的执行流程" class="headerlink" title="golang http包的执行流程"></a>golang http包的执行流程</h3><p>参考:<a href="https://astaxie.gitbooks.io/build-web-application-with-golang/content/zh/03.3.html" title="http" target="_blank" rel="external">Go如何使得Web工作</a><br><img src="/img/golang_http.png" alt="http包运行机制"></p>
-<h3 id="结合goroutine处理并发"><a href="#结合goroutine处理并发" class="headerlink" title="结合goroutine处理并发"></a>结合goroutine处理并发</h3><p>在golang中, 为了实现高并发与高性能, 处理连接的读写事件使用了goroutine机制。因此, 对于每个请求都能保持独立性, 相互没有阻塞, 能高效响应网络请求事件。</p>
+        <p>对于大文件上传下载，可以通过requests库来流式处理，示例如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(url, local_fpath)</span>:</span></div><div class="line">    headers = &#123;</div><div class="line">        <span class="string">'content-type'</span>: <span class="string">'application/octet-stream'</span>,</div><div class="line">        <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">with</span> open(local_fpath, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</div><div class="line">        r = requests.post(url, headers=headers, data=f)</div><div class="line">        <span class="comment"># deal with r.headers.xxx</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url, local_fpath)</span>:</span></div><div class="line">    headers = &#123;</div><div class="line">        <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    r = requests.get(url, stream=<span class="keyword">True</span>, headers=headers)</div><div class="line">    <span class="keyword">with</span> open(local_fpath, <span class="string">"wb"</span>) <span class="keyword">as</span> fd:</div><div class="line">        <span class="keyword">for</span> chunk <span class="keyword">in</span> r.iter_content(chunk_size=<span class="number">10240</span>):</div><div class="line">            <span class="keyword">if</span> chunk:</div><div class="line">                fd.write(chunk)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -316,13 +310,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></p>
+        <p><span>本文标题:</span><a href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2016-12-03, 14:11:45</p>
-        <p><span>最后更新:</span>2017-08-07, 13:47:10</p>
+        <p><span>发布时间:</span>2017-08-19, 22:39:53</p>
+        <p><span>最后更新:</span>2017-08-19, 22:41:55</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/12/03/golang/golang_http-server/" title="[golang]HTTP webserver">http://blog.moguang.com/2016/12/03/golang/golang_http-server/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/12/03/golang/golang_http-server/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/19/python/python-upload-download-large-file/" title="python upload/download large file">http://blog.moguang.com/2017/08/19/python/python-upload-download-large-file/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/08/19/python/python-upload-download-large-file/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -334,16 +328,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/12/16/deployment-spark-on-yarn/">
-                    [deployment]spark on yarn
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/15/network/network-transport-layer/">
-                    network transport layer
+                <a href="/2017/08/19/python/python-pika-broken-pipe/">
+                    python pika broken pipe
                 </a>
             </div>
         
@@ -355,7 +343,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单示例"><span class="toc-number">1.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#golang-http包的执行流程"><span class="toc-number">2.</span> <span class="toc-text">golang http包的执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合goroutine处理并发"><span class="toc-number">3.</span> <span class="toc-text">结合goroutine处理并发</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -391,7 +379,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"[golang]HTTP webserver　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"python upload/download large file　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -411,15 +399,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/12/16/deployment-spark-on-yarn/" title="上一篇: [deployment]spark on yarn">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/15/network/network-transport-layer/" title="下一篇: network transport layer">
+            <a href="/2017/08/19/python/python-pika-broken-pipe/" title="下一篇: python pika broken pipe">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
-<meta name="keywords" content="golang">
+<meta name="description" content="问题描述在消费rabbitMQ队列时, 每次进入回调函数内需要进行一些比较耗时的操作;操作完成后给rabbitMQ server发送ack信号以dequeue本条消息。问题就发生在发送ack操作时, 程序提示链接已被断开或socket error。">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[golang]HTTP webserver">
-<meta property="og:url" content="http://blog.moguang.com/2016/12/03/golang/golang_http-server/index.html">
+<meta property="og:title" content="python pika broken pipe">
+<meta property="og:url" content="http://blog.moguang.com/2017/08/19/python/python-pika-broken-pipe/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
+<meta property="og:description" content="问题描述在消费rabbitMQ队列时, 每次进入回调函数内需要进行一些比较耗时的操作;操作完成后给rabbitMQ server发送ack信号以dequeue本条消息。问题就发生在发送ack操作时, 程序提示链接已被断开或socket error。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://blog.moguang.com/img/golang_http.png">
-<meta property="og:updated_time" content="2017-08-07T05:47:10.146Z">
+<meta property="og:updated_time" content="2017-08-19T11:20:02.241Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[golang]HTTP webserver">
-<meta name="twitter:description" content="简单示例golang对http网络模块有比较完备的标准库支持, 如下示例:">
-<meta name="twitter:image" content="http://blog.moguang.com/img/golang_http.png">
+<meta name="twitter:title" content="python pika broken pipe">
+<meta name="twitter:description" content="问题描述在消费rabbitMQ队列时, 每次进入回调函数内需要进行一些比较耗时的操作;操作完成后给rabbitMQ server发送ack信号以dequeue本条消息。问题就发生在发送ack操作时, 程序提示链接已被断开或socket error。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>[golang]HTTP webserver | moxiaomomo</title>
+<title>python pika broken pipe | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +260,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python/python-pika-broken-pipe" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
-      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
+      <a href="/2017/08/19/python/python-pika-broken-pipe/" class="article-date">
+      <time datetime="2017-08-19T10:46:21.000Z" itemprop="datePublished">2017-08-19</time>
 </a>
 
 
@@ -281,7 +279,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      [golang]HTTP webserver
+      python pika broken pipe
     </h1>
   
 
@@ -292,7 +290,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -302,12 +300,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
-<a id="more"></a>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"io"</span></div><div class="line">    <span class="string">"net/http"</span></div><div class="line">    <span class="string">"log"</span></div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">LogicServer</span><span class="params">(w http.ResponseWriter, req *http.Request)</span></span> &#123;</div><div class="line">    io.WriteString(w, <span class="string">"I'm logic server."</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">    http.HandleFunc(<span class="string">"/test"</span>, LogicServer)</div><div class="line">    err := http.ListenAndServe(<span class="string">":8888"</span>, <span class="literal">nil</span>)</div><div class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">        log.Fatal(<span class="string">"ListenAndServe Err:"</span>, err)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xiaomo@XIAOMO:~$ curl <span class="string">"http://127.0.0.1:8888/test"</span></div><div class="line">I<span class="string">'m logic server.xiaomo</span></div></pre></td></tr></table></figure></p>
-<h3 id="golang-http包的执行流程"><a href="#golang-http包的执行流程" class="headerlink" title="golang http包的执行流程"></a>golang http包的执行流程</h3><p>参考:<a href="https://astaxie.gitbooks.io/build-web-application-with-golang/content/zh/03.3.html" title="http" target="_blank" rel="external">Go如何使得Web工作</a><br><img src="/img/golang_http.png" alt="http包运行机制"></p>
-<h3 id="结合goroutine处理并发"><a href="#结合goroutine处理并发" class="headerlink" title="结合goroutine处理并发"></a>结合goroutine处理并发</h3><p>在golang中, 为了实现高并发与高性能, 处理连接的读写事件使用了goroutine机制。因此, 对于每个请求都能保持独立性, 相互没有阻塞, 能高效响应网络请求事件。</p>
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在消费rabbitMQ队列时, 每次进入回调函数内需要进行一些比较耗时的操作;操作完成后给rabbitMQ server发送ack信号以dequeue本条消息。<br><br>问题就发生在发送ack操作时, 程序提示链接已被断开或socket error。<br><a id="more"></a></p>
+<h2 id="源码示例"><a href="#源码示例" class="headerlink" title="源码示例"></a>源码示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin</span></div><div class="line"><span class="comment">#coding: utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> pika</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"></div><div class="line">USER = <span class="string">'guest'</span></div><div class="line">PWD = <span class="string">'guest'</span></div><div class="line">TEST_QUEUE = <span class="string">'just4test'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(ch, method, properties, body)</span>:</span></div><div class="line">    print(body)</div><div class="line">    time.sleep(<span class="number">600</span>)</div><div class="line">    ch.basic_publish(<span class="string">''</span>, routing_key=TEST_QUEUE, body=<span class="string">"fortest"</span>)</div><div class="line">    ch.basic_ack(delivery_tag = method.delivery_tag)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_main</span><span class="params">()</span>:</span></div><div class="line">    s_conn = pika.BlockingConnection(</div><div class="line">        pika.ConnectionParameters(<span class="string">'127.0.0.1'</span>, </div><div class="line">            credentials=pika.PlainCredentials(USER, PWD)))</div><div class="line">    chan = s_conn.channel()</div><div class="line">    chan.queue_declare(queue=TEST_QUEUE)</div><div class="line"></div><div class="line">    chan.basic_publish(<span class="string">''</span>, routing_key=TEST_QUEUE, body=<span class="string">"fortest"</span>)</div><div class="line">    chan.basic_consume(callback, queue=TEST_QUEUE)</div><div class="line">    chan.start_consuming()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    test_main()</div></pre></td></tr></table></figure>
+<p>运行一段时间后， 就会报错:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[ERROR][pika.adapters.base_connection][2017-08-18 12:33:49]Error event 25, None</div><div class="line">[CRITICAL][pika.adapters.base_connection][2017-08-18 12:33:49]Tried to handle an error where no error existed</div><div class="line">[ERROR][pika.adapters.base_connection][2017-08-18 12:33:49]Fatal Socket Error: BrokenPipeError(32, &apos;Broken pipe&apos;)</div></pre></td></tr></table></figure>
+<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><h3 id="猜测：pika客户端没有及时发送心跳，连接被server断开"><a href="#猜测：pika客户端没有及时发送心跳，连接被server断开" class="headerlink" title="猜测：pika客户端没有及时发送心跳，连接被server断开"></a>猜测：pika客户端没有及时发送心跳，连接被server断开</h3><p>一开始修改了heartbeat_interval参数值, 示例如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_main</span><span class="params">()</span>:</span></div><div class="line">    s_conn = pika.BlockingConnection(</div><div class="line">        pika.ConnectionParameters(<span class="string">'127.0.0.1'</span>, </div><div class="line">            heartbeat_interval=<span class="number">10</span>,</div><div class="line">            socket_timeout=<span class="number">5</span>,</div><div class="line">            credentials=pika.PlainCredentials(USER, PWD)))</div><div class="line">    <span class="comment"># ....</span></div></pre></td></tr></table></figure>
+<p>修改后运行依然报错，后来想想应该单线程被一直占用，pika无法发送心跳；<br><br>于是又加了个心跳线程, 示例如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin</span></div><div class="line"><span class="comment">#coding: utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> pika</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line">USER = <span class="string">'guest'</span></div><div class="line">PWD = <span class="string">'guest'</span></div><div class="line">TEST_QUEUE = <span class="string">'just4test'</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Heartbeat</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, connection)</span>:</span></div><div class="line">        super(Heartbeat, self).__init__()</div><div class="line">        self.lock = threading.Lock()</div><div class="line">        self.connection = connection</div><div class="line">        self.quitflag = <span class="keyword">False</span></div><div class="line">        self.stopflag = <span class="keyword">True</span></div><div class="line">        self.setDaemon(<span class="keyword">True</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">not</span> self.quitflag:</div><div class="line">            time.sleep(<span class="number">10</span>)</div><div class="line">            self.lock.acquire()</div><div class="line">            <span class="keyword">if</span> self.stopflag :</div><div class="line">                self.lock.release()</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                self.connection.process_data_events()</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</div><div class="line">                logging.warn(<span class="string">"Error format: %s"</span>%(str(ex)))</div><div class="line">                self.lock.release()</div><div class="line">                <span class="keyword">return</span></div><div class="line">            self.lock.release()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">startHeartbeat</span><span class="params">(self)</span>:</span></div><div class="line">        self.lock.acquire()</div><div class="line">        <span class="keyword">if</span> self.quitflag==<span class="keyword">True</span>:</div><div class="line">            self.lock.release()</div><div class="line">            <span class="keyword">return</span></div><div class="line">        self.stopflag=<span class="keyword">False</span></div><div class="line">        self.lock.release()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(ch, method, properties, body)</span>:</span></div><div class="line">    logging.info(<span class="string">"recv_body:%s"</span> % body)</div><div class="line">    time.sleep(<span class="number">600</span>)</div><div class="line">    ch.basic_ack(delivery_tag = method.delivery_tag)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_main</span><span class="params">()</span>:</span></div><div class="line">    s_conn = pika.BlockingConnection(</div><div class="line">        pika.ConnectionParameters(<span class="string">'127.0.0.1'</span>, </div><div class="line">            heartbeat_interval=<span class="number">10</span>,</div><div class="line">            socket_timeout=<span class="number">5</span>,</div><div class="line">            credentials=pika.PlainCredentials(USER, PWD)))</div><div class="line">    chan = s_conn.channel()</div><div class="line">    chan.queue_declare(queue=TEST_QUEUE)</div><div class="line">    chan.basic_consume(callback,</div><div class="line">                       queue=TEST_QUEUE)</div><div class="line"></div><div class="line">    heartbeat = Heartbeat(s_conn)</div><div class="line">    heartbeat.start()          <span class="comment">#开启心跳线程</span></div><div class="line">    heartbeat.startHeartbeat()</div><div class="line">    chan.start_consuming()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    test_main()</div></pre></td></tr></table></figure>
+<p>尝试运行，结果还是不行，不得不安静下来思考自己是不是想错了。<br><br>去看它的api，看到heartbeat_interval的解析:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">:param int heartbeat_interval: How often to send heartbeats.</div><div class="line">                                  Min between this value and server&apos;s proposal</div><div class="line">                                  will be used. Use 0 to deactivate heartbeats</div><div class="line">                                  and None to accept server&apos;s proposal.</div></pre></td></tr></table></figure>
+<p>按这样说法，应该还是没有把心跳值给设置好。上面的程序期望是10秒发一次心跳，但是理论上发送心跳的间隔会比10秒多一点。所以艾玛，我应该是把<em>heartbeat_interval</em>的作用搞错了， 它是指超过这个时间间隔不发心跳或不给server任何信息，server就会断开连接, 而不是说pika会按这个间隔来发心跳。 结果我把heartbeat_interval值设置高一点(比实际发送心跳/信息的间隔更长)，比如上面设置成60秒，就正常运行了。</p>
+<p>如果不指定<em>heartbeat_interval</em>， 它默认为None， 意味着按rabbitMQ server的配置来检测心跳是否正常。<br><br>如果设置<em>heartbeat_interval=0</em>， 意味着不检测心跳，server端将不会主动断开连接。</p>
 
       
     </div>
@@ -316,13 +320,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></p>
+        <p><span>本文标题:</span><a href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2016-12-03, 14:11:45</p>
-        <p><span>最后更新:</span>2017-08-07, 13:47:10</p>
+        <p><span>发布时间:</span>2017-08-19, 18:46:21</p>
+        <p><span>最后更新:</span>2017-08-19, 19:20:02</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/12/03/golang/golang_http-server/" title="[golang]HTTP webserver">http://blog.moguang.com/2016/12/03/golang/golang_http-server/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/12/03/golang/golang_http-server/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/19/python/python-pika-broken-pipe/" title="python pika broken pipe">http://blog.moguang.com/2017/08/19/python/python-pika-broken-pipe/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/08/19/python/python-pika-broken-pipe/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -335,15 +339,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/12/16/deployment-spark-on-yarn/">
-                    [deployment]spark on yarn
+                <a href="/2017/08/19/python/python-upload-download-large-file/">
+                    python upload/download large file
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/15/network/network-transport-layer/">
-                    network transport layer
+                <a href="/2017/08/06/mysql/mysql_concurrent_query/">
+                    [mysql]python3并发访问分布式mysql表
                 </a>
             </div>
         
@@ -355,7 +359,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单示例"><span class="toc-number">1.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#golang-http包的执行流程"><span class="toc-number">2.</span> <span class="toc-text">golang http包的执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结合goroutine处理并发"><span class="toc-number">3.</span> <span class="toc-text">结合goroutine处理并发</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题描述"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码示例"><span class="toc-number">2.</span> <span class="toc-text">源码示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题排查"><span class="toc-number">3.</span> <span class="toc-text">问题排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#猜测：pika客户端没有及时发送心跳，连接被server断开"><span class="toc-number">3.1.</span> <span class="toc-text">猜测：pika客户端没有及时发送心跳，连接被server断开</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -391,7 +395,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"[golang]HTTP webserver　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"python pika broken pipe　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -411,7 +415,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/12/16/deployment-spark-on-yarn/" title="上一篇: [deployment]spark on yarn">
+            <a href="/2017/08/19/python/python-upload-download-large-file/" title="上一篇: python upload/download large file">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -419,7 +423,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/15/network/network-transport-layer/" title="下一篇: network transport layer">
+            <a href="/2017/08/06/mysql/mysql_concurrent_query/" title="下一篇: [mysql]python3并发访问分布式mysql表">
                 <i class="fa fa-angle-right"></i>
             </a>
         
