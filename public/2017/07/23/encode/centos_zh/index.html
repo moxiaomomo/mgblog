@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot; 刷新配置文件12source /etc/locale.confsource /etc/sysconfig/i18n">
+<meta name="description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7 中文乱码问题">
 <meta property="og:url" content="http://blog.moguang.com/2017/07/23/encode/centos_zh/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot; 刷新配置文件12source /etc/locale.confsource /etc/sysconfig/i18n">
+<meta property="og:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-23T06:34:19.741Z">
+<meta property="og:updated_time" content="2017-08-20T05:48:47.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7 中文乱码问题">
-<meta name="twitter:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot; 刷新配置文件12source /etc/locale.confsource /etc/sysconfig/i18n">
+<meta name="twitter:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot;">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -297,7 +297,9 @@
           
         <h2 id="修改-etc-locale-conf"><a href="#修改-etc-locale-conf" class="headerlink" title="修改/etc/locale.conf"></a>修改/etc/locale.conf</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"en_US.UTF-8"</span></div></pre></td></tr></table></figure>
 <h2 id="修改-etc-sysconfig-i18n"><a href="#修改-etc-sysconfig-i18n" class="headerlink" title="修改/etc/sysconfig/i18n"></a>修改/etc/sysconfig/i18n</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"zh_CN.UTF-8"</span></div></pre></td></tr></table></figure>
-<h2 id="刷新配置文件"><a href="#刷新配置文件" class="headerlink" title="刷新配置文件"></a>刷新配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /etc/locale.conf</div><div class="line"><span class="built_in">source</span> /etc/sysconfig/i18n</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="修改-etc-vimrc或-vimrc-添加"><a href="#修改-etc-vimrc或-vimrc-添加" class="headerlink" title="修改/etc/vimrc或~/.vimrc,添加"></a>修改/etc/vimrc或~/.vimrc,添加</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span> fileencodings=utf-8,gb2312,gbk,gb18030  </div><div class="line"><span class="built_in">set</span> termencoding=utf-8  </div><div class="line"><span class="built_in">set</span> fileformats=unix  </div><div class="line"><span class="built_in">set</span> encoding=prc</div></pre></td></tr></table></figure>
+<h2 id="刷新配置文件"><a href="#刷新配置文件" class="headerlink" title="刷新配置文件"></a>刷新配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /etc/locale.conf</div><div class="line"><span class="built_in">source</span> /etc/sysconfig/i18n</div><div class="line"><span class="built_in">source</span> ~/.vimrc</div><div class="line"><span class="built_in">source</span> /etc/vimrc</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -309,7 +311,7 @@
         <p><span>本文标题:</span><a href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
         <p><span>发布时间:</span>2017-07-23, 01:25:42</p>
-        <p><span>最后更新:</span>2017-07-23, 14:34:19</p>
+        <p><span>最后更新:</span>2017-08-20, 13:48:47</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/07/23/encode/centos_zh/" title="CentOS7 中文乱码问题">http://blog.moguang.com/2017/07/23/encode/centos_zh/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/07/23/encode/centos_zh/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -345,7 +347,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-locale-conf"><span class="toc-number">1.</span> <span class="toc-text">修改/etc/locale.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-sysconfig-i18n"><span class="toc-number">2.</span> <span class="toc-text">修改/etc/sysconfig/i18n</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷新配置文件"><span class="toc-number">3.</span> <span class="toc-text">刷新配置文件</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-locale-conf"><span class="toc-number">1.</span> <span class="toc-text">修改/etc/locale.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-sysconfig-i18n"><span class="toc-number">2.</span> <span class="toc-text">修改/etc/sysconfig/i18n</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-vimrc或-vimrc-添加"><span class="toc-number">3.</span> <span class="toc-text">修改/etc/vimrc或~/.vimrc,添加</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷新配置文件"><span class="toc-number">4.</span> <span class="toc-text">刷新配置文件</span></a></li></ol>
         
     </div>
     <style>

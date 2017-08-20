@@ -127,9 +127,9 @@ base_font_size: 16  #px, 16 - 24
 color_scheme: 
 
 highlight_style:
-  #on: true
-  inline_code: 1  # Value: 0 - 9 可选
-  code_block: 1  # Value: 0 - 4 
+  on: true
+  inline_code: 2  # Value: 0 - 9 可选
+  code_block: 2  # Value: 0 - 4 
   # Set inline_code to style highlight text
   # Chose a highlight theme for code block
   # 通过 inline_code 切换内置文本高亮样式
@@ -137,15 +137,15 @@ highlight_style:
 
 blockquote_style:
   #on: true
-  blockquote: 1  # Value: 0 - 7 可选
+  blockquote: 2  # Value: 0 - 7 可选
   # 自定义文章「引用部分」的样式
 
 # Headings Style | 标题风格
 ## 0-Yelee, 1-Yilia, 2-GitHub
-heading_style: 0 # Value: 0 - 2
+heading_style: 2 # Value: 0 - 2
 
 ## List style type (ul) | 无序列表项标记样式
-list_style: 0  # value: 0 - 12 可选
+list_style: 5  # value: 0 - 12 可选
 
 # 左边栏宽度 px
 left_col_width: 300
