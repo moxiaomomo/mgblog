@@ -263,6 +263,79 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-deployment-spark-on-yarn" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/16/deployment-spark-on-yarn/" class="article-date">
+      <time datetime="2016-12-16T15:10:04.000Z" itemprop="datePublished">2016-12-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/16/deployment-spark-on-yarn/">[deployment]spark on yarn</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="安装包准备"><a href="#安装包准备" class="headerlink" title="安装包准备"></a>安装包准备</h3><ul>
+<li><p>Oracle JDK<br><br>  安装了elasticSearch的系统应该已经配置好了JDK环境; 推荐JDK7</p>
+</li>
+<li><p>scala开发环境<br><br>  spark依赖于scala运行, scala是开发spark统计程序的官方语言; 推荐安装scala-2.11版本</p>
+</li>
+<li><p>hadoop集群<br><br>  hadoop-yarn为spark运算提供资源管理及hdfs存储; 推荐apache hadoop-2.7.3版本</p>
+</li>
+<li><p>spark集群<br><br>  用于分布式运算; 推荐apache spark 2.0.2版本</p>
+</li>
+<li><p>ES-Hadoop插件<br><br>  es-hadoop作为hadoop/spark集成elasticSearch的插件使用; 推荐es-hadoop_5.1.1版本</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark-hadoop/">spark, hadoop</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/12/16/deployment-spark-on-yarn/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -831,74 +904,6 @@
       
         <p class="article-more-link">
           <a href="/2016/03/04/golang/golang_channel/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/golang_goroutine" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/03/golang/golang_goroutine/" class="article-date">
-      <time datetime="2016-03-03T01:34:55.000Z" itemprop="datePublished">2016-03-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>关于gorountine的特性, 我还是借鉴以下这篇文章来学习和总结一下, 至于一些用法在下一节channel再进行小结。</p>
-<p>源地址:<br><a href="http://www.infoq.com/cn/articles/knowledge-behind-goroutine" title="goroutine" target="_blank" rel="external">goroutine背后的系统知识</a></p>
-<p>节选(goroutine的特性):</p>
-<blockquote>
-<p>1.Go语言通过goroutine提供了目前为止所有(我所了解的)语言里对于并发编程的最清晰最直接的支持，Go语言的文档里对其特性也描述的非常全面甚至超过了，在这里，基于我们上面的系统知识介绍，列举一下goroutine的特性，算是小结：<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/03/golang/golang_goroutine/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

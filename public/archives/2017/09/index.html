@@ -15,21 +15,16 @@
 
 
 
-<meta name="description" content="UDP包结构, 如图所示:">
-<meta name="keywords" content="networking">
-<meta property="og:type" content="article">
-<meta property="og:title" content="network transport layer">
-<meta property="og:url" content="http://blog.moguang.com/2016/08/15/network/network-transport-layer/index.html">
+<meta name="description" content="人生很长, 编程当歌">
+<meta property="og:type" content="website">
+<meta property="og:title" content="moxiaomomo">
+<meta property="og:url" content="http://blog.moguang.com/archives/2017/09/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="UDP包结构, 如图所示:">
+<meta property="og:description" content="人生很长, 编程当歌">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://blog.moguang.com/img/udppackage.png">
-<meta property="og:image" content="http://blog.moguang.com/img/tcppackage.png">
-<meta property="og:updated_time" content="2017-08-15T03:58:49.205Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="network transport layer">
-<meta name="twitter:description" content="UDP包结构, 如图所示:">
-<meta name="twitter:image" content="http://blog.moguang.com/img/udppackage.png">
+<meta name="twitter:title" content="moxiaomomo">
+<meta name="twitter:description" content="人生很长, 编程当歌">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +54,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>network transport layer | moxiaomomo</title>
+<title>Archives: 2017/9 | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -69,8 +64,8 @@
         fancybox: true,
         animate: false,
         isHome: false,
-        isPost: true,
-        isArchive: false,
+        isPost: false,
+        isArchive: true,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -263,202 +258,56 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-network/network-transport-layer" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2016/08/15/network/network-transport-layer/" class="article-date">
-      <time datetime="2016-08-15T03:33:04.000Z" itemprop="datePublished">2016-08-15</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a href="/2017/09/05/python/python3-aiohttp/" class="archive-article-date">
+      <time datetime="2017-09-05T10:10:02.000Z" itemprop="datePublished">09-05</time>
 </a>
 
 
-    </div>
+        </div>
+         
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      network transport layer
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-        <p>UDP包结构, 如图所示:<br><br><img src="/img/udppackage.png" alt="UDP包结"><br><a id="more"></a></p>
-<p>TCP包结构, 如图所示:<br><br><img src="/img/tcppackage.png" alt="TCP包结构"></p>
-<p>关于TCP包几点说明:<br></p>
-<ul>
-<li>连接请求号：即SEQ, 该部分占32位，值从1到2的32次方减1。</li>
-<li>应答号：即对方返回的ACK值, 该部分占32位，值从1到2的32次方减1。</li>
-<li>标志位：例如：Flags＝01,该值用两个十六进制数来表示。该部分长度为6位，6个标志位的含义分别是：<ul>
-<li>URG位：紧急标志，和紧急指针配合使用，当其为1时表示，此报文要尽快传送。</li>
-<li>ACK位：确认标志，和确认号字段配合使用，当ACK位置1时，确认号字段有效。</li>
-<li>PSH位：为推送标志，置1时，发送方将立即发送缓冲区中的数据。</li>
-<li>RST位：复位标志，置1时，表明有严重差错，必须释放连接。</li>
-<li>SYN位： 同步标志，置1时，表示请求建立连接。</li>
-<li>FIN位：终止标志，置1时，表明数据已经发送完，请求释放连接。</li>
-</ul>
-</li>
-<li>窗口大小：32bit，用于向对方通告当前本机的接受缓冲区的大小。</li>
-</ul>
 
-      
-    </div>
-    
-  </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/08/15/network/network-transport-layer/">network transport layer</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2016-08-15, 11:33:04</p>
-        <p><span>最后更新:</span>2017-08-15, 11:58:49</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/08/15/network/network-transport-layer/" title="network transport layer">http://blog.moguang.com/2016/08/15/network/network-transport-layer/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2016/08/15/network/network-transport-layer/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
-
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/12/03/golang/golang_http-server/">
-                    [golang]HTTP webserver
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/11/golang/golang-pprof性能分析工具/">
-                    [golang]pprof性能分析工具
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-3 i,
-        .toc-level-3 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"network transport layer　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
 
     
-</div>
 
-
-
-
-
-
-
-    
-        <section class="youyan" id="comments">
-    <script>
-        var loadComment = function(){
-            var d = document, s = d.createElement('script');
-            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
-            (d.head || d.body).appendChild(s);
-        }
-    </script>
-    
-    <script> loadComment(); </script>
-
-    <div id="uyan_frame"></div>
-</section>
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/12/03/golang/golang_http-server/" title="上一篇: [golang]HTTP webserver">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/08/11/golang/golang-pprof性能分析工具/" title="下一篇: [golang]pprof性能分析工具">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
 </div>
       <footer id="footer">
     <div class="outer">
