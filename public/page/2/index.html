@@ -263,6 +263,75 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="[golang]array-slice-golang/golang_array-slice" class="article article-type-[golang]array-slice" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/30/golang/golang_array-slice/" class="article-date">
+      <time datetime="2017-01-30T01:00:18.000Z" itemprop="datePublished">2017-01-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1)基础特性"></a>1)基础特性</h4><ul>
+<li>array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度;</li>
+<li>数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝;</li>
+<li>作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低;</li>
+<li>数组长度也是Type一部分, 如[4]int和[2]int类型不一样.</li>
+</ul>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/01/30/golang/golang_array-slice/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-deployment-spark-on-yarn" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -835,75 +904,6 @@
       
         <p class="article-more-link">
           <a href="/2016/03/10/golang/golang-异常处理/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/golang_channel" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/04/golang/golang_channel/" class="article-date">
-      <time datetime="2016-03-04T01:00:11.000Z" itemprop="datePublished">2016-03-04</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在unix系统中, 管道是进程间通信的一种方式。那golang的channel和系统的管道有什么区别？</p>
-<h3 id="什么是channel"><a href="#什么是channel" class="headerlink" title="什么是channel"></a>什么是channel</h3><p>官方文档有个channel的定义:</p>
-<blockquote>
-<p>   A channel provides a mechanism for concurrently executing functions to communicate<br>   by sending and receiving values of a specified element type.<br>   The value of an uninitialized channel is nil.</p>
-</blockquote>
-<p>channel应该可以理解为: 一种为并行执行而提供函数间通信的机制, 通过传递send和recieve特定类型的值来实现。没有初始化值的channel对象, 默认为nil。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/04/golang/golang_channel/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

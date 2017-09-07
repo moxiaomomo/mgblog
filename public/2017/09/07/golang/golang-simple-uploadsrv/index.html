@@ -15,17 +15,18 @@
 
 
 
-<meta name="description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot;">
+<meta name="description" content="利用net/http库及gorilla/mux库实现了一个简单的文件上传服务,示例如下:">
+<meta name="keywords" content="golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CentOS7 中文乱码问题">
-<meta property="og:url" content="http://blog.moguang.com/2017/07/23/encode/centos_zh/index.html">
+<meta property="og:title" content="[golang]简单文件上传服务">
+<meta property="og:url" content="http://blog.moguang.com/2017/09/07/golang/golang-simple-uploadsrv/index.html">
 <meta property="og:site_name" content="moxiaomomo">
-<meta property="og:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot;">
+<meta property="og:description" content="利用net/http库及gorilla/mux库实现了一个简单的文件上传服务,示例如下:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-20T05:48:47.995Z">
+<meta property="og:updated_time" content="2017-09-07T10:54:16.718Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CentOS7 中文乱码问题">
-<meta name="twitter:description" content="修改/etc/locale.conf1LANG=&quot;en_US.UTF-8&quot; 修改/etc/sysconfig/i18n1LANG=&quot;zh_CN.UTF-8&quot;">
+<meta name="twitter:title" content="[golang]简单文件上传服务">
+<meta name="twitter:description" content="利用net/http库及gorilla/mux库实现了一个简单的文件上传服务,示例如下:">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -55,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>CentOS7 中文乱码问题 | moxiaomomo</title>
+<title>[golang]简单文件上传服务 | moxiaomomo</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -259,11 +260,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-encode/centos_zh" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-golang/golang-simple-uploadsrv" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/23/encode/centos_zh/" class="article-date">
-      <time datetime="2017-07-22T17:25:42.000Z" itemprop="datePublished">2017-07-23</time>
+      <a href="/2017/09/07/golang/golang-simple-uploadsrv/" class="article-date">
+      <time datetime="2017-09-07T10:51:21.000Z" itemprop="datePublished">2017-09-07</time>
 </a>
 
 
@@ -278,7 +279,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CentOS7 中文乱码问题
+      [golang]简单文件上传服务
     </h1>
   
 
@@ -288,6 +289,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -295,11 +300,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="修改-etc-locale-conf"><a href="#修改-etc-locale-conf" class="headerlink" title="修改/etc/locale.conf"></a>修改/etc/locale.conf</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"en_US.UTF-8"</span></div></pre></td></tr></table></figure>
-<h2 id="修改-etc-sysconfig-i18n"><a href="#修改-etc-sysconfig-i18n" class="headerlink" title="修改/etc/sysconfig/i18n"></a>修改/etc/sysconfig/i18n</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"zh_CN.UTF-8"</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="修改-etc-vimrc或-vimrc-添加"><a href="#修改-etc-vimrc或-vimrc-添加" class="headerlink" title="修改/etc/vimrc或~/.vimrc,添加"></a>修改/etc/vimrc或~/.vimrc,添加</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span> fileencodings=utf-8,gb2312,gbk,gb18030  </div><div class="line"><span class="built_in">set</span> termencoding=utf-8  </div><div class="line"><span class="built_in">set</span> fileformats=unix  </div><div class="line"><span class="built_in">set</span> encoding=prc</div></pre></td></tr></table></figure>
-<h2 id="刷新配置文件"><a href="#刷新配置文件" class="headerlink" title="刷新配置文件"></a>刷新配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /etc/locale.conf</div><div class="line"><span class="built_in">source</span> /etc/sysconfig/i18n</div><div class="line"><span class="built_in">source</span> ~/.vimrc</div><div class="line"><span class="built_in">source</span> /etc/vimrc</div></pre></td></tr></table></figure>
+        <p>利用net/http库及gorilla/mux库实现了一个简单的文件上传服务,<br><br>示例如下:<br><a id="more"></a></p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">	<span class="string">"github.com/gorilla/mux"</span></div><div class="line">	<span class="string">"io"</span></div><div class="line">	<span class="string">"net/http"</span></div><div class="line">	<span class="string">"os"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">const</span> uploadHTML = <span class="string">`</span></div><div class="line">&lt;html&gt;  </div><div class="line">  &lt;head&gt;  </div><div class="line">    &lt;title&gt;选择文件&lt;/title&gt;</div><div class="line">  &lt;/head&gt;  </div><div class="line">  &lt;body&gt;  </div><div class="line">    &lt;form enctype="multipart/form-data" action="/" method="post"&gt;  </div><div class="line">      &lt;input type="file" name="uploadfile" /&gt;  </div><div class="line">      &lt;input type="submit" value="上传文件" /&gt;  </div><div class="line">    &lt;/form&gt;  </div><div class="line">  &lt;/body&gt;  </div><div class="line">&lt;/html&gt;`</div><div class="line"></div><div class="line"><span class="keyword">const</span> destLocalPath = <span class="string">"/data/files/"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">	w.Write([]<span class="keyword">byte</span>(uploadHTML))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">upload</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> r.Method == <span class="string">"GET"</span> &#123;</div><div class="line">		index(w, r)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	r.ParseMultipartForm(<span class="number">32</span> &lt;&lt; <span class="number">20</span>) <span class="comment">// max memory is set to 32MB</span></div><div class="line">	clientfd, handler, err := r.FormFile(<span class="string">"uploadfile"</span>)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		fmt.Println(err)</div><div class="line">		w.Write([]<span class="keyword">byte</span>(<span class="string">"upload failed."</span>))</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">defer</span> clientfd.Close()</div><div class="line"></div><div class="line">	localpath := fmt.Sprintf(<span class="string">"%s%s"</span>, destLocalPath, handler.Filename)</div><div class="line">	localfd, err := os.OpenFile(localpath, os.O_WRONLY|os.O_CREATE, <span class="number">0666</span>)</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		fmt.Println(err)</div><div class="line">		w.Write([]<span class="keyword">byte</span>(<span class="string">"upload failed."</span>))</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">defer</span> localfd.Close()</div><div class="line"></div><div class="line">	io.Copy(localfd, clientfd)</div><div class="line">	w.Write([]<span class="keyword">byte</span>(<span class="string">"upload finish."</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">newRouter</span><span class="params">()</span> <span class="title">http</span>.<span class="title">Handler</span></span> &#123;</div><div class="line">	hdl := mux.NewRouter()</div><div class="line">	hdl.HandleFunc(<span class="string">"/"</span>, upload)</div><div class="line"></div><div class="line">	<span class="keyword">return</span> hdl</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	http.ListenAndServe(<span class="string">":8877"</span>, newRouter())</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -308,13 +310,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></p>
+        <p><span>本文标题:</span><a href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
-        <p><span>发布时间:</span>2017-07-23, 01:25:42</p>
-        <p><span>最后更新:</span>2017-08-20, 13:48:47</p>
+        <p><span>发布时间:</span>2017-09-07, 18:51:21</p>
+        <p><span>最后更新:</span>2017-09-07, 18:54:16</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/23/encode/centos_zh/" title="CentOS7 中文乱码问题">http://blog.moguang.com/2017/07/23/encode/centos_zh/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/07/23/encode/centos_zh/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/07/golang/golang-simple-uploadsrv/" title="[golang]简单文件上传服务">http://blog.moguang.com/2017/09/07/golang/golang-simple-uploadsrv/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/09/07/golang/golang-simple-uploadsrv/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -326,16 +328,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/23/encode/base64/">
-                    python之encode/decode
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/09/golang/golang_gRPC/">
-                    [golang]gRPC通信协议
+                <a href="/2017/09/05/python/python3-aiohttp/">
+                    [python3]使用aiohttp
                 </a>
             </div>
         
@@ -347,7 +343,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-locale-conf"><span class="toc-number">1.</span> <span class="toc-text">修改/etc/locale.conf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-sysconfig-i18n"><span class="toc-number">2.</span> <span class="toc-text">修改/etc/sysconfig/i18n</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改-etc-vimrc或-vimrc-添加"><span class="toc-number">3.</span> <span class="toc-text">修改/etc/vimrc或~/.vimrc,添加</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷新配置文件"><span class="toc-number">4.</span> <span class="toc-text">刷新配置文件</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -383,7 +379,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"CentOS7 中文乱码问题　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"[golang]简单文件上传服务　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -417,15 +413,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/23/encode/base64/" title="上一篇: python之encode/decode">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/02/09/golang/golang_gRPC/" title="下一篇: [golang]gRPC通信协议">
+            <a href="/2017/09/05/python/python3-aiohttp/" title="下一篇: [python3]使用aiohttp">
                 <i class="fa fa-angle-right"></i>
             </a>
         
