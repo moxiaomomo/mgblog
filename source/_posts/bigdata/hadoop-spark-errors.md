@@ -1,7 +1,7 @@
 ---
 title: hadoop-spark错误问题总结
 date: 2017-10-16 14:55:21
-tags: hadoop spark
+tags: bigdata
 ---
 
 ## hadoop-spark错误问题总结

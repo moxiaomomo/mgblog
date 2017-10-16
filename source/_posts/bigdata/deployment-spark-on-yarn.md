@@ -1,7 +1,7 @@
 ---
 title: '[deployment]spark on yarn'
 date: 2016-12-16 23:10:04
-tags: spark, hadoop
+tags: bigdata
 ---
 
 ### 安装包准备
