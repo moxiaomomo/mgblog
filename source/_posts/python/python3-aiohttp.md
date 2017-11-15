@@ -24,6 +24,7 @@ async def test(url):
             async with session.post(url) as resp:
                 r = await resp.text()
                 print(r)
+                # r = await resp.read()  ## 用于读取字节流，不作解码
                 print(resp.headers.get('Content-Type'))
                 # TODO: do something...
 
