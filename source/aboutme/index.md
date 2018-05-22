@@ -16,7 +16,7 @@ date: 2015-07-31 12:04:33
  - 性别: 男
  - 出生年月: 1988/08
  - 教育背景：本科/华南理工大学软件工程
- - 工作年限：约5年(2012年本科毕业)
+ - 工作年限：2012年本科毕业至今
  - 个人博客：<br>
 [http://blog.moguang.me](http://blog.moguang.me)<br>
 [http://blog.csdn.net/moxiaomomo](http://blog.csdn.net/moxiaomomo)
@@ -35,20 +35,22 @@ date: 2015-07-31 12:04:33
 - 搭建数据分析平台
 
     - 基于hadoop搭建资源调度系统, 基于spark搭建分布式计算系统;<br>
-    - 基于awk过滤和格式化日志, 及HDFS存储格式化数据, 日志来源含纯文本, elasticSearch, 数据库等;<br>
+    - 完成数据仓库构建工作，包括日志的过滤转换，HDFS文件存储维护等;<br>
     - 结合spark SQL, 对每天数亿条记录进行各维度分布式统计分析;<br>
     - 结合spark MLib和机器学习算法, 对用户数据进行聚类/分类学习, 构建用户画像;<br>
     - 基于python tornado, echarts及mongoDB构建报表系统;
+    - 基于阿里云大数据平台，重建并优化数据分析平台和报表平台。
    
-- 参与微服务开发
+- 微服务平台开发
   
-    - 基于GO语言, go-micro框架进行易于部署和可插拔的微服务开发;<br>
+    - 基于Go语言, go-micro框架进行易于部署和可插拔的微服务开发;<br>
     - 基于Docker, 实现consul服务发现的快速部署方案;<br>
     - 完成配置中心，访问统计，文件获取等基础服务组件的开发;
  
 - 存储服务维护
-    - 日常维护百PB量级文件存储服务, 包括数据迁移, 流量监控, 读写监控等;<br>
-    - 其他, 如数据修复工作，配合运维处理突发问题;
+    - 日常维护百PB量级文件存储服务, 完善服务的可用性监控及流量监控平台;<br>
+    - 参与PB级文件数据的迁移工作，确保文件迁移的完整性和业务的无缝过渡;
+    - 其他, 如数据修复工作，配合运维处理突发问题等;
  
 - CDN节点加速
     - 根据视频播放记录, 统计分析各地区热门视频数据;<br>
@@ -102,13 +104,13 @@ date: 2015-07-31 12:04:33
 
 # 常用技能清单
 
-- 语言：Python / GO / shell(AWK) / C / javascript
+- 语言：Python / Go / shell(AWK) / C / NodeJS / javascript
 - 编程环境: Linux, Vim / SublimeText / Atom / CodeBlocks
 - 操作系统: 熟悉Linux下文件IO / 网络IO / 进程间通信 / 内存管理等
-- 网络原理: 熟悉TCP/IP协议, HTTP/Websocket/MQTT等网络协议, Raft/Gossip等分布式协议
+- 网络原理: 熟悉TCP/IP协议, HTTP/Websocket/MQTT等网络协议, Raft/Gossip等分布式一致性协议
 - 编程框架：Python-tornado / python-django / gin / paho-mqtt
 - 开源架构: Hadoop-hdfs, Hadoop-spark, micro-service
-- 数据库：熟悉MySQL / redis / dynamoDB / MongoDB
+- 数据库：熟悉MySQL / Redis / MongoDB / HBase
 - 代码管理：Svn / Git
 - 文档管理: Markdown / Gitbook / Google-docs / Graphviz
 - 云开放平台：AWS(亚马逊云) / KS3(金山云) / 阿里云IoT
