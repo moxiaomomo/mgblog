@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="偶然看到一条关于goroutine有趣的QA：https://news.ycombinator.com/item?id=12459841发现可以以另一种方式来理解goroutine，欢迎拍砖。 关键概念说明:1234M: machine， M对应于内核线程;P: processor, P是一种在M上运行的context, 维护了goroutine的列表;G: goroutine核心结构, 维护了g">
+<meta name="keywords" content="golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Golang]另一角度理解goroutine">
+<meta property="og:url" content="http://blog.moguang.com/2017/11/10/golang/a-way-to-understand-goroutine/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="偶然看到一条关于goroutine有趣的QA：https://news.ycombinator.com/item?id=12459841发现可以以另一种方式来理解goroutine，欢迎拍砖。 关键概念说明:1234M: machine， M对应于内核线程;P: processor, P是一种在M上运行的context, 维护了goroutine的列表;G: goroutine核心结构, 维护了g">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-10T02:02:46.210Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Golang]另一角度理解goroutine">
+<meta name="twitter:description" content="偶然看到一条关于goroutine有趣的QA：https://news.ycombinator.com/item?id=12459841发现可以以另一种方式来理解goroutine，欢迎拍砖。 关键概念说明:1234M: machine， M对应于内核线程;P: processor, P是一种在M上运行的context, 维护了goroutine的列表;G: goroutine核心结构, 维护了g">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>[Golang]另一角度理解goroutine | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-golang/a-way-to-understand-goroutine" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/10/golang/a-way-to-understand-goroutine/" class="article-date">
+      <time datetime="2017-11-10T02:01:11.000Z" itemprop="datePublished">2017-11-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [Golang]另一角度理解goroutine
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>偶然看到一条关于goroutine有趣的QA：<br><a href="https://news.ycombinator.com/item?id=12459841" target="_blank" rel="external">https://news.ycombinator.com/item?id=12459841</a><br>发现可以以另一种方式来理解goroutine，欢迎拍砖。</p>
+<p>关键概念说明:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">M: machine， M对应于内核线程;</div><div class="line">P: processor, P是一种在M上运行的context, 维护了goroutine的列表;</div><div class="line">G: goroutine核心结构, 维护了goroutine需要的栈、程序计数器以及所在的M等信息;</div><div class="line">sysmon: GO程序启动时创建的一个用于监控管理的线程。</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h4 id="假设一开始没有M和P-没有sysmon-同时GOMAXPROCS-1"><a href="#假设一开始没有M和P-没有sysmon-同时GOMAXPROCS-1" class="headerlink" title="假设一开始没有M和P, 没有sysmon, 同时GOMAXPROCS=1"></a>假设一开始没有M和P, 没有sysmon, 同时GOMAXPROCS=1</h4><p>这个时候go程序以单线程模式运行，<br>每次执行一个G, 无法做到抢占，而必须由程序自己yield来让出CPU，<br>让出CPU时当前G需要将相关上下文信息保存到自己的结构中，<br>然后程序查找下一个等待的G并执行。</p>
+<p>遇到systemcall时, 当前线程会新开一个线程用以接管执行之后的G，<br>而当前线程会阻塞知道系统调用返回，<br>之后将返回结果保存到某个地方，<br>最后该线程退出。</p>
+<h4 id="加入M，减少线程创建-销毁消耗，GOMAXPROCS-1不变"><a href="#加入M，减少线程创建-销毁消耗，GOMAXPROCS-1不变" class="headerlink" title="加入M，减少线程创建/销毁消耗，GOMAXPROCS=1不变"></a>加入M，减少线程创建/销毁消耗，GOMAXPROCS=1不变</h4><p>上面的主要问题是单线程执行任务，<br>遇到syscall便会在创建/销毁线程操作中消耗很多资源，<br>所以这时我们想复用线程。</p>
+<p>这里我们加入了一定数量的M，每个M对应一个内核线程，<br>由于GOMAXPROCS=1，同时在跑的M只有一个，其他的在sleep。<br>与上面有所改进的是，<br>如果当前M遇到syscall，它不用新创建一个线程，<br>而是唤醒M列表中的某个M来接管执行之后的G就可以了，<br>而自己负责等待系统调用，<br>系统调用返回后将结果写到某个地方便sleep及等待唤醒。</p>
+<h4 id="加入调度锁，支持多线程并发，GOMAXPROCS-gt-1"><a href="#加入调度锁，支持多线程并发，GOMAXPROCS-gt-1" class="headerlink" title="加入调度锁，支持多线程并发，GOMAXPROCS&gt;1"></a>加入调度锁，支持多线程并发，GOMAXPROCS&gt;1</h4><p>上面的场景还是同时只有一个线程在运行，<br>我们想利用多核同时跑几个线程，<br>那应该怎么做呢？</p>
+<p>我们加入一个叫调度锁的东西，<br>用于解决多线程从G列表争抢资源G发生冲突的场景，<br>设置GOMAXPROCS&gt;1, 这时可以最多同时跑GOMAXPROCS个线程。<br>调度锁是一个全局锁，如果资源上锁了，那所有线程都必须等待。<br>这时M数量&gt;=GOMAXPROCS, 同时在跑的M数量==GOMAXPROCS。</p>
+<h4 id="加入P，提高并发性能"><a href="#加入P，提高并发性能" class="headerlink" title="加入P，提高并发性能"></a>加入P，提高并发性能</h4><p>上面使用了调度锁，虽然解决了多线程并发问题，<br>但是由于是对列表G全局加锁，并发性能并不好。</p>
+<p>这时我们加入了P，将结构关系G:M变为了G:P:M。<br>每一个M对应一个P， 而每个P维护了一个G列表，<br>这时每新建一个G，会按某种顺序加到某个P的G队列末尾。<br>这个时候不再用全局锁了，M也不用每次到全局G队列中争抢G，<br>只需要从P的G队列中拿出一个就绪的G运行即可。</p>
+<p>同样如果一个M进入syscall，<br>它会释放P以允许其他M来接管自己的P及P所维护的G队列，<br>自己等待系统调用返回并保存结果后，<br>进入M的空闲队列并等待唤醒。</p>
+<h4 id="加入sysmon，解决阻塞syscall问题"><a href="#加入sysmon，解决阻塞syscall问题" class="headerlink" title="加入sysmon，解决阻塞syscall问题"></a>加入sysmon，解决阻塞syscall问题</h4><p>像上面提到的，当一个M进入syscall而释放P时具体怎么实现呢？</p>
+<p>这里引入了sysmon这个在Go程序启动时就会创建的一个独立线程，<br>它用于任务的监控和管理， 内部就是一个无限循环，<br>它发现如果有M处于syscall状态时便将它的P及对P上的G队列抢过来，<br>放到其他可用的M上运行(有可能需要新建M， 也可能是唤醒某个sleep的M)。</p>
+<h4 id="负载均衡问题"><a href="#负载均衡问题" class="headerlink" title="负载均衡问题"></a>负载均衡问题</h4><p>如果有些M很快把手头上的G消耗完，而有些挤压了很多，<br>那就会出现负载不均衡，有些任务响应太迟的问题。</p>
+<p>所以goroutine有了这么一个调度机制(stealing work)，<br>当当前M发现所绑定的P上的G没有了，<br>它会去尝试从全局runqueue中获取一部分G任务，<br>如果全局runqueue也没有，那么就去其他M上’抢夺’一些G过来执行，<br>每次大概是抢对方队列G的一半数量。<br>如果最后发现没有哪个M可以’抢夺’的G任务，<br>那就将自己加到M空闲队列并进入sleep状态。</p>
+<hr>
+<p>至此，很粗略的概括了goroutine的协作式调度原理。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-11-10, 10:01:11</p>
+        <p><span>最后更新:</span>2017-11-10, 10:02:46</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/10/golang/a-way-to-understand-goroutine/" title="[Golang]另一角度理解goroutine">http://blog.moguang.com/2017/11/10/golang/a-way-to-understand-goroutine/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/11/10/golang/a-way-to-understand-goroutine/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/11/14/golang/golang-tech-examination/">
+                    golang笔试题整理
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/11/07/network/Understand-TCP-IP-Stack3/">
+                    理解TCP/IP协议栈(3)
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#假设一开始没有M和P-没有sysmon-同时GOMAXPROCS-1"><span class="toc-number">1.</span> <span class="toc-text">假设一开始没有M和P, 没有sysmon, 同时GOMAXPROCS=1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加入M，减少线程创建-销毁消耗，GOMAXPROCS-1不变"><span class="toc-number">2.</span> <span class="toc-text">加入M，减少线程创建/销毁消耗，GOMAXPROCS=1不变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加入调度锁，支持多线程并发，GOMAXPROCS-gt-1"><span class="toc-number">3.</span> <span class="toc-text">加入调度锁，支持多线程并发，GOMAXPROCS>1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加入P，提高并发性能"><span class="toc-number">4.</span> <span class="toc-text">加入P，提高并发性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加入sysmon，解决阻塞syscall问题"><span class="toc-number">5.</span> <span class="toc-text">加入sysmon，解决阻塞syscall问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#负载均衡问题"><span class="toc-number">6.</span> <span class="toc-text">负载均衡问题</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"[Golang]另一角度理解goroutine　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/11/14/golang/golang-tech-examination/" title="上一篇: golang笔试题整理">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/11/07/network/Understand-TCP-IP-Stack3/" title="下一篇: 理解TCP/IP协议栈(3)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

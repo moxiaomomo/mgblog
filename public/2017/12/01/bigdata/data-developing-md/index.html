@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="CAP理论1234567891011121314151) 理论概述分布式领域中CAP理论：① C：Consistency，一致性，数据一致更新，所有数据变动都是同步的。② A：Availability，可用性，系统具有好的响应性能。③ P：Partition tolerance，分区容错性。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必">
+<meta name="keywords" content="bigdata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据开发技术知识点">
+<meta property="og:url" content="http://blog.moguang.com/2017/12/01/bigdata/data-developing-md/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="CAP理论1234567891011121314151) 理论概述分布式领域中CAP理论：① C：Consistency，一致性，数据一致更新，所有数据变动都是同步的。② A：Availability，可用性，系统具有好的响应性能。③ P：Partition tolerance，分区容错性。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-01T08:48:06.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大数据开发技术知识点">
+<meta name="twitter:description" content="CAP理论1234567891011121314151) 理论概述分布式领域中CAP理论：① C：Consistency，一致性，数据一致更新，所有数据变动都是同步的。② A：Availability，可用性，系统具有好的响应性能。③ P：Partition tolerance，分区容错性。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>大数据开发技术知识点 | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-bigdata/data-developing-md" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/01/bigdata/data-developing-md/" class="article-date">
+      <time datetime="2017-12-01T08:44:10.000Z" itemprop="datePublished">2017-12-01</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      大数据开发技术知识点
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bigdata/">bigdata</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">1) 理论概述</div><div class="line">分布式领域中CAP理论：</div><div class="line">① C：Consistency，一致性，数据一致更新，所有数据变动都是同步的。</div><div class="line">② A：Availability，可用性，系统具有好的响应性能。</div><div class="line">③ P：Partition tolerance，分区容错性。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择，也就是说无论任何消息丢失，系统都可用。</div><div class="line"></div><div class="line">该理论已被证明：任何分布式系统只可同时满足两点，无法三者兼顾。 因此，将精力浪费在思考如何设计能满足三者的完美系统上是愚钝的，应该根据应用场景进行适当取舍。</div><div class="line"></div><div class="line">2) 一致性分类</div><div class="line">一致性是指从系统外部读取系统内部的数据时，在一定约束条件下相同，即数据变动在系统内部各节点应该是同步的。根据一致性的强弱程度不同，可以将一致性级别分为如下几种：</div><div class="line">① 强一致性（strong consistency）。任何时刻，任何用户都能读取到最近一次成功更新的数据。</div><div class="line">② 单调一致性（monotonic consistency）。任何时刻，任何用户一旦读到某个数据在某次更新后的值，那么就不会再读到比这个值更旧的值。也就是说，可获取的数据顺序必是单调递增的。</div><div class="line">③ 会话一致性（session consistency）。任何用户在某次会话中，一旦读到某个数据在某次更新后的值，那么在本次会话中就不会再读到比这个值更旧的值。会话一致性是在单调一致性的基础上进一步放松约束，只保证单个用户单个会话内的单调性，在不同用户或同一用户不同会话间则没有保障。</div><div class="line">④ 最终一致性（eventual consistency）。用户只能读到某次更新后的值，但系统保证数据将最终达到完全一致的状态，只是所需时间不能保障。</div><div class="line">⑤ 弱一致性（weak consistency）。用户无法在确定时间内读到最新更新的值。</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">MapReduce主要包括JobClient、JobTracker、TaskTracker、HDFS四个独立的部分。</div><div class="line"></div><div class="line">1、JobClient</div><div class="line">配置参数Configuration，并打包成jar文件存储在HDFS上，将文件路径提交给JobTracker的master服务，然后由master创建每个task将它们分发到各个TaskTracker服务中去执行。</div><div class="line"></div><div class="line">2、JobTracker</div><div class="line">这是一个master服务，程序启动后，JobTracker负责资源监控和作业调度。JobTracker监控所有的TaskTracker和job的健康状况，一旦发生失败，即将之转移到其他节点上，同时JobTracker会跟踪任务的执行进度、资源使用量等信息，并将这些信息告诉任务调度器，而调度器会在资源出现空闲时，选择合适的任务使用这些资源。在Hadoop 中，任务调度器是一个可插拔的模块，用户可以根据自己的需要设计相应的调度器。</div><div class="line"></div><div class="line">3、TaskTracker</div><div class="line">运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信接受作业，并负责直接执行每个任务。TaskTracker 会周期性地通过Heartbeat 将本节点上资源的使用情况和任务的运行进度汇报给JobTracker，同时接收JobTracker 发送过来的命令并执行相应的操作（如启动新任务、杀死任务等）。TaskTracker 使用“slot”等量划分本节点上的资源量。“slot”代表计算资源（CPU、内存等）。一个Task 获取到一个slot 后才有机会运行，而Hadoop 调度器的作用就是将各个TaskTracker 上的空闲slot 分配给Task 使用。slot 分为Map slot 和Reduce slot 两种，分别供MapTask 和Reduce Task 使用。TaskTracker 通过slot 数目（可配置参数）限定Task 的并发度。</div><div class="line">Task分为Map Task和Reduce Task两种，均由TaskTracker启动。HDFS以block块存储数据，mapreduce处理的最小数据单位为split。</div><div class="line">　　</div><div class="line">4. HDFS</div><div class="line">保存数据和配置信息等。</div></pre></td></tr></table></figure>
+<h4 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">设计目的</div><div class="line">1.最终一致性：client不论连接到哪个Server，展示给它都是同一个视图，这是zookeeper最重要的性能。</div><div class="line">2 .可靠性：具有简单、健壮、良好的性能，如果消息m被到一台服务器接受，那么它将被所有的服务器接受。</div><div class="line">3 .实时性：Zookeeper保证客户端将在一个时间间隔范围内获得服务器的更新信息，或者服务器失效的信息。但由于网络延时等原因，Zookeeper不能保证两个客户端能同时得到刚更新的数据，如果需要最新数据，应该在读数据之前调用sync()接口。</div><div class="line">4 .等待无关（wait-free）：慢的或者失效的client不得干预快速的client的请求，使得每个client都能有效的等待。</div><div class="line">5.原子性：更新只能成功或者失败，没有中间状态。</div><div class="line">6 .顺序性：包括全局有序和偏序两种：全局有序是指如果在一台服务器上消息a在消息b前发布，则在所有Server上消息a都将在消息b前被发布；偏序是指如果一个消息b在消息a后被同一个发送者发布，a必将排在b前面。</div><div class="line"></div><div class="line">工作原理</div><div class="line">ZAB: ZooKeeper Atomic Broadcast zk原子广播协议</div><div class="line">Zookeeper的核心是原子广播机制，这个机制保证了各个server之间的同步。实现这个机制的协议叫做Zab协议。Zab协议有两种模式，它们分别是恢复模式和广播模式。</div><div class="line">1) 恢复模式</div><div class="line">当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数server完成了和leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和server具有相同的系统状态。</div><div class="line">2) 广播模式</div><div class="line">一旦Leader已经和多数的Follower进行了状态同步后，他就可以开始广播消息了，即进入广播状态。这时候当一个Server加入ZooKeeper服务中，它会在恢复模式下启动，发现Leader，并和Leader进行状态同步。待到同步结束，它也参与消息广播。ZooKeeper服务一直维持在Broadcast状态，直到Leader崩溃了或者Leader失去了大部分的Followers支持。</div></pre></td></tr></table></figure>
+<h4 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">一个高可靠，高吞吐量的分布式文件系统，通俗的说就是把文件存储到多台服务器上</div><div class="line"></div><div class="line">Namenode全权管理数据块的复制，它周期性地从集群中的每个Datanode接收心跳信号和块状态报告(Blockreport)。接收到心跳信号意味着该Datanode节点工作正常</div><div class="line">。块状态报告包含了一个该Datanode上所有数据块的列表。</div><div class="line"></div><div class="line">Namenode是一个中心服务器:单一节点（简化系统的设计和实现），负责管理文件系统的名字空间(namespace)以及客户端对文件的访问。</div><div class="line">SecondaryNameNode 用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</div><div class="line">Datanode一个数据块在DataNode以文件存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳DataNode启动后向NameNode注册，通过后，周期性（1小时）的向NameNode上报所有的块信息</div><div class="line"></div><div class="line">文件操作:NameNode负责文件元数据的操作，DataNode负责处理文件内容的读写请求，跟文件内容相关的数据流不经过NameNode，只会询问它跟那个DataNode联系，否则NameNode会成为系统的瓶颈。</div><div class="line"></div><div class="line">副本存放位置：DataNode上由NameNode来控制，根据全局情况做出块放置决定，读取文件时NameNode尽量让用户先读取最近的副本，降低带块消耗和读取时延</div></pre></td></tr></table></figure>
+<h4 id="spark"><a href="#spark" class="headerlink" title="spark"></a>spark</h4><ul>
+<li><p>spark数据倾斜时如何优化处理？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">在shuffle阶段会出现数据倾斜，distinct/groupbyKey/reducebykey/join/repartition时会导致这些情况。</div><div class="line">解决方案：</div><div class="line">1）预处理数据，将发生数据倾斜提前解决，一般一天处理一次；对于频繁调度spark的场景使用。</div><div class="line">2）过滤导致倾斜的key：如果这些key对统计分析结果不重要，那么就过滤掉。</div><div class="line">3）阶段聚合：（局部聚合+全局聚合）</div><div class="line">4）将reduce join转为map join：适合大表对小表场景，将小表进行广播</div><div class="line">5）采样倾斜key并分拆join操作： 对导致倾斜的key加上随机前缀，将rdd打散到多个task中</div><div class="line">6）多种方法组合</div></pre></td></tr></table></figure>
+</li>
+<li><p>日志系统的etl环节具体每步都做了哪些事情？数据质量是如何保证的？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">数据采集：从不同的数据来源收集日志，如nginx访问日志，应用日志，用户上报日志等</div><div class="line">数据清洗：过滤一些无效日志，重复日志等</div><div class="line">数据转换：将原始数据转换到适合数据挖掘分析的形式</div><div class="line">数据存储：将格式化后的日志存储到文件系统或数据库中，如hdfs、hbase</div><div class="line">数据分析：通过大数据技术进行数据挖掘分析，得到某些维度或分类数据结果</div><div class="line">数据展示：分析后的数据存储于某数据库，通过报表的形式展现给需求方</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="hbase"><a href="#hbase" class="headerlink" title="hbase"></a>hbase</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">hbase 的特点是什么</div><div class="line">(1) Hbase一个分布式的基于列式存储的数据库,基于Hadoop的hdfs存储，zookeeper进行管理。</div><div class="line">(2) Hbase适合存储半结构化或非结构化数据，对于数据结构字段不够确定或者杂乱无章很难按一个概念去抽取的数据。</div><div class="line">(3) Hbase为null的记录不会被存储.</div><div class="line">(4)基于的表包含rowkey，时间戳，和列族。新写入数据时，时间戳更新，同时可以查询到以前的版本.</div><div class="line">(5) hbase是主从架构。hmaster作为主节点，hregionserver作为从节点。</div><div class="line"></div><div class="line">Hbase和hive 有什么区别</div><div class="line">Hive和Hbase是两种基于Hadoop的不同技术 - -Hive是一种类SQL 的引擎，并且运行MapReduce 任务，Hbase 是一种在Hadoop之上的NoSQL的Key/vale数据库。当然，这两种工具是可以同时使用的。就像用Google 来搜索，用FaceBook 进行社交一样，Hive 可以用来进行统计查询，HBase 可以用来进行实时查询，数据也可以从Hive 写到Hbase，设置再从Hbase 写回Hive。</div><div class="line">Hbase非常适合用来进行大数据的实时查询。Facebook用Hbase 进行消息和实时的分析。它也可以用来统计Facebook的连接数。</div><div class="line"></div><div class="line">描述Hbase的rowKey的设计原则.</div><div class="line">Rowkey长度原则</div><div class="line">Rowkey 是一个二进制码流，Rowkey 的长度被很多开发者建议说设计在10~100 个字节，</div><div class="line">不过建议是越短越好，不要超过16 个字节。</div><div class="line">Rowkey散列原则</div><div class="line">如果Rowkey 是按时间戳的方式递增，不要将时间放在二进制码的前面，建议将Rowkey</div><div class="line">的高位作为散列字段，由程序循环生成，低位放时间字段，这样将提高数据均衡分布在每个</div><div class="line">Regionserver 实现负载均衡的几率。</div><div class="line">Rowkey唯一原则</div><div class="line">必须在设计上保证其唯一性。</div><div class="line"></div><div class="line">请描述如何解决Hbase中region太小和region太大带来的冲突.</div><div class="line">Region过大会发生多次compaction，将数据读一遍并重写一遍到hdfs 上，占用io，region过小会造成多次split，region 会下线，影响访问服务，调整hbase.hregion.max.filesize 为256m.</div><div class="line"></div><div class="line">简述 HBASE中compact用途是什么，什么时候触发，分为哪两种,有什么区别，有哪些相关配置参数？</div><div class="line">在hbase中每当有memstore数据flush到磁盘之后，就形成一个storefile，当storeFile的数量达到一定程度后，就需要将 storefile 文件来进行 compaction 操作。</div><div class="line">Compact 的作用：</div><div class="line">1&gt;.合并文件</div><div class="line">2&gt;.清除过期，多余版本的数据</div><div class="line">3&gt;.提高读写数据的效率</div><div class="line">HBase 中实现了两种 compaction 的方式：minor and major. 这两种 compaction 方式的区别是：</div><div class="line">1、Minor 操作只用来做部分文件的合并操作以及包括 minVersion=0 并且设置 ttl 的过</div><div class="line">期版本清理，不做任何删除数据、多版本数据的清理工作。</div><div class="line">2、Major 操作是对 Region 下的HStore下的所有StoreFile执行合并操作，最终的结果是整理合并出一个文件。</div></pre></td></tr></table></figure>
+<h4 id="flume"><a href="#flume" class="headerlink" title="flume"></a>flume</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">flume-ng中最重要的核心三大组件是source, channel, sink</div><div class="line"></div><div class="line">source负责从源端收集数据，产出event：</div><div class="line">Source是数据源的总称，我们往往设定好源后，数据将源源不断的被抓取或者被推送。</div><div class="line">常见的数据源有：ExecSource，KafkaSource，HttpSource，NetcatSource，JmsSource，AvroSource等等。</div><div class="line"></div><div class="line">channel负责暂存event，以备下游取走消费：</div><div class="line">Channel用于连接Source和Sink，Source将日志信息发送到Channel，Sink从Channel消费日志信息；Channel是中转日志信息的一个临时存储，保存有Source组件传递过来的日志信息。</div><div class="line"></div><div class="line">sink负责消费通道中的event，写到最终的输出端上：</div><div class="line">Sink在设置存储数据时，可以向文件系统中，数据库中，hadoop中储数据，在日志数据较少时，可以将数据存储在文件系中，并且设定一定的时间间隔保存数据。在日志数据较多时，可以将相应的日志数据存储到Hadoop中，便于日后进行相应的数据分析。</div></pre></td></tr></table></figure>
+<h4 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Kafka是最初由Linkedin公司开发，是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统(也可以当做MQ系统)，常见可以用于web/nginx日志、访问日志，消息服务等等，Linkedin于2010年贡献给了Apache基金会并成为顶级开源项目。</div><div class="line"></div><div class="line">Kafka部分名词解释如下：</div><div class="line">Broker：消息中间件处理结点，一个Kafka节点就是一个broker，多个broker可以组成一个Kafka集群。</div><div class="line">Topic：一类消息，例如page view日志、click日志等都可以以topic的形式存在，Kafka集群能够同时负责多个topic的分发。</div><div class="line">Partition：topic物理上的分组，一个topic可以分为多个partition，每个partition是一个有序的队列。</div><div class="line">Segment：partition物理上由多个segment组成，下面2.2和2.3有详细说明。</div><div class="line">offset：每个partition都由一系列有序的、不可变的消息组成，这些消息被连续的追加到partition中。partition中的每个消息都有一个连续的序列号叫做offset,用于partition唯一标识一条消息.</div><div class="line"></div><div class="line">分析过程分为以下4个步骤：</div><div class="line">topic中partition存储分布</div><div class="line">partiton中文件存储方式</div><div class="line">partiton中segment文件存储结构</div><div class="line">在partition中如何通过offset查找message</div><div class="line"></div><div class="line">Kafka高效文件存储设计特点</div><div class="line">Kafka把topic中一个parition大文件分成多个小文件段，通过多个小文件段，就容易定期清除或删除已经消费完文件，减少磁盘占用。</div><div class="line">通过索引信息可以快速定位message和确定response的最大大小。</div><div class="line">通过index元数据全部映射到memory，可以避免segment file的IO磁盘操作。</div><div class="line">通过索引文件稀疏存储，可以大幅降低index文件元数据占用空间大小。</div></pre></td></tr></table></figure>
+<h4 id="streaming-analysis"><a href="#streaming-analysis" class="headerlink" title="streaming analysis"></a>streaming analysis</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">Storm&amp;SparkStreaming</div><div class="line">处理模型,延迟</div><div class="line">虽然这两个框架都提供可扩展性和容错性,它们根本的区别在于他们的处理模型。而Storm处理的是每次传入的一个事件，而Spark Streaming是处理某个时间段窗口内的事件流。因此,Storm处理一个事件可以达到秒内的延迟，而Spark Streaming则有几秒钟的延迟。</div><div class="line"></div><div class="line">容错、数据保证</div><div class="line">在容错数据保证方面的权衡是，Spark Streaming提供了更好的支持容错状态计算。在Storm中,每个单独的记录当它通过系统时必须被跟踪，所以Storm能够至少保证每个记录将被处理一次，但是在从错误中恢复过来时候允许出现重复记录。这意味着可变状态可能不正确地被更新两次。</div><div class="line"></div><div class="line">另一方面，Spark Streaming只需要在批级别进行跟踪处理，因此可以有效地保证每个mini-batch将完全被处理一次，即便一个节点发生故障。(实际上,Storm的 Trident library库也提供了完全一次处理。但是,它依赖于事务更新状态,这比较慢,通常必须由用户实现。)</div><div class="line"></div><div class="line">简而言之,如果你需要秒内的延迟，Storm是一个不错的选择，而且没有数据丢失。如果你需要有状态的计算，而且要完全保证每个事件只被处理一次，Spark Streaming则更好。Spark Streaming编程逻辑也可能更容易，因为它类似于批处理程序(Hadoop)，特别是在你使用批次(尽管是很小的)时。</div><div class="line"></div><div class="line">实现,编程api</div><div class="line">Storm初次是由Clojure实现，而 Spark Streaming是使用Scala. 如果你想看看代码还是让自己的定制时需要注意的地方，这样以便发现每个系统是如何工作的。Storm是由BackType和Twitter开发; Spark Streaming是在加州大学伯克利分校开发的。</div><div class="line"></div><div class="line">Storm 有一个Java API, 也支持其他语言，而Spark Streaming是以Scala编程，当然也支持Java</div><div class="line"></div><div class="line">Spark Streaming一个好的特性是其运行在Spark上. 这样你能够你编写批处理的同样代码，这就不需要编写单独的代码来处理实时流数据和历史数据。</div><div class="line"></div><div class="line">产品支持</div><div class="line">Storm已经发布几年了，在Twitter从2011年运行至今，同时也有其他公司使用，而Spark Streaming是一个新的项目，它从2013年在Sharethrough有一个项目运行。</div><div class="line"></div><div class="line">Hadoop支持</div><div class="line">Storm是一个 Hortonworks Hadoop数据平台上的流解决方案，而Spark Streaming有 MapR的版本还有Cloudera的企业数据平台，Databricks也提供Spark支持。</div><div class="line"></div><div class="line">集群管理集成</div><div class="line">尽管两个系统都运行在它们自己的集群上，Storm也能运行在Mesos, 而Spark Streaming能运行在YARN 和 Mesos上。</div></pre></td></tr></table></figure>
+<h4 id="ELK"><a href="#ELK" class="headerlink" title="ELK"></a>ELK</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">https://www.ibm.com/developerworks/cn/opensource/os-cn-elk/</div><div class="line"></div><div class="line">Elasticsearch</div><div class="line">Elasticsearch 是一个实时的分布式搜索和分析引擎，它可以用于全文搜索，结构化搜索以及分析。它是一个建立在全文搜索引擎 Apache Lucene 基础上的搜索引擎，使用 Java 语言编写。目前，最新的版本是 2.1.0。</div><div class="line">主要特点</div><div class="line">实时分析</div><div class="line">分布式实时文件存储，并将每一个字段都编入索引</div><div class="line">文档导向，所有的对象全部是文档</div><div class="line">高可用性，易扩展，支持集群（Cluster）、分片和复制（Shards 和 Replicas）。见图 2 和图 3</div><div class="line">接口友好，支持 JSON</div><div class="line"></div><div class="line">Logstash</div><div class="line">Logstash 是一个具有实时渠道能力的数据收集引擎。使用 JRuby 语言编写。其作者是世界著名的运维工程师乔丹西塞 (JordanSissel)。</div><div class="line">主要特点</div><div class="line">几乎可以访问任何数据</div><div class="line">可以和多种外部应用结合</div><div class="line">支持弹性扩展</div><div class="line">它由三个主要部分组成，见图 4：</div><div class="line">Shipper－发送日志数据</div><div class="line">Broker－收集数据，缺省内置 Redis</div><div class="line">Indexer－数据写入</div><div class="line"></div><div class="line">Kibana</div><div class="line">Kibana 是一款基于 Apache 开源协议，使用 JavaScript 语言编写，为 Elasticsearch 提供分析和可视化的 Web 平台。它可以在 Elasticsearch 的索引中查找，交互数据，并生成各种维度的表图。</div></pre></td></tr></table></figure>
+<h4 id="machine-learning"><a href="#machine-learning" class="headerlink" title="machine learning"></a>machine learning</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">http://blog.jobbole.com/108395/</div><div class="line">http://blog.jobbole.com/92021/</div><div class="line"></div><div class="line">广义来说，有三种机器学习算法</div><div class="line"></div><div class="line">1、 监督式学习</div><div class="line"></div><div class="line">工作机制：这个算法由一个目标变量或结果变量（或因变量）组成。这些变量由已知的一系列预示变量（自变量）预测而来。利用这一系列变量，我们生成一个将输入值映射到期望输出值的函数。这个训练过程会一直持续，直到模型在训练数据上获得期望的精确度。监督式学习的例子有：回归、决策树、随机森林、K – 近邻算法、逻辑回归等。</div><div class="line"></div><div class="line">2、非监督式学习</div><div class="line"></div><div class="line">工作机制：在这个算法中，没有任何目标变量或结果变量要预测或估计。这个算法用在不同的组内聚类分析。这种分析方式被广泛地用来细分客户，根据干预的方式分为不同的用户组。非监督式学习的例子有：关联算法和 K – 均值算法。</div><div class="line"></div><div class="line">3、强化学习</div><div class="line"></div><div class="line">工作机制：这个算法训练机器进行决策。它是这样工作的：机器被放在一个能让它通过反复试错来训练自己的环境中。机器从过去的经验中进行学习，并且尝试利用了解最透彻的知识作出精确的商业判断。 强化学习的例子有马尔可夫决策过程。</div><div class="line"></div><div class="line">常见机器学习算法名单</div><div class="line"></div><div class="line">这里是一个常用的机器学习算法名单。这些算法几乎可以用在所有的数据问题上：</div><div class="line"></div><div class="line">线性回归</div><div class="line">逻辑回归</div><div class="line">决策树</div><div class="line">SVM</div><div class="line">朴素贝叶斯</div><div class="line">K最近邻算法</div><div class="line">K均值算法</div><div class="line">随机森林算法</div><div class="line">降维算法</div><div class="line">Gradient Boost 和 Adaboost 算法</div><div class="line"></div><div class="line"></div><div class="line">可以先说说主要的一些概念， 然后挑一个比较熟悉的算法来讲， 包括算法原理、使用场景和缺点等</div></pre></td></tr></table></figure>
+<h4 id="大数据处理相关面试题"><a href="#大数据处理相关面试题" class="headerlink" title="大数据处理相关面试题"></a>大数据处理相关面试题</h4><ul>
+<li>TopK问题<br>求最大K个数用最小堆，最小K个数用最大堆</li>
+<li>大数据处理常用排序<br>快速排序/堆排序/归并排序/桶排序</li>
+<li>有a、b两个文件，各存放50亿个url，每个url各占64byte，内存限制是4G，如何找出a、b文件共同的url？</li>
+<li>有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M，要求返回频数最高的100个词。</li>
+<li>现有海量日志数据保存在一个超级大的文件中，该文件无法直接读入内存，要求从中提取某天出访问百度次数最多的那个IP。</li>
+<li>现有海量日志数据保存在一个超级大的文件中，该文件无法直接读入内存，要求从中提取某天出访问百度次数最多的那个IP；假设这个IP总会超过总数的一半。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-12-01, 16:44:10</p>
+        <p><span>最后更新:</span>2017-12-01, 16:48:06</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/01/bigdata/data-developing-md/" title="大数据开发技术知识点">http://blog.moguang.com/2017/12/01/bigdata/data-developing-md/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/12/01/bigdata/data-developing-md/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/12/05/script/parallel-shell-md/">
+                    使用parallel-ssh批量执行远程shell命令
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/11/29/bigdata/distributed-video-convert/">
+                    分布式转码初步方案
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#CAP理论"><span class="toc-number">1.</span> <span class="toc-text">CAP理论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MapReduce"><span class="toc-number">2.</span> <span class="toc-text">MapReduce</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ZooKeeper"><span class="toc-number">3.</span> <span class="toc-text">ZooKeeper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HDFS"><span class="toc-number">4.</span> <span class="toc-text">HDFS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#spark"><span class="toc-number">5.</span> <span class="toc-text">spark</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hbase"><span class="toc-number">6.</span> <span class="toc-text">hbase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flume"><span class="toc-number">7.</span> <span class="toc-text">flume</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka"><span class="toc-number">8.</span> <span class="toc-text">kafka</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#streaming-analysis"><span class="toc-number">9.</span> <span class="toc-text">streaming analysis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ELK"><span class="toc-number">10.</span> <span class="toc-text">ELK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#machine-learning"><span class="toc-number">11.</span> <span class="toc-text">machine learning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#大数据处理相关面试题"><span class="toc-number">12.</span> <span class="toc-text">大数据处理相关面试题</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"大数据开发技术知识点　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/12/05/script/parallel-shell-md/" title="上一篇: 使用parallel-ssh批量执行远程shell命令">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/11/29/bigdata/distributed-video-convert/" title="下一篇: 分布式转码初步方案">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

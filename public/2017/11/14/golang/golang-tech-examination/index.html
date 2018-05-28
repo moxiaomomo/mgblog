@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142package mainimport &quot;fmt&quot;func f1() (result int) &amp;#123;	defer func() &amp;#123;		result++	&amp;#125;()	return 0&amp;#125;func f2() (r int)">
+<meta name="keywords" content="golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang笔试题整理">
+<meta property="og:url" content="http://blog.moguang.com/2017/11/14/golang/golang-tech-examination/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142package mainimport &quot;fmt&quot;func f1() (result int) &amp;#123;	defer func() &amp;#123;		result++	&amp;#125;()	return 0&amp;#125;func f2() (r int)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-14T00:46:41.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang笔试题整理">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142package mainimport &quot;fmt&quot;func f1() (result int) &amp;#123;	defer func() &amp;#123;		result++	&amp;#125;()	return 0&amp;#125;func f2() (r int)">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>golang笔试题整理 | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-golang/golang-tech-examination" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/14/golang/golang-tech-examination/" class="article-date">
+      <time datetime="2017-11-14T00:44:28.000Z" itemprop="datePublished">2017-11-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang笔试题整理
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span> <span class="params">(result <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		result++</div><div class="line">	&#125;()</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span> <span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	t := <span class="number">3</span></div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		t = t + <span class="number">3</span></div><div class="line">	&#125;()</div><div class="line">	<span class="keyword">return</span> t</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span> <span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">		r = r + <span class="number">2</span></div><div class="line">	&#125;(r)</div><div class="line">	<span class="keyword">return</span> <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(f1())</div><div class="line">	fmt.Println(f2())</div><div class="line">	fmt.Println(f3())</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：defer的一些坑</span></div><div class="line"><span class="comment">// return xxx可以改写成一下规则：</span></div><div class="line"><span class="comment">// 返回值 = xxx</span></div><div class="line"><span class="comment">// 调用defer函数</span></div><div class="line"><span class="comment">// 空的return</span></div><div class="line"></div><div class="line"><span class="comment">// 输出：</span></div><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="comment">// 3</span></div><div class="line"><span class="comment">// 1</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">loop</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</div><div class="line">		fmt.Printf(<span class="string">"%d "</span>, i)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">go</span> loop()</div><div class="line">	loop()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点: 线程的执行顺序</span></div><div class="line"><span class="comment">// 主线程首先退出，goroutine无法执行</span></div><div class="line"></div><div class="line"><span class="comment">// 输出:</span></div><div class="line"><span class="comment">// 0 1 2 3 4 5 6 7 8 9</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> ch1 <span class="keyword">chan</span> <span class="keyword">int</span> = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</div><div class="line"><span class="keyword">var</span> ch2 <span class="keyword">chan</span> <span class="keyword">int</span> = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker1</span><span class="params">(s <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">	fmt.Println(s)</div><div class="line">	ch1 &lt;- &lt;-ch2</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker2</span><span class="params">(s <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">	ch1 &lt;- &lt;-ch2</div><div class="line">	fmt.Println(s)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">go</span> worker1(<span class="string">"work hard."</span>)</div><div class="line">	<span class="keyword">go</span> worker2(<span class="string">"just for fun!"</span>)</div><div class="line">	&lt;-ch1</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：channel的执行顺序</span></div><div class="line"><span class="comment">// ch1 &lt;- &lt;-ch2会引起当前goroutine阻塞,</span></div><div class="line"><span class="comment">// &lt;-ch1 会引起主线程阻塞,</span></div><div class="line"><span class="comment">// 所有goroutine都在阻塞，引起死锁</span></div><div class="line"></div><div class="line"><span class="comment">// 输出:</span></div><div class="line"><span class="comment">// work hard.</span></div><div class="line"><span class="comment">// fatal error: all goroutines are asleep - deadlock!</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</div><div class="line">	Name <span class="keyword">string</span></div><div class="line">	Age  <span class="keyword">int</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]*student)</div><div class="line">	stus := []student&#123;</div><div class="line">		&#123;Name: <span class="string">"zhao"</span>, Age: <span class="number">24</span>&#125;,</div><div class="line">		&#123;Name: <span class="string">"chen"</span>, Age: <span class="number">23</span>&#125;,</div><div class="line">		&#123;Name: <span class="string">"wang"</span>, Age: <span class="number">22</span>&#125;,</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> _, stu := <span class="keyword">range</span> stus &#123;</div><div class="line">		m[stu.Name] = &amp;stu</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</div><div class="line">		<span class="built_in">println</span>(k, <span class="string">"--"</span>, v.Name)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：遍历与指针</span></div><div class="line"><span class="comment">// m[stu.Name] = &amp;stu： 每次赋值的&amp;stu其实指向同一个地址,</span></div><div class="line"><span class="comment">// 最后打印的值为最后一次遍历的student对象的值。</span></div><div class="line"></div><div class="line"><span class="comment">// 输出:</span></div><div class="line"><span class="comment">// zhao -- wang</span></div><div class="line"><span class="comment">// chen -- wang</span></div><div class="line"><span class="comment">// wang -- wang</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="keyword">type</span> People <span class="keyword">struct</span>&#123;&#125;</div><div class="line"><span class="keyword">type</span> Teacher <span class="keyword">struct</span> &#123;</div><div class="line">	People</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *People)</span> <span class="title">Walk</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(<span class="string">"People Walk"</span>)</div><div class="line">	p.Work()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *People)</span> <span class="title">Work</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(<span class="string">"People Work"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *Teacher)</span> <span class="title">Work</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(<span class="string">"Teacher Work"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	t := Teacher&#123;&#125;</div><div class="line">	t.Walk()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点: golang的组合继承</span></div><div class="line"><span class="comment">// 虽然被组合的People类的方法升级成为外部Teacher组合类型的方法，</span></div><div class="line"><span class="comment">// 但p.Work()调用时接收者仍然是People, 因此打印"People Work"</span></div><div class="line"></div><div class="line"><span class="comment">// 输出:</span></div><div class="line"><span class="comment">// People Walk</span></div><div class="line"><span class="comment">// People Work</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">()</span> []<span class="title">func</span><span class="params">()</span></span>  &#123;</div><div class="line">    <span class="keyword">var</span> funs []<span class="function"><span class="keyword">func</span><span class="params">()</span></span></div><div class="line">    <span class="title">for</span> <span class="title">i</span>:=0;<span class="title">i</span>&lt;2 ;<span class="title">i</span>++  &#123;</div><div class="line">        funs = <span class="built_in">append</span>(funs, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">            <span class="built_in">println</span>(&amp;i,i)</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> funs</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    funs:=test()</div><div class="line">    <span class="keyword">for</span> _,f:=<span class="keyword">range</span> funs&#123;</div><div class="line">        f()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：闭包延迟求值</span></div><div class="line"></div><div class="line"><span class="comment">// 输出：</span></div><div class="line"><span class="comment">// 0xc42000e110 2</span></div><div class="line"><span class="comment">// 0xc42000e110 2</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">    <span class="string">"fmt"</span></div><div class="line">    <span class="string">"reflect"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main1</span><span class="params">()</span></span>  &#123;</div><div class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">       <span class="keyword">if</span> err:=<span class="built_in">recover</span>();err!=<span class="literal">nil</span>&#123;</div><div class="line">           fmt.Println(err)</div><div class="line">       &#125;<span class="keyword">else</span> &#123;</div><div class="line">           fmt.Println(<span class="string">"fatal"</span>)</div><div class="line">       &#125;</div><div class="line">    &#125;()</div><div class="line"></div><div class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">panic</span>(<span class="string">"defer panic"</span>)</div><div class="line">    &#125;()</div><div class="line">    <span class="built_in">panic</span>(<span class="string">"panic"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：panic仅有最后一个被捕获</span></div><div class="line"></div><div class="line"><span class="comment">// 输出：</span></div><div class="line"><span class="comment">// defer panic</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"sync"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> UserAges <span class="keyword">struct</span> &#123;</div><div class="line">	ages <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></div><div class="line">	sync.Mutex</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ua *UserAges)</span> <span class="title">Add</span><span class="params">(name <span class="keyword">string</span>, age <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	ua.Lock()</div><div class="line">	<span class="keyword">defer</span> ua.Unlock()</div><div class="line">	ua.ages[name] = age</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(ua *UserAges)</span> <span class="title">Get</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> age, ok := ua.ages[name]; ok &#123;</div><div class="line">		<span class="keyword">return</span> age</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">-1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	ua := UserAges&#123;&#125;</div><div class="line">	ua.Get(<span class="string">"yourname"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：map线程安全</span></div><div class="line"><span class="comment">// 有可能出现：fatal error: concurrent map read and map write</span></div><div class="line"><span class="comment">// 修改， Get方法加锁：</span></div><div class="line"><span class="comment">//func (ua *UserAges) Get(name string) int &#123;</span></div><div class="line"><span class="comment">//    ua.Lock()</span></div><div class="line"><span class="comment">//    defer ua.Unlock()</span></div><div class="line"><span class="comment">//    if age, ok := ua.ages[name]; ok &#123;</span></div><div class="line"><span class="comment">//        return age</span></div><div class="line"><span class="comment">//    &#125;</span></div><div class="line"><span class="comment">//    return -1</span></div><div class="line"><span class="comment">//&#125;</span></div></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="keyword">type</span> People <span class="keyword">interface</span> &#123;</div><div class="line">	Speak(<span class="keyword">string</span>) <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">type</span> Stduent <span class="keyword">struct</span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(stu *Stduent)</span> <span class="title">Speak</span><span class="params">(name <span class="keyword">string</span>)</span> <span class="params">(talk <span class="keyword">string</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> name == <span class="string">"xiaoming"</span> &#123;</div><div class="line">		talk = <span class="string">"xiaoming is a good boy."</span></div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		talk = <span class="string">"who's that guy?"</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	<span class="keyword">var</span> peo People = Stduent&#123;&#125;</div><div class="line">	fmt.Println(peo.Speak(<span class="string">"xiaoming"</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点: 接口实现与类型检查</span></div><div class="line"><span class="comment">// 对于赋值给接口的类型，会有严格的类型检查，不允许做A到A*的转换</span></div><div class="line"><span class="comment">// 类型A的方法集（method set）是类型*A的一个子集</span></div><div class="line"></div><div class="line"><span class="comment">// 输出:</span></div><div class="line"><span class="comment">// ./p7.go:23: cannot use Stduent literal (type Stduent) as type People in assignment:</span></div><div class="line"><span class="comment">//	Stduent does not implement People (Speak method has pointer receiver)</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-11-14, 08:44:28</p>
+        <p><span>最后更新:</span>2017-11-14, 08:46:41</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/14/golang/golang-tech-examination/" title="golang笔试题整理">http://blog.moguang.com/2017/11/14/golang/golang-tech-examination/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/11/14/golang/golang-tech-examination/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/11/14/golang/golang-tech-keys/">
+                    golang知识点整理(持续更新)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/11/10/golang/a-way-to-understand-goroutine/">
+                    [Golang]另一角度理解goroutine
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"golang笔试题整理　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/11/14/golang/golang-tech-keys/" title="上一篇: golang知识点整理(持续更新)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/11/10/golang/a-way-to-understand-goroutine/" title="下一篇: [Golang]另一角度理解goroutine">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

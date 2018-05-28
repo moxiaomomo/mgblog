@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="翻译自: https://www.cubrid.org/blog/understanding-tcp-ip-network-stack 目前我们的internet服务都是基于TCP/IP来开发的, 无法想像没有TCP/IP的Internet会是什么样子. 因此无论是在逻辑调整, 故障排除，还是发现新技术方面, 理解网络中数据的传输原理会帮助我们多方面提高服务性能表现.本文会介绍基于Linux系统及">
+<meta name="keywords" content="networking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解TCP&#x2F;IP协议栈(1)">
+<meta property="og:url" content="http://blog.moguang.com/2017/10/26/network/Understand-TCP-IP-Stack/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="翻译自: https://www.cubrid.org/blog/understanding-tcp-ip-network-stack 目前我们的internet服务都是基于TCP/IP来开发的, 无法想像没有TCP/IP的Internet会是什么样子. 因此无论是在逻辑调整, 故障排除，还是发现新技术方面, 理解网络中数据的传输原理会帮助我们多方面提高服务性能表现.本文会介绍基于Linux系统及">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.moguang.com/img/tcp_ip_stat.png">
+<meta property="og:image" content="http://blog.moguang.com/img/tcp_payload.png">
+<meta property="og:updated_time" content="2017-10-26T09:21:29.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解TCP&#x2F;IP协议栈(1)">
+<meta name="twitter:description" content="翻译自: https://www.cubrid.org/blog/understanding-tcp-ip-network-stack 目前我们的internet服务都是基于TCP/IP来开发的, 无法想像没有TCP/IP的Internet会是什么样子. 因此无论是在逻辑调整, 故障排除，还是发现新技术方面, 理解网络中数据的传输原理会帮助我们多方面提高服务性能表现.本文会介绍基于Linux系统及">
+<meta name="twitter:image" content="http://blog.moguang.com/img/tcp_ip_stat.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>理解TCP/IP协议栈(1) | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-network/Understand-TCP-IP-Stack" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/26/network/Understand-TCP-IP-Stack/" class="article-date">
+      <time datetime="2017-10-26T09:09:45.000Z" itemprop="datePublished">2017-10-26</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      理解TCP/IP协议栈(1)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>翻译自: <a href="https://www.cubrid.org/blog/understanding-tcp-ip-network-stack" target="_blank" rel="external">https://www.cubrid.org/blog/understanding-tcp-ip-network-stack</a></p>
+<p>目前我们的internet服务都是基于TCP/IP来开发的, 无法想像没有TCP/IP的Internet会是什么样子. 因此无论是在逻辑调整, 故障排除，还是发现新技术方面, 理解网络中数据的传输原理会帮助我们多方面提高服务性能表现.<br>本文会介绍基于Linux系统及硬件层数据流和控制流的网络协议栈体系.<br>TCP/IP重点特征<br>我应该怎么设计网络协议来保证数据的快速传输， 并保证数据有序不丢失？<br>TCP and IP<br>严格来说由于TCP和IP在不同层次上, 分开来描述它们也是可以的. 不过这里将他们描述为一个整体.</p>
+<ol>
+<li>面向连接<br>首先,  两个终端(本地和远程)建立了连接, 数据开始传输. 此处”TCP connection identifier”是两个终端的地址组合, 类型为<code>&lt;local IP address, local port number, remote IP address, remote port number&gt;</code>.</li>
+<li>双向字节流<br>双向的数据以字节流来进行通讯.</li>
+<li>按序传输<br>接收者按发送者发送顺序来接收数据. 因此数据是要求有序的, 一个32位int类型的数据用于标志次序.<a id="more"></a></li>
+<li>ACK保证可靠性<br>当发送者向接收者发送数据后并没有收到ACK, 发送者会重发TCP数据. 因此, 发送者会缓存没有从接收到ACK的数据.</li>
+<li>流控制<br>发送者会尽可能多的发送数据. 接收者告知发送者它能接收的最大字节数(空闲的buffer size, 接收窗口); 发送者基于这个最大字节数尽可能快的发送数据.</li>
+<li>拥塞控制<br>拥塞窗口 用于分割接收窗口,通过限制网络数据流来避免网络拥塞. 类似接收窗口, 发送者会根据接收者的拥塞窗口大小限制而使用多种策略来发送尽可能多的数据, 策略比如有TCP Vegas, Westwood, BIC, 和CUBIC. 和流控制不同的是, 拥塞控制只在发送者上实现.<br>数据传输<br>网络栈包含多层, Figure 1展示了每层的类型.<br><img src="/img/tcp_ip_stat.png" alt="tcp/ip layer"><br>Figure 1: TCP/IO网络栈在数据传输时各层的处理过程.<br>可以简单分为三层结构:</li>
+</ol>
+<ul>
+<li><p>用户层面</p>
+</li>
+<li><p>内核层面</p>
+</li>
+<li><p>设备层面</p>
+</li>
+</ul>
+<p>用户层面和内核层面的任务由CPU来处理. 用户层和内核层称为”host”, 以此与设备层区分. 这里的设备指的是用于发送/接收数据包的Network Interface Card (NIC). 更准确的术语叫”LAN card”.<br>用户层面: 首先应用程序创建要发送的数据 (Figure 1中”User data”)并调用系统函数write()来发送数据. 假设socket已创建好(Figure 1中的fd). 当进入系统调用时, 系统进入内核态.<br>POSIX系列操作系统(包括Linux, Unix)通过文件描述符将socket暴露给应用程序. 在此类系统中, socket可看作是一种文件. 文件层执行简单校验后调用socket函数来连接到文件结构.<br>内核socket有两个buffer:</p>
+<ul>
+<li>send socket buffer: 用于发送数据;</li>
+<li>receive socket buffer: 用于接收数据.</li>
+</ul>
+<p>当系统函数write被调用时, 数据将从用户区拷贝到内核区内存并且添加到socket buffer的末端, 这样按顺序发送数据. 如Figure 1, 浅灰色框包含的部分表示的是在发送buffer中的数据. 然后调用TCP.<br>TCP Control Block (TCB)结构用于连接socket. TCB包含请求处理TCP连接的数据, 包括: 连接状态(LISTEN, ESTABLISHED, TIME_WAIT), 接收窗口, 拥塞窗口, 序号, 重发时钟, 等等.<br>如果当前TCP状态允许数据传输, 一个新的TCP段(也叫packet)将被创建. 如果由于流控制这些原因无法传输数据, 系统调用会结束并且系统返回到 用户态(也就是将控制权交回应用程序).<br>Figure 2展示了两个TCP段:</p>
+<ul>
+<li><p>TCP头;</p>
+</li>
+<li><p>内容载体payload.<br><img src="/img/tcp_payload.png" alt="tcp segment"><br>Figure 2: TCP Frame Structure (source).</p>
+</li>
+</ul>
+<p>payload包含了未接收到ACK的socket buffer内容. payload的最大长度为接收窗口大小, 拥塞窗口, maximum segment size (MSS)三者中的最大值.<br>然后计算TCP检验码: 计算元素包含头部信息(IP addresses, segment length, and protocol number). 然后根据TCP状态发送一个或多个packet.<br>实际上目前网络栈的TCP校验码由NIC计算而非内核. 不过我们认为内核计算TCP校验码更加方便.<br>TCP段传输到IP层: IP层在TCP段头部加上IP头信息用于IP路由. IP routing是不断跳到中间IP并最终到达目标IP的过程.<br>IP包传输到链路层: 链路层会使用ARP协议来找到下一个跳转IP的MAC地址. 它会将Ethernet头信息加到packet上, 这样一个host数据packet便完整了.<br>经过IP routing后, 经过NIC将数据传输到下一个跳转IP, 此过程会调用NIC驱动.<br>这个时候, 如果运行了tcpdump或Wireshark等抓包程序, 内核将会将数据包拷贝到这种程序的缓冲区. 这种情况下接收的数据包将在驱动层直接被抓取. 一般流量整形功能都是在链路层实现的.<br>链路驱动根据NIC制造商提供的NIC驱动通讯协议来请求传输数据包.<br>接收到包传输请求后, NIC将数据包从主存中拷贝到它的内存并发送到网络中. 这时根据以太网标准, 它将IFG (Inter-Frame Gap), preamble, 及CRC信息到packet中. IFG和preamble用来区分包的开始位置(专业术语, 帧), CRC用来保护数据(和TCP及IP checksum目的一样). 数据包基于以太网物理速率及流控制条件来开始传输.<br>当NIC发送一个包, NIC在主机CPU产生一个中断. 每个中断有他的中断标志号, 然后OS根据中断号来调用对应的驱动来处理中断. 驱动在启动时会向系统注册一个函数, 用于处理中断指令. The OS calls the interrupt handler and then the interrupt handler returns the transmitted packet to the OS(??).<br>目前我们讨论了当应用程序请求write时, 内核和设备处理数据传输的过程. 不过, 没有来自应用程序的write请求, 内核也可以直接通过TCP来传输数据包. 比如当接收到一个ACK且接收窗口已扩展时, 内核将创建一个包含socket buffer剩余数据的TCP段, 并发送给接收者.</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-10-26, 17:09:45</p>
+        <p><span>最后更新:</span>2017-10-26, 17:21:29</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/10/26/network/Understand-TCP-IP-Stack/" title="理解TCP/IP协议栈(1)">http://blog.moguang.com/2017/10/26/network/Understand-TCP-IP-Stack/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/10/26/network/Understand-TCP-IP-Stack/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/10/31/bigdata/es-backup-restore-md/">
+                    ElasticSearch数据备份与恢复
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">
+                    [Linux]用户空间与内核空间
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"理解TCP/IP协议栈(1)　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/31/bigdata/es-backup-restore-md/" title="上一篇: ElasticSearch数据备份与恢复">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/10/25/linux/UserSpace-vs-KernelSpace/" title="下一篇: [Linux]用户空间与内核空间">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="源文: http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html 理解用户空间及内核空间对于增强理解Linux内核知识是非常重要的。  这里的用户空间及内核空间对应于虚拟地址空间. 每个linux中的进程占用独立的虚拟空间. 在32位架构linux系统中, 用户空间至少对应3GB虚拟空间, 而内核">
+<meta name="keywords" content="linux kernel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Linux]用户空间与内核空间">
+<meta property="og:url" content="http://blog.moguang.com/2017/10/25/linux/UserSpace-vs-KernelSpace/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="源文: http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html 理解用户空间及内核空间对于增强理解Linux内核知识是非常重要的。  这里的用户空间及内核空间对应于虚拟地址空间. 每个linux中的进程占用独立的虚拟空间. 在32位架构linux系统中, 用户空间至少对应3GB虚拟空间, 而内核">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-25T06:44:09.317Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Linux]用户空间与内核空间">
+<meta name="twitter:description" content="源文: http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html 理解用户空间及内核空间对于增强理解Linux内核知识是非常重要的。  这里的用户空间及内核空间对应于虚拟地址空间. 每个linux中的进程占用独立的虚拟空间. 在32位架构linux系统中, 用户空间至少对应3GB虚拟空间, 而内核">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>[Linux]用户空间与内核空间 | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-linux/UserSpace-vs-KernelSpace" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/25/linux/UserSpace-vs-KernelSpace/" class="article-date">
+      <time datetime="2017-10-25T06:42:48.000Z" itemprop="datePublished">2017-10-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [Linux]用户空间与内核空间
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>源文: <a href="http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html" target="_blank" rel="external">http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html</a></p>
+<p>理解用户空间及内核空间对于增强理解Linux内核知识是非常重要的。</p>
+<ul>
+<li>这里的用户空间及内核空间对应于虚拟地址空间.</li>
+<li>每个linux中的进程占用独立的虚拟空间.</li>
+<li>在32位架构linux系统中, 用户空间至少对应3GB虚拟空间, 而内核空间至多占1GB空间.(普遍情况)</li>
+<li>内核空间的虚拟地址空间共享给所有进程使用.</li>
+<li>当一个进程活跃时, 要么处于用户态, 要么处于内核态.<a id="more"></a></li>
+<li>当一个进程运行在用户态时, 意味着CPU正在运行用户空间中的代码.</li>
+<li>用户态进程权限会受限, 并由CPU中的标志flag控制.</li>
+<li>虽然内核内存地址可在进程的内存映射表中访问得到, 但用户空间代码并不被允许去访问内核空间代码.(不过可通过特殊方法做到).</li>
+<li>当一个进程想要进行类似拷贝外部数据到它内存空间的操作(如打开某个文件), 它必须通过系统调用来与内核通讯.</li>
+<li>每种CPU架构都有它独特方式去进行系统调用, 但底层基础都是一致的, 也就是:</li>
+<li>一条指令被执行时, CPU将flag标志为”privileged mode”, 同时跳到制定的内核空间地址, 也就是”系统调用入口地址”.( 关于系统调用可参考另一篇文章)</li>
+<li>现在系统调用已进入内核空间, 进程也就进入内核态并在内核空间内存中执行指令.</li>
+<li>同样以系统调用为例, 要找到所请求的文件, 内核需要与文件系统驱动进行商议(确认文件在哪个位置) 并阻塞设备驱动 (从disk中加载必要的块) 或网络设备驱动 (从远程源中加载文件).</li>
+<li>这些驱动可以是内建或额外加载的模块， 而重点是他们都是内核空间的一部分.</li>
+<li>在系统调用请求内核拷贝模块代码和数据到内核空间, 并在内核态中运行它的初始化代码后, 模块加载便完成.</li>
+<li>如果内核不能立刻完成请求处理则将进程置为睡眠状态, 当请求处理完成后系统调用再返回到用户态.</li>
+<li>回到用户态意味着将CPU寄存器恢复到进入内核态之前的状态, 同时将CPU优先级置为none-privilege.</li>
+<li>除了系统调用, 还有一些操作也可以使CPU进入内核态, 比如</li>
+</ul>
+<ol>
+<li><p>缺页错误- 如果进程尝试访问一个没有对应物理地址的虚拟内存地址时, CPU将进入内核态并跳到缺页错误处理模块, 判断虚拟地址是否有效, 如果有效则尝试创建一个物理页给该虚拟地址, 否则发出段错误信号(SIGSEGV).</p>
+</li>
+<li><p>中断- 当CPU接收到来自硬件的中断指令时, 将进入内核态并执行中断处理方法。当内核完成指令处理时, CPU返回用户态并从上次代码中断位置继续执行.</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-10-25, 14:42:48</p>
+        <p><span>最后更新:</span>2017-10-25, 14:44:09</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/" title="[Linux]用户空间与内核空间">http://blog.moguang.com/2017/10/25/linux/UserSpace-vs-KernelSpace/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/10/25/linux/UserSpace-vs-KernelSpace/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/10/26/network/Understand-TCP-IP-Stack/">
+                    理解TCP/IP协议栈(1)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/10/24/script/shell-curl-httpheader/">
+                    [shell]curl结果获取http header的问题
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"[Linux]用户空间与内核空间　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/26/network/Understand-TCP-IP-Stack/" title="上一篇: 理解TCP/IP协议栈(1)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/10/24/script/shell-curl-httpheader/" title="下一篇: [shell]curl结果获取http header的问题">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

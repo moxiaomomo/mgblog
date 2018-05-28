@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="hadoop-spark错误问题总结1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class具体错误日志:12345678910111213141516171819202122Caused by: java.lang.NoClassDefFoundError: scala/colle">
+<meta name="keywords" content="bigdata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop-spark错误问题总结">
+<meta property="og:url" content="http://blog.moguang.com/2017/10/16/bigdata/hadoop-spark-errors/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="hadoop-spark错误问题总结1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class具体错误日志:12345678910111213141516171819202122Caused by: java.lang.NoClassDefFoundError: scala/colle">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-16T07:20:04.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hadoop-spark错误问题总结">
+<meta name="twitter:description" content="hadoop-spark错误问题总结1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class具体错误日志:12345678910111213141516171819202122Caused by: java.lang.NoClassDefFoundError: scala/colle">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>hadoop-spark错误问题总结 | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-bigdata/hadoop-spark-errors" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/16/bigdata/hadoop-spark-errors/" class="article-date">
+      <time datetime="2017-10-16T06:55:21.000Z" itemprop="datePublished">2017-10-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      hadoop-spark错误问题总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bigdata/">bigdata</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="hadoop-spark错误问题总结"><a href="#hadoop-spark错误问题总结" class="headerlink" title="hadoop-spark错误问题总结"></a>hadoop-spark错误问题总结</h2><h4 id="1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class"><a href="#1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class" class="headerlink" title="1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class"></a>1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</div><div class="line">    at org.elasticsearch.spark.rdd.AbstractEsRDDIterator.&lt;init&gt;(AbstractEsRDDIterator.scala:28)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDDIterator.&lt;init&gt;(ScalaEsRowRDD.scala:49)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDD.compute(ScalaEsRowRDD.scala:45)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDD.compute(ScalaEsRowRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:70)</div><div class="line">    at org.apache.spark.scheduler.Task.run(Task.scala:86)</div><div class="line">    at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:274)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</div><div class="line">    ... 1 more</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>原因分析及解决方法:</p>
+<ul>
+<li>spark所依赖的scala版本与系统安装的scala版本不一致<br><br>  通过检查, 系统安装了scala2.11.1, spark依赖的包为2.11.8; 统一之后， 问题依然存在</li>
+<li>scala2.11.8中并不存在类GenTraversableOnce<br><br>  通过其API Reference可知, 该类是有定义的， 而且spark下关于sparkSQL的example运行测试通过;</li>
+<li>代码自身问题, 调用API方式或配置不当<br><br>原有代码(参照了官方scala示例):<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">conf = SparkConf()</div><div class="line">conf.setMaster(<span class="string">"spark://192.168.1.181:7077"</span>).setAppName(<span class="string">"es_spark"</span>)</div><div class="line">conf.set(<span class="string">"es.nodes"</span>, <span class="string">"192.168.1.181"</span>)</div><div class="line">conf.set(<span class="string">"es.port"</span>, <span class="string">"9200"</span>)</div><div class="line">conf.set(<span class="string">"es.resource"</span>, <span class="string">"web-2016.12.26/web"</span>)</div><div class="line">sc = SparkContext(conf=conf)</div><div class="line">sqc = SQLContext(sc)</div><div class="line">df = sqc.read.format(<span class="string">"org.elasticsearch.spark.sql"</span>  ).load(<span class="string">"web-2016.12.26/web"</span>)</div><div class="line">df.printSchema()</div><div class="line"><span class="keyword">print</span> df.first()   <span class="comment"># 这里开始报错</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>改用根据rdd来创建view的方法, 修改后如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">conf = &#123;</div><div class="line">    <span class="string">"es.nodes"</span>: <span class="string">"192.168.1.181"</span>,</div><div class="line">    <span class="string">"es.port"</span>: <span class="string">"9200"</span>,</div><div class="line">    <span class="string">"es.resource"</span>: <span class="string">"web-2016.12.26/web"</span>,</div><div class="line">    <span class="string">"es.read.field.include"</span>: <span class="string">"city,uri,unique"</span>,</div><div class="line">&#125;</div><div class="line">query = <span class="string">'''&#123;</span></div><div class="line">      "query": &#123;</div><div class="line">        "match": &#123;"city":"Guangzhou"&#125;</div><div class="line">      &#125;</div><div class="line">  &#125;'''</div><div class="line">conf[<span class="string">'es.query'</span>] = query</div><div class="line">rdd = sc.newAPIHadoopRDD(</div><div class="line">    <span class="string">"org.elasticsearch.hadoop.mr.EsInputFormat"</span>,</div><div class="line">    <span class="string">"org.apache.hadoop.io.NullWritable"</span>,</div><div class="line">    <span class="string">"org.elasticsearch.hadoop.mr.LinkedMapWritable"</span>,</div><div class="line">    conf=es_conf).map(<span class="keyword">lambda</span> x: x[<span class="number">1</span>])</div><div class="line">schemaUsers = ss.createDataFrame(rdd)</div><div class="line">schemaUsers.createOrReplaceTempView(<span class="string">"users"</span>)</div><div class="line">res = ss.sql(<span class="string">"select uri from users"</span>)</div><div class="line"><span class="keyword">print</span> (res.first())</div></pre></td></tr></table></figure></p>
+<h4 id="2-NativeCodeLoader-Unable-to-load-native-hadoop-library-for-your-platform"><a href="#2-NativeCodeLoader-Unable-to-load-native-hadoop-library-for-your-platform" class="headerlink" title="2. NativeCodeLoader: Unable to load native-hadoop library for your platform"></a>2. NativeCodeLoader: Unable to load native-hadoop library for your platform</h4><p>原因分析及解决方法:</p>
+<blockquote>
+<p>主要是jre目录下缺少了libhadoop.so和libsnappy.so两个文件。具体是，spark-shell依赖的是scala，scala依赖的是JAVA_HOME下的jdk，libhadoop.so和libsnappy.so两个文件应该放到$JAVA_HOME/jre/lib/amd64下面。<br>这两个so：libhadoop.so和libsnappy.so。前一个so可以在HADOOP_HOME下找到，如hadoop\lib\native。第二个libsnappy.so需要下载一个snappy-1.1.0.tar.gz，然后./configure，make编译出来，编译成功之后在.libs文件夹下。<br>当这两个文件准备好后再次启动spark shell不会出现这个问题.<br>参考自: <a href="https://www.zhihu.com/question/23974067/answer/26267153" target="_blank" rel="external">https://www.zhihu.com/question/23974067/answer/26267153</a></p>
+</blockquote>
+<h4 id="3-Initial-job-has-not-accepted-any-resources-check-your-cluster-UI-to-ensure-that-workers-are-registered-and-have-sufficient-memory"><a href="#3-Initial-job-has-not-accepted-any-resources-check-your-cluster-UI-to-ensure-that-workers-are-registered-and-have-sufficient-memory" class="headerlink" title="3. Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient memory"></a>3. Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient memory</h4><p>原因分析及解决方法:<br><br>默认情况下spark.cores.max是不限制的， 运行第一个spark application时， 会分配所有的cpu来执行任务；<br><br>因此第二个application很可能就得不到足够的资源了。假设每个任务最多获取一半的cpu资源， 假设总共节点的core为8, 我们可以设置为spark.cores.max=4。</p>
+<h4 id="4-NoSuchMethodError-org-apache-hadoop-http-HttpConfig-isSecure-Z"><a href="#4-NoSuchMethodError-org-apache-hadoop-http-HttpConfig-isSecure-Z" class="headerlink" title="4. NoSuchMethodError: org.apache.hadoop.http.HttpConfig.isSecure()Z"></a>4. NoSuchMethodError: org.apache.hadoop.http.HttpConfig.isSecure()Z</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">btadmin@master:/usr/local/spark/$ bin/spark-submit --class org.apache.spark.examples.JavaSparkPi --master yarn --deploy-mode client examples/jars/spark-examples_2.11-2.0.2.jar</div><div class="line">16/12/30 10:00:06 WARN Utils: Your hostname, node1 resolves to a loopback address: 127.0.1.1; using 192.168.1.191 instead (on interface eth0)</div><div class="line">16/12/30 10:00:07 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address</div><div class="line">Exception in thread &quot;main&quot; java.lang.NoSuchMethodError: org.apache.hadoop.http.HttpConfig.isSecure()Z</div><div class="line"> at org.apache.hadoop.yarn.webapp.util.WebAppUtils.getResolvedRMWebAppURLWithoutScheme(WebAppUtils.java:101)</div><div class="line"> at org.apache.hadoop.yarn.webapp.util.WebAppUtils.getProxyHostAndPort(WebAppUtils.java:90)</div><div class="line"> at org.apache.spark.deploy.yarn.YarnRMClient.getAmIpFilterParams(YarnRMClient.scala:115)</div><div class="line"> at org.apache.spark.deploy.yarn.ApplicationMaster.addAmIpFilter(ApplicationMaster.scala:582)</div><div class="line"> at org.apache.spark.deploy.yarn.ApplicationMaster.runExecutorLauncher(ApplicationMaster.scala:406)</div><div class="line"> at org.apache.spark.deploy.yarn.ApplicationMaster.run(ApplicationMaster.scala:247)</div><div class="line"> at org.apache.spark.deploy.yarn.ApplicationMaster$$anonfun$main$1.apply$mcV$sp(ApplicationMaster.scala:749)</div><div class="line"> at org.apache.spark.deploy.SparkHadoopUtil$$anon$1.run(SparkHadoopUtil.scala:71)</div><div class="line"> at org.apache.spark.deploy.SparkHadoopUtil$$anon$1.run(SparkHadoopUtil.scala:70)</div><div class="line"> at java.security.AccessController.doPrivileged(Native Method)</div><div class="line"> at javax.security.auth.Subject.doAs(Subject.java:415)</div><div class="line"> at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1698)</div><div class="line"> at org.apache.spark.deploy.SparkHadoopUtil.runAsSparkUser(SparkHadoopUtil.scala:70)</div><div class="line"> at org.apache.spark.deploy.yarn.ApplicationMaster$.main(ApplicationMaster.scala:747)</div><div class="line"> at org.apache.spark.deploy.yarn.ExecutorLauncher$.main(ApplicationMaster.scala:774)</div><div class="line"> at org.apache.spark.deploy.yarn.ExecutorLauncher.main(ApplicationMaster.scala)</div></pre></td></tr></table></figure></p>
+<p>原因分析及解决方法:<br>spark中部分jar文件与hadoop的不兼容, 当前spark-defaults.conf中设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark.yarn.jars hdfs:///sparkjars/*   # jar文件从$&#123;SPARK_HOME&#125;/jars/中已上传到hdfs</div></pre></td></tr></table></figure></p>
+<p>使用另一种方法代替jar库引用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark.yarn.archive hdfs://master:9000/user/btadmin/.sparkStaging/application_1483167145424_0004/__spark_libs__8967711398799981387.zip</div></pre></td></tr></table></figure></p>
+<h4 id="5-Could-not-find-or-load-main-class-org-apache-spark-deploy-yarn-ExecutorLauncher"><a href="#5-Could-not-find-or-load-main-class-org-apache-spark-deploy-yarn-ExecutorLauncher" class="headerlink" title="5.Could not find or load main class org.apache.spark.deploy.yarn.ExecutorLauncher"></a>5.Could not find or load main class org.apache.spark.deploy.yarn.ExecutorLauncher</h4><p>spark-defaults.conf的参数spark.yarn.jars配置错了， 参考:<br><a href="http://blog.csdn.net/dax1n/article/details/53001884" target="_blank" rel="external">http://blog.csdn.net/dax1n/article/details/53001884</a></p>
+<p>需要将以下配置项(假设jar库都放在了hdfs)</p>
+<blockquote>
+<p>spark.yarn.jars hdfs://your.hdfs.host:port/sparkjars/</p>
+</blockquote>
+<p>修改为</p>
+<blockquote>
+<p>spark.yarn.jars hdfs://your.hdfs.hos:port/sparkjars/*</p>
+</blockquote>
+<h4 id="6-java-nio-channels-ClosedChannelException"><a href="#6-java-nio-channels-ClosedChannelException" class="headerlink" title="6.java.nio.channels.ClosedChannelException"></a>6.java.nio.channels.ClosedChannelException</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java.nio.channels.ClosedChannelException</div><div class="line">    at io.netty.channel.AbstractChannel$AbstractUnsafe.write(...)(Unknown Source)</div></pre></td></tr></table></figure></p>
+<p>参考博客: <a href="http://www.bijishequ.com/detail/203655?p=58" target="_blank" rel="external">http://www.bijishequ.com/detail/203655?p=58</a><br><br>目测是给节点分配的内存太小, yarn直接kill了task。</p>
+<p>解决方案：</p>
+<p>修改yarn-site.xml，添加下列property<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.pmem-check-enabled&lt;/name&gt;</div><div class="line">    &lt;value&gt;false&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line"></div><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;</div><div class="line">    &lt;value&gt;false&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="7-提交spark作业时-一直卡在yarn-Client-Application-report-for-application-xxx-state-ACCEPTED"><a href="#7-提交spark作业时-一直卡在yarn-Client-Application-report-for-application-xxx-state-ACCEPTED" class="headerlink" title="7.提交spark作业时, 一直卡在yarn.Client: Application report for application_xxx (state: ACCEPTED)"></a>7.提交spark作业时, 一直卡在yarn.Client: Application report for application_xxx (state: ACCEPTED)</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">17/10/13 15:14:49 INFO impl.YarnClientImpl: Application submission is not finished, submitted application application_1507620566574_0010 is still in NEW</div><div class="line">17/10/13 15:14:51 INFO impl.YarnClientImpl: Application submission is not finished, submitted application application_1507620566574_0010 is still in NEW</div><div class="line">17/10/13 15:14:52 INFO impl.YarnClientImpl: Submitted application application_1507620566574_0010</div><div class="line">17/10/13 15:14:53 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:14:53 INFO yarn.Client: </div><div class="line">	 client token: N/A</div><div class="line">	 diagnostics: N/A</div><div class="line">	 ApplicationMaster host: N/A</div><div class="line">	 ApplicationMaster RPC port: -1</div><div class="line">	 queue: default</div><div class="line">	 start time: 1507878873743</div><div class="line">	 final status: UNDEFINED</div><div class="line">	 tracking URL: http://1.downlog-es.10.220.2.233.fs.115cdn.net:8088/proxy/application_1507620566574_0010/</div><div class="line">	 user: hadoop</div><div class="line">17/10/13 15:14:54 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:14:55 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:14:56 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:14:57 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:14:58 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:14:59 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:00 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:01 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:02 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:03 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:04 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:05 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:06 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div><div class="line">17/10/13 15:15:07 INFO yarn.Client: Application report for application_1507620566574_0010 (state: ACCEPTED)</div></pre></td></tr></table></figure></p>
+<p>检查查yarn配置时, 发现    yarn.resourcemanager.address 的值不正常。</p>
+<p>比如节点hostname为: 1.test.10.220.2.233.mycdn.net, 则yarn中参数值为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;1.1.test.10.220.2.233.mycdn.net:8032&lt;/value&gt;</div><div class="line">    &lt;source&gt;programatically&lt;/source&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure></p>
+<p>同时在执行stop-dfs.sh时, 发现namenode和datanode的hostname对不上:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Stopping namenodes on [1.1.test.10.220.2.233.mycdn.net]</div><div class="line">1.1.test.10.220.2.233.mycdn.net: stopping namenode</div><div class="line">1.test.10.220.2.233.mycdn.net: stopping datanode</div><div class="line">2.test.10.220.2.234.mycdn.net: stopping datanode</div><div class="line">Stopping secondary namenodes [0.0.0.0]</div><div class="line">0.0.0.0: stopping secondarynamenode</div></pre></td></tr></table></figure></p>
+<p>查看/etc/hosts时， 发现多了一个域名映射:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">10.220.2.233 1.1.test.10.220.2.233.mycdn.net 1</div></pre></td></tr></table></figure></p>
+<p>注释掉之后， 重启hadoop集群, spark on yarn任务可以正常执行。</p>
+<h4 id="8-java-lang-NoClassDefFoundError-kafka-common-TopicAndPartition"><a href="#8-java-lang-NoClassDefFoundError-kafka-common-TopicAndPartition" class="headerlink" title="8.java.lang.NoClassDefFoundError: kafka/common/TopicAndPartition"></a>8.java.lang.NoClassDefFoundError: kafka/common/TopicAndPartition</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">Exception in thread &quot;Thread-3&quot; java.lang.NoClassDefFoundError: kafka/common/TopicAndPartition</div><div class="line">	at java.lang.Class.getDeclaredMethods0(Native Method)</div><div class="line">	at java.lang.Class.privateGetDeclaredMethods(Class.java:2701)</div><div class="line">	at java.lang.Class.privateGetPublicMethods(Class.java:2902)</div><div class="line">	at java.lang.Class.getMethods(Class.java:1615)</div><div class="line">	at py4j.reflection.ReflectionEngine.getMethodsByNameAndLength(ReflectionEngine.java:345)</div><div class="line">	at py4j.reflection.ReflectionEngine.getMethod(ReflectionEngine.java:305)</div><div class="line">	at py4j.reflection.ReflectionEngine.getMethod(ReflectionEngine.java:326)</div><div class="line">	at py4j.Gateway.invoke(Gateway.java:272)</div><div class="line">	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)</div><div class="line">	at py4j.commands.CallCommand.execute(CallCommand.java:79)</div><div class="line">	at py4j.GatewayConnection.run(GatewayConnection.java:214)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line">Caused by: java.lang.ClassNotFoundException: kafka.common.TopicAndPartition</div><div class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)</div><div class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)</div><div class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)</div><div class="line">	... 12 more</div><div class="line">ERROR:root:Exception while sending command.</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;/usr/local/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py&quot;, line 883, in send_command</div><div class="line">    response = connection.send_command(command)</div><div class="line">  File &quot;/usr/local/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py&quot;, line 1040, in send_command</div><div class="line">    &quot;Error while receiving&quot;, e, proto.ERROR_ON_RECEIVE)</div><div class="line">Py4JNetworkError: Error while receiving</div></pre></td></tr></table></figure></p>
+<p>原因及解决方法:<br>使用的spark-stream-kafka jar包版本不对, spark2.2(python)具体看这里:<br><a href="https://spark.apache.org/docs/latest/streaming-kafka-integration.html" target="_blank" rel="external">https://spark.apache.org/docs/latest/streaming-kafka-integration.html</a></p>
+<p>同时在maven上面下载正确的版本(spark-streaming-kafka-0-8-assembly_2.11):<br><a href="http://search.maven.org/#search%7Cga%7C1%7Cspark-streaming-kafka" target="_blank" rel="external">http://search.maven.org/#search%7Cga%7C1%7Cspark-streaming-kafka</a></p>
+<p>检查jar是否包含该类:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hadoop@1:/data/test$ jar -tvf spark-streaming-kafka-0-8-assembly_2.11-2.2.0.jar | grep -i Topicandpartition</div><div class="line">  1959 Fri Jun 30 17:08:54 CST 2017 kafka/common/TopicAndPartition$.class</div><div class="line">  6136 Fri Jun 30 17:08:54 CST 2017 kafka/common/TopicAndPartition.class</div><div class="line">hadoop@1:/data/test$</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-10-16, 14:55:21</p>
+        <p><span>最后更新:</span>2017-10-16, 15:20:04</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/10/16/bigdata/hadoop-spark-errors/" title="hadoop-spark错误问题总结">http://blog.moguang.com/2017/10/16/bigdata/hadoop-spark-errors/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/10/16/bigdata/hadoop-spark-errors/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/10/16/bigdata/flume-kafka-deploy/">
+                    flume-kafka部署总结
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/09/28/script/shell-compare-files/">
+                    [shell]批量对比两个host上的文件
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#hadoop-spark错误问题总结"><span class="toc-number">1.</span> <span class="toc-text">hadoop-spark错误问题总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-NativeCodeLoader-Unable-to-load-native-hadoop-library-for-your-platform"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. NativeCodeLoader: Unable to load native-hadoop library for your platform</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Initial-job-has-not-accepted-any-resources-check-your-cluster-UI-to-ensure-that-workers-are-registered-and-have-sufficient-memory"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient memory</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-NoSuchMethodError-org-apache-hadoop-http-HttpConfig-isSecure-Z"><span class="toc-number">1.0.4.</span> <span class="toc-text">4. NoSuchMethodError: org.apache.hadoop.http.HttpConfig.isSecure()Z</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Could-not-find-or-load-main-class-org-apache-spark-deploy-yarn-ExecutorLauncher"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.Could not find or load main class org.apache.spark.deploy.yarn.ExecutorLauncher</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-java-nio-channels-ClosedChannelException"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.java.nio.channels.ClosedChannelException</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-提交spark作业时-一直卡在yarn-Client-Application-report-for-application-xxx-state-ACCEPTED"><span class="toc-number">1.0.7.</span> <span class="toc-text">7.提交spark作业时, 一直卡在yarn.Client: Application report for application_xxx (state: ACCEPTED)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-java-lang-NoClassDefFoundError-kafka-common-TopicAndPartition"><span class="toc-number">1.0.8.</span> <span class="toc-text">8.java.lang.NoClassDefFoundError: kafka/common/TopicAndPartition</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"hadoop-spark错误问题总结　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/16/bigdata/flume-kafka-deploy/" title="上一篇: flume-kafka部署总结">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/09/28/script/shell-compare-files/" title="下一篇: [shell]批量对比两个host上的文件">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

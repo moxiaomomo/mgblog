@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="操作系统基础概念 操作系统的四个特性 12341. 并发: 同一时间间隔内支持执行多个任务, 对于一个核则是交替执行；2. 共享: 硬件资源或数据资源支持多个进程共享；3. 异步: 并发情况下， 一个程序会陆陆续续被执行，完成时间不可预知；4. 虚拟: 物理实体转化为逻辑实体，如虚拟内存。  操作系统的基本功能 12341. CPU管理, 作业调度2. 存储管理, 数据存取3. 设备管理, 与外围">
+<meta name="keywords" content="OS kernel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统与网络知识整理(持续更新)">
+<meta property="og:url" content="http://blog.moguang.com/2017/11/03/linux/devtech-overview/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="操作系统基础概念 操作系统的四个特性 12341. 并发: 同一时间间隔内支持执行多个任务, 对于一个核则是交替执行；2. 共享: 硬件资源或数据资源支持多个进程共享；3. 异步: 并发情况下， 一个程序会陆陆续续被执行，完成时间不可预知；4. 虚拟: 物理实体转化为逻辑实体，如虚拟内存。  操作系统的基本功能 12341. CPU管理, 作业调度2. 存储管理, 数据存取3. 设备管理, 与外围">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.moguang.me/img/process_state.jpg">
+<meta property="og:updated_time" content="2017-11-06T06:00:32.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统与网络知识整理(持续更新)">
+<meta name="twitter:description" content="操作系统基础概念 操作系统的四个特性 12341. 并发: 同一时间间隔内支持执行多个任务, 对于一个核则是交替执行；2. 共享: 硬件资源或数据资源支持多个进程共享；3. 异步: 并发情况下， 一个程序会陆陆续续被执行，完成时间不可预知；4. 虚拟: 物理实体转化为逻辑实体，如虚拟内存。  操作系统的基本功能 12341. CPU管理, 作业调度2. 存储管理, 数据存取3. 设备管理, 与外围">
+<meta name="twitter:image" content="http://blog.moguang.me/img/process_state.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>操作系统与网络知识整理(持续更新) | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-linux/devtech-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/03/linux/devtech-overview/" class="article-date">
+      <time datetime="2017-11-03T05:54:12.000Z" itemprop="datePublished">2017-11-03</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      操作系统与网络知识整理(持续更新)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h3><h4 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h4><ul>
+<li><p>操作系统的四个特性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. 并发: 同一时间间隔内支持执行多个任务, 对于一个核则是交替执行；</div><div class="line">2. 共享: 硬件资源或数据资源支持多个进程共享；</div><div class="line">3. 异步: 并发情况下， 一个程序会陆陆续续被执行，完成时间不可预知；</div><div class="line">4. 虚拟: 物理实体转化为逻辑实体，如虚拟内存。</div></pre></td></tr></table></figure>
+</li>
+<li><p>操作系统的基本功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. CPU管理, 作业调度</div><div class="line">2. 存储管理, 数据存取</div><div class="line">3. 设备管理, 与外围设备交互</div><div class="line">4. 接口管理, 向应用程序/用户提供交互接口</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>软中断与硬中断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">系统在执行某个任务程序时收到中断信号， 需要让出当前CPU来执行中断处理。中断处理完成后，CPU再继续执行之前的任务程序。</div><div class="line">1. 软中断：</div><div class="line">&gt;当前运行的程序产生的中断信号，通常是I/O请求；</div><div class="line">&gt;不会直接中断CPU，需要内核去为当前进程完成一些类似I/O的请求；</div><div class="line">&gt;中断过程: 进程-&gt;内核设备驱动程序。</div><div class="line">2. 硬中断:</div><div class="line">&gt;由硬件产生，比如磁盘，网卡，时钟，键盘等；</div><div class="line">&gt;直接中断CPU，通常一个中断只中断一个CPU；</div><div class="line">&gt;中断过程: 硬件-&gt;CPU-&gt;内核设备驱动程序。</div><div class="line">3. 中断优先级:</div><div class="line">硬件错误&gt;时钟&gt;磁盘&gt;网络设备&gt;其他终端设备&gt;软件中断</div></pre></td></tr></table></figure>
+</li>
+<li><p>动态链接及静态链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">动态链接: 在程序运行期间, 所依赖的模块来自于程序外部，在内存中动态加载/卸载，按需加载可节省内存；</div><div class="line">静态链接: 在程序运行期间, 所依赖的模块来自于程序内部，即编译时已打包好，程序启动时便会载入内存。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h4><ul>
+<li>进程的状态类型与转换<br>5个状态模型:<br><img src="http://blog.moguang.me/img/process_state.jpg" alt="process_state"></li>
+<li><p>进程与线程的区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">概念区别：</div><div class="line">1. 进程： 一个程序的动态执行过程， 分配资源的基本单位；</div><div class="line">2. 线程： 一个进程内调度的基本单位，一个进程包含一个或多个线程。</div><div class="line">执行区别：</div><div class="line">1. 进程：拥有独立内存空间，支持内部多个线程共享；</div><div class="line">2. 线程：必须依赖于进程来运行，每个线程有独立入口/执行序列/出口。</div><div class="line">应用意义区别：</div><div class="line">一个应用运行时对应一个或多个进程， 而线程在进程的基础上提供了可以执行不同调度逻辑的入口，易于实现任务的并发执行。</div></pre></td></tr></table></figure>
+</li>
+<li><p>进程间通信的几种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">1. 管道pipe</div><div class="line">管道是独立的文件系统，有自己的数据结构。实际上是只存在于内存中的文件，需要通过两个打开的文件句柄来进行操作，他们分别表示管道的两端。管道分为无名管道和有名管道。</div><div class="line">2. 共享内存</div><div class="line">共享内存由一个进程创建， 能被其他进程访问， 最快的IPC方式。</div><div class="line">3. 消息队列</div><div class="line">消息的链表， 存放于内核并由队列标识符标识；克服了缓冲区大小受限，信号信息有限，管道无格式字节流等缺点。</div><div class="line">4. 信号</div><div class="line">用于通知某个进程某个事件已经发生，可触发进程已注册的处理函数。</div><div class="line">5. 信号量</div><div class="line">一种计数器，用来控制多个进程对共享资源的访问， 通常作为一种锁机制， 常应用于进程间或进程内多个线程的同步。</div><div class="line">6. Socket</div><div class="line">通过套接字通信，也可用于不同host之间的进程见通信。</div></pre></td></tr></table></figure>
+</li>
+<li><p>进程同步，线程同步的几种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1. 临界区（CriticalSection）（进程内线程同步）</div><div class="line">一次只能被一个进程所占用的资源为临界资源；进程内访问临界资源的代码就是临界区。</div><div class="line">进入区/临界区/退出区/剩余区</div><div class="line">2. 事件</div><div class="line">基于事件机制， 一个进程/线程主动唤醒另一个进程/线程；比如监听通信端口A。</div><div class="line">3. 互斥量（Mutex）</div><div class="line">类似临界区，但是能在进程间使用。Futex由一块能被多个进程共享的内存空间(对齐后的整型变量)组成, 保存在用户空间的共享内存中，通过原子操作进行操作。操作基本在用户空间内进行(需要仲裁时使用系统内核调用), 减少了系统调用次数， 提供系统性能。</div><div class="line">4. 信号量(Semphore)</div><div class="line">信号量建立在原子操作上，使用信号量可以用来限制共享资源的线程数目。</div></pre></td></tr></table></figure>
+</li>
+<li><p>线程的实现方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">用户级线程（也可看作协程）：进程内的线程切换不用切换到内核进行， 内核并没有感知进程内的线程存在， 所以即使多线程并不能利用多核来进行操作。一个线程如果调用了阻塞系统调用， 那整个进程都会被阻塞。</div><div class="line">内核级线程（通常所说的线程）：也即内核管理的所有线程， 内核头既包含进程表， 也包含线程表。多线程可以利用到多核，多核下微观和宏观下都能做到并行。</div><div class="line">混合模式： 内核线程可以在用户空间完成创建，应用的多个用户级线程可以被映射到内核线程中，提高并发效率。</div></pre></td></tr></table></figure>
+</li>
+<li><p>用户态与内核态的区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">用户态：执行用户级别的代码，权限受限，由CPU标志flag来控制；</div><div class="line">内核态：执行内核模块代码，比如执行磁盘IO，网络IO处理等。</div><div class="line">应用进程可通过系统调用由用户态进入内核态，在缺页错误或中断发生时进入内核态。</div></pre></td></tr></table></figure>
+</li>
+<li><p>用户栈与内核栈的区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">用户栈： 进程在用户空间时创建的栈，比如函数调用时压栈出栈， 保存了函数互相调用的参数/返回值等；</div><div class="line">内核栈： 中断进入内核态时，用内核栈来保存用户态进程的状态信息，返回用户钛再将这些信息出栈；内核栈位置在内核的一块固定区域，保存中断现场，进程调用数据等。</div></pre></td></tr></table></figure>
+</li>
+<li><p>内存池，进程池，线程池</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">所谓池的概念， 一般是指应用提前向内核批量申请资源，用于接下来的使用和回收再利用， 减少资源的初始化和销毁次数等开销， 以达到提高系统性能的目标。</div><div class="line">内存池：真正使用前申请一片内存区域，有新需求时取出其中一部分使用，不够用时再重新申请新内存。</div><div class="line">进程池：</div><div class="line">&gt;应用预先创建一组子进程，所有子进程运行相同代码，拥有相同属性，比如PGID和优先级等；</div><div class="line">&gt;常见两种工作方式：</div><div class="line">1. 主进程通过随机或round robin算法来选择子进程作为新任务的服务进程；</div><div class="line">2. 通过一个共享队列来进行同步，所有子进程从该队列中获取任务，不过同时只能有一个子进程能成功获得新任务处理权。</div><div class="line">线程池：</div><div class="line">主要应用于任务小而多，处理时间短的场景，比如简单网页请求等。</div></pre></td></tr></table></figure>
+</li>
+<li><p>死锁的概念，产生条件及处理策略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">死锁：一组竞争同一系统资源或通信的进程由于互相等待而造成的永久阻塞。</div><div class="line">产生死锁的四个条件：</div><div class="line">1. 互斥： 一次只能有一个进程使用一个资源。</div><div class="line">2. 占有并等待： 一个进程等待另一个资源的同时占有一个已分配的资源。</div><div class="line">3. 不可抢占： 一个已被某个进程占有的资源不可被其他进程抢夺。</div><div class="line">4. 循环等待： 在一个封闭进程链中，每个进程至少占有下一个进程所等待的资源。</div><div class="line">处理死锁几种方式：预防/避免/检测，比如一次性申请所需资源，银行家算法。</div></pre></td></tr></table></figure>
+</li>
+<li><p>进程调度算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">调度种类：</div><div class="line">1. 高级调度： 作业调度，决定把后备作业调入内存运行；</div><div class="line">2. 中级调度： 内存，外存交换区进行进程对换；</div><div class="line">3. 低级调度： 进程调度，决定把就绪状态的进程获得CPU。</div><div class="line">CPU任务种类： 交互式任务和批处理任务。</div><div class="line">调度算法：</div><div class="line">1. FIFO(FCFS)： 公平简单，不利于交互式，不利于IO密集型作业；</div><div class="line">2. SJF：短作业优先调度，可以保证整体的最小等待时间，但不利于长作业；</div><div class="line">3. 优先权调度：拥有高优先权的作业优先处理， 有可能出现优先权低的任务“饥饿”情况；</div><div class="line">4. Round-Robin：按时间片进行轮转调度，让每个任务定时有响应但是上下文切换次数可能会过多。</div><div class="line">5. 多级优先级队列：按不同规则创建多个进程队列，不同队列拥有不同的优先级以及可以分配不同的时间片/调度策略。但是也存在”饥饿“可能性。</div><div class="line">6. 多级反馈队列：在多级优先级队列基础上，长期得不到运行的队列优先级会被提高。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h4><ul>
+<li><p>内存管理的技术发展</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. 固定分区：系统初始化阶段，内存被固定划分成多个静态分区，进程可以一次性被装载到大于或等于自身空间的分区；</div><div class="line">2. 动态分区：动态创建分区，进程可以被装载到与自身相等大小的分区中；</div><div class="line">3. 虚拟内存分页：系统初始化阶段，内存被划分为多个大小一致的页框；每个进程被划分成多个与页框相等的页；根据实时需要加载一定数量的页。</div><div class="line">4. 虚拟内存分段：每个进程维护一个段表，系统维护一个空闲的块表，按需加载段。</div><div class="line">5. 段页式： 单按页加载的调度粒度太细，单按段加载的调度粒度太粗， 结合使用可有效提高系统性能。应用地址空间可划分成多个段，每个段又划分为多个固定大小的页，段偏移量在系统角度可看作是指定段中的一个页好和页偏移。</div></pre></td></tr></table></figure>
+</li>
+<li><p>物理内存与虚拟内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">物理地址：实际物理内存中的存储地址；</div><div class="line">虚拟地址： 编码时将代码或数据分成若干段，每条代码或数据对应的地址由段号加段内偏移地址构成。</div><div class="line">MMU: 实现将虚拟地址映射到物理地址的CPU中的硬件电路。</div></pre></td></tr></table></figure>
+</li>
+<li><p>几种页面置换算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FIFIO： 淘汰最早调入的页面；</div><div class="line">OPT： 理想化的最佳置换算法，将标记为下次最迟才会被访问的页面淘汰；</div><div class="line">LRU： 将最近一段时间内最久没有被使用的页置换出去。</div></pre></td></tr></table></figure>
+</li>
+<li><p>DMA定义及工作流程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">DMA指外部设备不经过CPU而直接与内存交换数据的技术。</div><div class="line">主要通过DMA控制器来实现： 控制器向CPU请求系统总线并获得控制权后， 与存储器直接进行数据交换， 完成后向CPU发送结束信号并交还控制权。</div></pre></td></tr></table></figure>
+</li>
+<li><p>外存分配的几种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">外存：CPU缓存及内存以外的存储器， 如硬盘/光盘等。</div><div class="line">分配方式：</div><div class="line">1. 连续分配：创建文件时，分配一组连续的块， FAT中每个文件只需要一项，用以说明起始块及文件大小。</div><div class="line">2. 链式分配： 文件存放在若干不连续的物理块，各块之间通过指针连接。</div><div class="line">3. 索引分配： 每个文件在FAT中有一个一级索引， 包含文件各个分区的入口；这个索引信息保存在单独个一个块当中， 作为文件的访问入口。</div></pre></td></tr></table></figure>
+</li>
+<li><p>CPU中的缓存及OS中的缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CPU缓存： 介于CPU与内存之间的临时存储器， 有一级/二级/三级缓存之分；</div><div class="line">系统缓存： 如块表，用于存放当前访问最频繁的少量活动页，提高数据存取速度。通过需要存取的数据所在逻辑地址，在块表中找到其对应的内存块地址， 结合其页偏移地址获得物理地址；如果块表中没有该逻辑页号，则通过查询空闲块来更新块空闲区信息；如果块表没有空闲区，则通过算法来淘汰块表中某一行，并填入新的空闲区。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h4><ul>
+<li>垃圾回收的几种算法</li>
+</ul>
+<h3 id="网络知识"><a href="#网络知识" class="headerlink" title="网络知识"></a>网络知识</h3><ul>
+<li>7层模型及4层模型的具体定义</li>
+<li>常见的网络协议及所处的TCP/IP模型层次</li>
+<li>TCP建立及关闭连接过程</li>
+<li>TCP滑动窗口及拥塞控制</li>
+<li>TCP的快速重传与快速恢复算法</li>
+<li>网络差错检测CRC</li>
+</ul>
+<h3 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h3><ul>
+<li>堆，栈，链表， 树， hashmap等结构</li>
+<li>常见的搜索/排序算法</li>
+<li>经典的分治算法</li>
+<li>分布式一致性hash</li>
+<li>分布式同步算法</li>
+</ul>
+<h3 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h3><ul>
+<li>事务与锁的概念</li>
+<li>视图与游标的概念</li>
+<li>对索引的认识（索引的结构、对dml影响、对查询影响、为什么提高查询性能）</li>
+<li>冷备份和热备份的不同点以及各自的优点</li>
+<li>mysql, redis, couchbase, mongodb的应用场景等</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2017-11-03, 13:54:12</p>
+        <p><span>最后更新:</span>2017-11-06, 14:00:32</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/03/linux/devtech-overview/" title="操作系统与网络知识整理(持续更新)">http://blog.moguang.com/2017/11/03/linux/devtech-overview/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2017/11/03/linux/devtech-overview/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/11/06/network/Understand-TCP-IP-Stack2/">
+                    理解TCP/IP协议栈(2)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/10/31/bigdata/es-backup-restore-md/">
+                    ElasticSearch数据备份与恢复
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统"><span class="toc-number">1.</span> <span class="toc-text">操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基础概念"><span class="toc-number">1.1.</span> <span class="toc-text">基础概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程管理"><span class="toc-number">1.2.</span> <span class="toc-text">进程管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内存管理"><span class="toc-number">1.3.</span> <span class="toc-text">内存管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.4.</span> <span class="toc-text">垃圾回收</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络知识"><span class="toc-number">2.</span> <span class="toc-text">网络知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据结构与算法"><span class="toc-number">3.</span> <span class="toc-text">数据结构与算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库知识"><span class="toc-number">4.</span> <span class="toc-text">数据库知识</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"操作系统与网络知识整理(持续更新)　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/11/06/network/Understand-TCP-IP-Stack2/" title="上一篇: 理解TCP/IP协议栈(2)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/10/31/bigdata/es-backup-restore-md/" title="下一篇: ElasticSearch数据备份与恢复">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
