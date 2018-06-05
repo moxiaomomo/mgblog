@@ -271,3 +271,15 @@ hadoop@1:/data/test$ jar -tvf spark-streaming-kafka-0-8-assembly_2.11-2.2.0.jar 
   6136 Fri Jun 30 17:08:54 CST 2017 kafka/common/TopicAndPartition.class
 hadoop@1:/data/test$ 
 ```
+
+#### 9.java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 3.
+
+```
+namenode进程中出现如下报错信息:
+java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 3
+
+原因：namenode元数据被破坏，需要修复
+解决：恢复一下namenode
+hadoop namenode -recover
+一路选择c，一般就OK了
+```
