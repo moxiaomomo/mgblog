@@ -283,3 +283,10 @@ java.io.IOException: There appears to be a gap in the edit log.  We expected txi
 hadoop namenode -recover
 一路选择c，一般就OK了
 ```
+
+#### 10.java.io.IOException: Incompatible clusterIDs
+
+```
+namenode和datanode的clusterID不一致，手动修改成一致的即可；
+/xxx/name/current/VERSION -> 拷贝clusterID字段值 -> /xxx/data/current/VERSION
+```
