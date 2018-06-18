@@ -1,7 +1,7 @@
 ---
 title: 基于环形队列和令牌桶实现的限流模块
 date: 2018-06-01 10:17:40
-tags: golang
+tags: ["golang","microservice"]
 ---
 
 ### 概述

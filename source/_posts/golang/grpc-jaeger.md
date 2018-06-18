@@ -1,7 +1,7 @@
 ---
 title: grpc-jaeger调用链跟踪模块
 date: 2018-06-17 17:04:05
-tags: golang
+tags: ["golang","tracing"]
 ---
 
 # grpc-jaeger说明
