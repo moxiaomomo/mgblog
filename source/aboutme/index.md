@@ -17,9 +17,10 @@ date: 2015-07-31 12:04:33
  - 出生年月: 1988/08
  - 教育背景：本科/华南理工大学软件工程
  - 工作年限：2012年本科毕业至今
- - 个人博客：<br>
-[http://blog.moguang.me](http://blog.moguang.me)<br>
+ - 个人主页
+[http://blog.moguang.me](http://blog.moguang.me)
 [http://blog.csdn.net/moxiaomomo](http://blog.csdn.net/moxiaomomo)
+[https://github.com/moxiaomomo](https://github.com/moxiaomomo)
 
 ---
 
