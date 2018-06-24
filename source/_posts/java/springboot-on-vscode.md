@@ -4,8 +4,6 @@ date: 2018-06-23 23:36:36
 tags: ["java","springboot"]
 ---
 
-# VS Code下创建SpringBoot应用
-
 ## 在vscode中安装相关扩展包
 
 主要选择了`Java Extension Pack`,`Spring Boot Extension Pack`这两个扩展包，如图：

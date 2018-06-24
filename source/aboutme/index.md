@@ -109,10 +109,10 @@ date: 2015-07-31 12:04:33
 
 ## 擅长技能清单
 
-- 语言：Python / Go / shell(AWK) / C / Java / NodeJS
+- 语言：Python / Go / C / Java / NodeJS
 - 操作系统: 熟悉Linux下文件IO / 网络IO / IPC / 内存管理等
 - 网络原理: 熟悉TCP/IP协议, HTTP/Websocket/MQTT等网络协议, Raft/Gossip等分布式一致性协议
-- 编程框架：Python-tornado / python-django / gin / paho-mqtt
+- 编程框架：python-tornado / python-django / gin / spring-boot
 - 开源架构: Hadoop-hdfs / Hadoop-spark / micro-service
 - 数据库：熟悉MySQL / Redis / MongoDB / HBase
 - 消息中间件：Flume / RabbitMQ / Kafka等
