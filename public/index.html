@@ -184,7 +184,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos-DevOps/">Centos, DevOps</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tracing/">tracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
                     </div>
                 </section>
                 
@@ -263,11 +263,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-python/curl-vs-python-requests" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ops/Nginx如何配置跨域-多域名" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/04/19/python/curl-vs-python-requests/" class="article-date">
-      <time datetime="2018-04-19T05:48:45.000Z" itemprop="datePublished">2018-04-19</time>
+      <a href="/2018/10/09/ops/Nginx如何配置跨域-多域名/" class="article-date">
+      <time datetime="2018-10-09T01:23:58.000Z" itemprop="datePublished">2018-10-09</time>
 </a>
 
 
@@ -282,7 +282,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a>
+      <a class="article-title" href="/2018/10/09/ops/Nginx如何配置跨域-多域名/">Nginx如何配置跨域(多域名)</a>
     </h1>
   
 
@@ -292,73 +292,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="shell-curl-与-python-requests"><a href="#shell-curl-与-python-requests" class="headerlink" title="shell curl 与 python requests"></a>shell curl 与 python requests</h3><p>偶然发现了curl和requests库的一个区别。场景是这样的–</p>
-<p>这样使用curl去发起post请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -v -X POST http://api.xx.com/api/yy.php --data &apos;params=&#123;&quot;sign&quot;:&quot;xxxx&quot;,&quot;data&quot;:[&#123;&quot;uid&quot;:110,&quot;remark&quot;:&quot;just4test&quot;&#125;]&#125;&apos;</div></pre></td></tr></table></figure></p>
-<p>后端接口服务能正常解析params参数并响应结果。但是当我改用python去请求时：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">data = &#123;<span class="string">"sign"</span>:<span class="string">"xxxx"</span>,<span class="string">"data"</span>:[&#123;<span class="string">"uid"</span>:<span class="number">110</span>,<span class="string">"remark"</span>:<span class="string">"just4test"</span>&#125;]&#125;</div><div class="line">reqbody = (<span class="string">'params=%s'</span>%json.dumps(data))</div><div class="line">res = requests.post(</div><div class="line">    <span class="string">'http://api.xx.com/api/yy.php'</span>,</div><div class="line">    data=reqbody)</div></pre></td></tr></table></figure>
-<p>接口无法解析params并返回错误。<br>后来认真对比了一下headers和body，发现有可能是header设置不同的原因。<br>仔细查看，curl中的header有一行是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Type: application/x-www-form-urlencoded</div></pre></td></tr></table></figure></p>
-<p>但在python requests中并没有对应的设置，因此加上了这一个header，其后请求能正常返回。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">import requests</div><div class="line"></div><div class="line">headers = &#123;&apos;Content-Type&apos;: &apos;application/x-www-form-urlencoded&apos;&#125;</div><div class="line">data = &#123;&quot;sign&quot;:&quot;xxxx&quot;,&quot;data&quot;:[&#123;&quot;uid&quot;:110,&quot;remark&quot;:&quot;just4test&quot;&#125;]&#125;</div><div class="line">reqbody = (&apos;params=%s&apos;%json.dumps(data))</div><div class="line">res = requests.post(</div><div class="line">    &apos;http://api.xx.com/api/yy.php&apos;,</div><div class="line">    data=reqbody，</div><div class="line">    headers=headers)</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/parallel-download-file-md" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/01/03/golang/parallel-download-file-md/" class="article-date">
-      <time datetime="2018-01-03T09:43:52.000Z" itemprop="datePublished">2018-01-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h4 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h4><p>假设有一个分布式文件系统，现需要从该系统中并发下载一部分文件到本地机器。<br>已知该文件系统的部分节点ip, 以及需要下载的文件fileID列表，并能通过这些信息来拼接下载地址。<br>其中节点ip列表保存在xx_node.txt， 要下载的fileID保存在xx_fileID.txt中。</p>
+              <p>假设需要允许来源为<code>localhost</code>或<code>.*.example.com</code>下所有二级域名的访问，在nginx中只需要类似这样配置即可：<br>
           
       
     </div>
@@ -369,12 +303,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2018/01/03/golang/parallel-download-file-md/#more">阅读全文 >></a>
+          <a href="/2018/10/09/ops/Nginx如何配置跨域-多域名/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -393,11 +327,11 @@
 
 
   
-    <article id="post-script/parallel-shell-md" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ops/Centos7安装ElasticSearch6" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/12/05/script/parallel-shell-md/" class="article-date">
-      <time datetime="2017-12-05T03:42:00.000Z" itemprop="datePublished">2017-12-05</time>
+      <a href="/2018/09/19/ops/Centos7安装ElasticSearch6/" class="article-date">
+      <time datetime="2018-09-19T08:05:51.000Z" itemprop="datePublished">2018-09-19</time>
 </a>
 
 
@@ -412,7 +346,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a>
+      <a class="article-title" href="/2018/09/19/ops/Centos7安装ElasticSearch6/">Centos7安装ElasticSearch6.4</a>
     </h1>
   
 
@@ -422,7 +356,27 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="使用parallel-ssh批量执行远程shell命令"><a href="#使用parallel-ssh批量执行远程shell命令" class="headerlink" title="使用parallel-ssh批量执行远程shell命令"></a>使用parallel-ssh批量执行远程shell命令</h3><h4 id="pssh使用场景"><a href="#pssh使用场景" class="headerlink" title="pssh使用场景"></a>pssh使用场景</h4><p>假设现在需要对数百台服务器节点进行配置更新或者执行一些简短command，而目前并没有完备的部署工具软件， 那可以选择向pssh这样的并行登录远程终端并执行指定命令的shell工具。<br>以前机器节点少的时候，直接用shell写个for循环来执行命令，也没什么问题。当节点数量多了之后，一个shell命令可能要消耗几秒， 这时才能感受到pssh这种并行方式的好处，省时省力。<br>
+              <h2 id="centos安装ElasticSearch6-4"><a href="#centos安装ElasticSearch6-4" class="headerlink" title="centos安装ElasticSearch6.4"></a>centos安装ElasticSearch6.4</h2><h3 id="节点准备"><a href="#节点准备" class="headerlink" title="节点准备"></a>节点准备</h3><table>
+<thead>
+<tr>
+<th>节点IP</th>
+<th>角色</th>
+<th>ES节点名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.1.10</td>
+<td>master</td>
+<td>node1</td>
+</tr>
+<tr>
+<td>192.168.1.11</td>
+<td>data</td>
+<td>node2</td>
+</tr>
+</tbody>
+</table>
           
       
     </div>
@@ -433,12 +387,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/12/05/script/parallel-shell-md/#more">阅读全文 >></a>
+          <a href="/2018/09/19/ops/Centos7安装ElasticSearch6/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -457,11 +411,11 @@
 
 
   
-    <article id="post-bigdata/data-developing-md" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-linux/Centos7快速搭建FTP服务" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/12/01/bigdata/data-developing-md/" class="article-date">
-      <time datetime="2017-12-01T08:44:10.000Z" itemprop="datePublished">2017-12-01</time>
+      <a href="/2018/08/16/linux/Centos7快速搭建FTP服务/" class="article-date">
+      <time datetime="2018-08-16T02:02:57.000Z" itemprop="datePublished">2018-08-16</time>
 </a>
 
 
@@ -476,7 +430,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a>
+      <a class="article-title" href="/2018/08/16/linux/Centos7快速搭建FTP服务/">Centos7快速搭建FTP服务</a>
     </h1>
   
 
@@ -486,7 +440,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">1) 理论概述</div><div class="line">分布式领域中CAP理论：</div><div class="line">① C：Consistency，一致性，数据一致更新，所有数据变动都是同步的。</div><div class="line">② A：Availability，可用性，系统具有好的响应性能。</div><div class="line">③ P：Partition tolerance，分区容错性。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择，也就是说无论任何消息丢失，系统都可用。</div><div class="line"></div><div class="line">该理论已被证明：任何分布式系统只可同时满足两点，无法三者兼顾。 因此，将精力浪费在思考如何设计能满足三者的完美系统上是愚钝的，应该根据应用场景进行适当取舍。</div><div class="line"></div><div class="line">2) 一致性分类</div><div class="line">一致性是指从系统外部读取系统内部的数据时，在一定约束条件下相同，即数据变动在系统内部各节点应该是同步的。根据一致性的强弱程度不同，可以将一致性级别分为如下几种：</div><div class="line">① 强一致性（strong consistency）。任何时刻，任何用户都能读取到最近一次成功更新的数据。</div><div class="line">② 单调一致性（monotonic consistency）。任何时刻，任何用户一旦读到某个数据在某次更新后的值，那么就不会再读到比这个值更旧的值。也就是说，可获取的数据顺序必是单调递增的。</div><div class="line">③ 会话一致性（session consistency）。任何用户在某次会话中，一旦读到某个数据在某次更新后的值，那么在本次会话中就不会再读到比这个值更旧的值。会话一致性是在单调一致性的基础上进一步放松约束，只保证单个用户单个会话内的单调性，在不同用户或同一用户不同会话间则没有保障。</div><div class="line">④ 最终一致性（eventual consistency）。用户只能读到某次更新后的值，但系统保证数据将最终达到完全一致的状态，只是所需时间不能保障。</div><div class="line">⑤ 弱一致性（weak consistency）。用户无法在确定时间内读到最新更新的值。</div></pre></td></tr></table></figure>
+              <h2 id="通过yum安装vsftpd"><a href="#通过yum安装vsftpd" class="headerlink" title="通过yum安装vsftpd"></a>通过<code>yum</code>安装vsftpd</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y vsftpd</div></pre></td></tr></table></figure>
+<h2 id="修改配置文件-etc-vsftpd-vsftpd-conf"><a href="#修改配置文件-etc-vsftpd-vsftpd-conf" class="headerlink" title="修改配置文件/etc/vsftpd/vsftpd.conf"></a>修改配置文件<code>/etc/vsftpd/vsftpd.conf</code></h2><p>增加了一些自定义配置，全部配置详细如下：</p>
           
       
     </div>
@@ -497,12 +452,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bigdata/">bigdata</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Centos-DevOps/">Centos, DevOps</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/12/01/bigdata/data-developing-md/#more">阅读全文 >></a>
+          <a href="/2018/08/16/linux/Centos7快速搭建FTP服务/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -521,11 +476,11 @@
 
 
   
-    <article id="post-bigdata/distributed-video-convert" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-archi/CAS单点登录前后端分离" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/29/bigdata/distributed-video-convert/" class="article-date">
-      <time datetime="2017-11-29T04:16:07.000Z" itemprop="datePublished">2017-11-29</time>
+      <a href="/2018/07/31/archi/CAS单点登录前后端分离/" class="article-date">
+      <time datetime="2018-07-31T13:56:20.000Z" itemprop="datePublished">2018-07-31</time>
 </a>
 
 
@@ -540,7 +495,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a>
+      <a class="article-title" href="/2018/07/31/archi/CAS单点登录前后端分离/">CAS单点登录前后端分离</a>
     </h1>
   
 
@@ -550,8 +505,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h4><p>现有的转码方案是一个转码worker处理整个视频的不同清晰度的转码，如果一个视频很大，那这个视频转码将非常耗时。<br>因此需要改进方案，要求对大多数格式的视频可以进行切片后并行转码，以此提高一个视频的转码效率。</p>
-<h4 id="技术预研"><a href="#技术预研" class="headerlink" title="技术预研"></a>技术预研</h4><p>目前搜到的参考资料，基本都是针对某几个特定格式的分布式转码方案。<br>当前视频转码基本都依赖于ffmpeg， 目前存在一个问题：<br>暂时没有找到一个合适的方法去无缝切割多种编码格式的视频，然后分别对切割出来的分片进行转码； 这个过程部分格式正常部分异常(请原谅我是非科班出身)。<br>计划先用low一点的方案实现，ffmpeg可以在一个完整的视频上，指定视频区间来进行转码，暂时测试了大多数格式的效果都OK；<br>那就每个worker的视频源都是同一个视频文件，然后并行对不同区间的视频段进行转码，所以就有了下面这个初步方案。</p>
+              <h2 id="关于单点登录-SSO"><a href="#关于单点登录-SSO" class="headerlink" title="关于单点登录(SSO)"></a>关于单点登录(SSO)</h2><p>假设用户X需同时登录站点A和站点B，这两个站点之间其实是有关联性的，但是如果用户认证数据不通用，那将需要注册或登录两次。</p>
+<p>单点登录系统就是为了解决这种场景的问题，建立一种用户认证中心，只要经过这个中心注册或登录了某一站点服务的用户，总是能够认证登录这个中心所授权的其他所有服务。</p>
           
       
     </div>
@@ -562,12 +517,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/视频/">视频</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/11/29/bigdata/distributed-video-convert/#more">阅读全文 >></a>
+          <a href="/2018/07/31/archi/CAS单点登录前后端分离/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -586,11 +541,11 @@
 
 
   
-    <article id="post-golang/golang-memory-management" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-archi/microservice-SSO" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/16/golang/golang-memory-management/" class="article-date">
-      <time datetime="2017-11-16T02:04:16.000Z" itemprop="datePublished">2017-11-16</time>
+      <a href="/2018/07/18/archi/microservice-SSO/" class="article-date">
+      <time datetime="2018-07-18T12:07:05.000Z" itemprop="datePublished">2018-07-18</time>
 </a>
 
 
@@ -605,7 +560,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a>
+      <a class="article-title" href="/2018/07/18/archi/microservice-SSO/">微服务开发之单点登录</a>
     </h1>
   
 
@@ -615,13 +570,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>最近粗略看了下golang内存初始化相关的代码，结合大牛们的一些源码分析，自己整理了一下学习总结。</p>
-<h4 id="几个关键数据结构"><a href="#几个关键数据结构" class="headerlink" title="几个关键数据结构"></a>几个关键数据结构</h4><ul>
-<li>mspan<br>由mheap管理的页面，记录了所分配的块大小和起始地址等</li>
-<li>mcache<br>与P(可看做cpu)绑定的线程级别的本地缓存</li>
-<li>mcenter<br>全局空间的缓存，收集了各种大小(67种)的span列表</li>
-<li>mheap<br>分配内存的堆分配器，以8kb进行页管理</li>
-<li>fixalloc<br>固定尺寸的堆外对象空闲列表分配器，用来管理分配器的存储
+              <h3 id="关于CAS"><a href="#关于CAS" class="headerlink" title="关于CAS"></a>关于CAS</h3><p>CAS是一种单点登录开源框架，遵循apache2.0协议，代码托管在<a href="https://github.com/apereo/cas" target="_blank" rel="external">github.com/apereo/cas</a>上。<br><br>而单点登录(SSO, Single Sign On)可简单理解为当用户在一个应用上登录了，其他被授权信任的关联应用不用再登录。<br><br>比如在同一个浏览器中登录了天猫，再打开淘宝网站时会自动登录，无需单独输用户名密码或扫二维码。以下简单说明下CAS的部署与测试结果。<br>
           
       
     </div>
@@ -632,12 +581,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservice/">microservice</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/11/16/golang/golang-memory-management/#more">阅读全文 >></a>
+          <a href="/2018/07/18/archi/microservice-SSO/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -656,11 +605,11 @@
 
 
   
-    <article id="post-golang/golang-tech-keys" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-java/springboot-gradle-mysql" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/14/golang/golang-tech-keys/" class="article-date">
-      <time datetime="2017-11-14T05:41:50.000Z" itemprop="datePublished">2017-11-14</time>
+      <a href="/2018/06/29/java/springboot-gradle-mysql/" class="article-date">
+      <time datetime="2018-06-29T13:05:46.000Z" itemprop="datePublished">2018-06-29</time>
 </a>
 
 
@@ -675,7 +624,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a>
+      <a class="article-title" href="/2018/06/29/java/springboot-gradle-mysql/">springboot+gradle下访问mysql用例</a>
     </h1>
   
 
@@ -685,9 +634,208 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <ul>
-<li>对golang的整体理解<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Go是一种编译型语言，结合了解释型语言的优点(如调试效率，跨平台)，动态类型语言的优点(如开发效率)，以及静态类型的优点(如安全性)；</div><div class="line">Go是静态类型语言，类型系统没有层级，因此无需在类型关系定义上耗费过多时间；</div><div class="line">Go是垃圾回收型的语言，并为并发执行与通信提供了基本的支持；</div><div class="line">Go目标是要成为一种现在的系统语言，不过目前更多用来构建支持高性能高并发web服务。</div></pre></td></tr></table></figure>
-</li>
+              <p>参考资料： <a href="https://blog.csdn.net/chentao866/article/details/67636520" target="_blank" rel="external">https://blog.csdn.net/chentao866/article/details/67636520</a></p>
+<h2 id="配置依赖build-gradle"><a href="#配置依赖build-gradle" class="headerlink" title="配置依赖build.gradle"></a>配置依赖build.gradle</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	compile(&apos;org.springframework.boot:spring-boot-starter-web&apos;)</div><div class="line">	runtime(&apos;org.springframework.boot:spring-boot-devtools&apos;)</div><div class="line">	compile &apos;org.springframework.boot:spring-boot-starter-data-jpa&apos;</div><div class="line">	runtime(&quot;mysql:mysql-connector-java&quot;)</div><div class="line">	testCompile(&apos;org.springframework.boot:spring-boot-starter-test&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/06/29/java/springboot-gradle-mysql/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-java/springboot-on-vscode" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/23/java/springboot-on-vscode/" class="article-date">
+      <time datetime="2018-06-23T15:36:36.000Z" itemprop="datePublished">2018-06-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/23/java/springboot-on-vscode/">VS Code下创建SpringBoot应用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="在vscode中安装相关扩展包"><a href="#在vscode中安装相关扩展包" class="headerlink" title="在vscode中安装相关扩展包"></a>在vscode中安装相关扩展包</h2><p>主要选择了<code>Java Extension Pack</code>,<code>Spring Boot Extension Pack</code>这两个扩展包，如图：<br><img src="/img/vscdep.png" alt=""></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/06/23/java/springboot-on-vscode/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-archi/microservice-circuitbreaker" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/22/archi/microservice-circuitbreaker/" class="article-date">
+      <time datetime="2018-06-22T09:57:12.000Z" itemprop="datePublished">2018-06-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/22/archi/microservice-circuitbreaker/">微服务开发之熔断器</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>一般在微服架构中，有一个组件角色叫熔断器。顾名思义，熔断器起的作用就是在特定的场景下关掉当前的通路，从而起到保护整个系统的效果。<br>在微服务架构中，一般我们的独立服务是比较多的，每个独立服务之间划分责任边界，并通过约定协议接口来进行通信。当我们的调用链路复杂依赖多时，很可能会发生雪崩效应。<br>假设有这么一个场景，有A, B, C, D四个独立服务，A会依赖B，C，D；当D发生负载过高或网络异常等导致响应过慢或超时时，很可能A会因此堆积过多的等待链接，从而导致A的状态也转为异常，后面依赖到A的其他服务跟着发生链式反应，这将会导致大面积的服务不可用，即使本来是一些没有依赖到B，C，D的服务。如下图所示：<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservice/">microservice</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/06/22/archi/microservice-circuitbreaker/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-archi/jaeger-deploy-on-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/" class="article-date">
+      <time datetime="2018-06-18T08:56:24.000Z" itemprop="datePublished">2018-06-18</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/">[分布式trace]在Ubuntu17.10上部署jaeger</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="关于Jaeger"><a href="#关于Jaeger" class="headerlink" title="关于Jaeger"></a>关于Jaeger</h2><p>Jaeger是由Uber发布的一种分布式调用链跟踪系统，主要用于集成到微服务调用追踪，和Zipkin作用类似。通过调用链跟踪系统，可以快速了解各节点的响应状况，方便定位问题。</p>
+<h2 id="Jaeger关键组件"><a href="#Jaeger关键组件" class="headerlink" title="Jaeger关键组件"></a>Jaeger关键组件</h2><p>Jaeger本身是一种可单独部署运行的服务，主要有以下几个关键组件：</p>
+<ul>
+<li>数据存储Cassandra</li>
+<li>数据收集jaeger-collector</li>
+<li>客户端代理jaeger-agent</li>
+<li>客户端库jaeger-client</li>
+<li>数据库代理jaeger-query</li>
+<li>UI查询jaeger-ui</li>
 </ul>
           
       
@@ -699,12 +847,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tracing/">tracing</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/11/14/golang/golang-tech-keys/#more">阅读全文 >></a>
+          <a href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -723,11 +871,11 @@
 
 
   
-    <article id="post-golang/golang-tech-examination" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/grpc-jaeger" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/14/golang/golang-tech-examination/" class="article-date">
-      <time datetime="2017-11-14T00:44:28.000Z" itemprop="datePublished">2017-11-14</time>
+      <a href="/2018/06/17/golang/grpc-jaeger/" class="article-date">
+      <time datetime="2018-06-17T09:04:05.000Z" itemprop="datePublished">2018-06-17</time>
 </a>
 
 
@@ -742,7 +890,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a>
+      <a class="article-title" href="/2018/06/17/golang/grpc-jaeger/">grpc-jaeger调用链跟踪模块</a>
     </h1>
   
 
@@ -752,7 +900,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span> <span class="params">(result <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		result++</div><div class="line">	&#125;()</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span> <span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	t := <span class="number">3</span></div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		t = t + <span class="number">3</span></div><div class="line">	&#125;()</div><div class="line">	<span class="keyword">return</span> t</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span> <span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">		r = r + <span class="number">2</span></div><div class="line">	&#125;(r)</div><div class="line">	<span class="keyword">return</span> <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(f1())</div><div class="line">	fmt.Println(f2())</div><div class="line">	fmt.Println(f3())</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：defer的一些坑</span></div><div class="line"><span class="comment">// return xxx可以改写成一下规则：</span></div><div class="line"><span class="comment">// 返回值 = xxx</span></div><div class="line"><span class="comment">// 调用defer函数</span></div><div class="line"><span class="comment">// 空的return</span></div><div class="line"></div><div class="line"><span class="comment">// 输出：</span></div><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="comment">// 3</span></div><div class="line"><span class="comment">// 1</span></div></pre></td></tr></table></figure>
+              <h1 id="grpc-jaeger说明"><a href="#grpc-jaeger说明" class="headerlink" title="grpc-jaeger说明"></a>grpc-jaeger说明</h1><p>具体源码可参考<a href="http://github.com/moxiaomomo/grpc-jaeger" target="_blank" rel="external">我的github源码</a></p>
+<p>grpc-jaeger是基于Go的针对gRPC的一种拦截器实现，用于结合jaeger来实现rpc调用链跟踪；可用于集成到微服务的分布式trace功能中。</p>
+<p>grpc包中对外暴露了两个接口：grpc.UnaryClientInterceptor及grpc.UnaryServerInterceptor， 只要将这两个函数重写即可以自定义拦截器，从而注入jaeger相关跟踪代码。</p>
           
       
     </div>
@@ -763,142 +913,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tracing/">tracing</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/11/14/golang/golang-tech-examination/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/a-way-to-understand-goroutine" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/10/golang/a-way-to-understand-goroutine/" class="article-date">
-      <time datetime="2017-11-10T02:01:11.000Z" itemprop="datePublished">2017-11-10</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>偶然看到一条关于goroutine有趣的QA：<br><a href="https://news.ycombinator.com/item?id=12459841" target="_blank" rel="external">https://news.ycombinator.com/item?id=12459841</a><br>发现可以以另一种方式来理解goroutine，欢迎拍砖。</p>
-<p>关键概念说明:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">M: machine， M对应于内核线程;</div><div class="line">P: processor, P是一种在M上运行的context, 维护了goroutine的列表;</div><div class="line">G: goroutine核心结构, 维护了goroutine需要的栈、程序计数器以及所在的M等信息;</div><div class="line">sysmon: GO程序启动时创建的一个用于监控管理的线程。</div></pre></td></tr></table></figure></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/11/10/golang/a-way-to-understand-goroutine/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-network/Understand-TCP-IP-Stack3" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/07/network/Understand-TCP-IP-Stack3/" class="article-date">
-      <time datetime="2017-11-07T06:14:27.000Z" itemprop="datePublished">2017-11-07</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>翻译自: <a href="https://www.cubrid.org/blog/understanding-tcp-ip-network-stack" target="_blank" rel="external">https://www.cubrid.org/blog/understanding-tcp-ip-network-stack</a></p>
-<h3 id="如何处理中断及接收包"><a href="#如何处理中断及接收包" class="headerlink" title="如何处理中断及接收包"></a>如何处理中断及接收包</h3><p>中断处理很复杂, 而你需要理解与之相关的到达包处理的性能. Figure 5展示了一个中断处理的流程.<br><img src="http://www.moguang.me/img/irq_handle.png" alt="irq_handle.png"><br>Figure 5: Processing Interrupt, softirq, and Received Packet.<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/11/07/network/Understand-TCP-IP-Stack3/#more">阅读全文 >></a>
+          <a href="/2018/06/17/golang/grpc-jaeger/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -919,7 +939,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -1006,8 +1026,10 @@
     
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">-->
+<script async src="http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
+
   </div>
 </body>
 </html>

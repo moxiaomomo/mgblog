@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="默默磨墨" />
+
+
+
+<meta name="description" content="关于JaegerJaeger是由Uber发布的一种分布式调用链跟踪系统，主要用于集成到微服务调用追踪，和Zipkin作用类似。通过调用链跟踪系统，可以快速了解各节点的响应状况，方便定位问题。 Jaeger关键组件Jaeger本身是一种可单独部署运行的服务，主要有以下几个关键组件：  数据存储Cassandra 数据收集jaeger-collector 客户端代理jaeger-agent 客户端库j">
+<meta name="keywords" content="tracing,docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[分布式trace]在Ubuntu17.10上部署jaeger">
+<meta property="og:url" content="http://blog.moguang.com/2018/06/18/archi/jaeger-deploy-on-ubuntu/index.html">
+<meta property="og:site_name" content="moxiaomomo">
+<meta property="og:description" content="关于JaegerJaeger是由Uber发布的一种分布式调用链跟踪系统，主要用于集成到微服务调用追踪，和Zipkin作用类似。通过调用链跟踪系统，可以快速了解各节点的响应状况，方便定位问题。 Jaeger关键组件Jaeger本身是一种可单独部署运行的服务，主要有以下几个关键组件：  数据存储Cassandra 数据收集jaeger-collector 客户端代理jaeger-agent 客户端库j">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdn.net/20180618132747474?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21veGlhb21vbW8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2018-06-18T09:06:26.603Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[分布式trace]在Ubuntu17.10上部署jaeger">
+<meta name="twitter:description" content="关于JaegerJaeger是由Uber发布的一种分布式调用链跟踪系统，主要用于集成到微服务调用追踪，和Zipkin作用类似。通过调用链跟踪系统，可以快速了解各节点的响应状况，方便定位问题。 Jaeger关键组件Jaeger本身是一种可单独部署运行的服务，主要有以下几个关键组件：  数据存储Cassandra 数据收集jaeger-collector 客户端代理jaeger-agent 客户端库j">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180618132747474?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21veGlhb21vbW8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="moxiaomomo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>[分布式trace]在Ubuntu17.10上部署jaeger | moxiaomomo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar4.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">默默磨墨</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">life &amp; programing</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/aboutme/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos-DevOps/">Centos, DevOps</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tracing/">tracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/moxiaomomo">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">后端开发，数据分析</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">默默磨墨</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar4.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">默默磨墨</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">life &amp; programing</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/aboutme/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:moxiaomomo@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/moxiaomomo" title="GitHub"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://blog.csdn.net/moxiaomomo" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-archi/jaeger-deploy-on-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/" class="article-date">
+      <time datetime="2018-06-18T08:56:24.000Z" itemprop="datePublished">2018-06-18</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [分布式trace]在Ubuntu17.10上部署jaeger
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tracing/">tracing</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="关于Jaeger"><a href="#关于Jaeger" class="headerlink" title="关于Jaeger"></a>关于Jaeger</h2><p>Jaeger是由Uber发布的一种分布式调用链跟踪系统，主要用于集成到微服务调用追踪，和Zipkin作用类似。通过调用链跟踪系统，可以快速了解各节点的响应状况，方便定位问题。</p>
+<h2 id="Jaeger关键组件"><a href="#Jaeger关键组件" class="headerlink" title="Jaeger关键组件"></a>Jaeger关键组件</h2><p>Jaeger本身是一种可单独部署运行的服务，主要有以下几个关键组件：</p>
+<ul>
+<li>数据存储Cassandra</li>
+<li>数据收集jaeger-collector</li>
+<li>客户端代理jaeger-agent</li>
+<li>客户端库jaeger-client</li>
+<li>数据库代理jaeger-query</li>
+<li>UI查询jaeger-ui</li>
+</ul>
+<a id="more"></a>
+<h2 id="部署cassandra"><a href="#部署cassandra" class="headerlink" title="部署cassandra"></a>部署cassandra</h2><p>首先通过<code>docker pull</code>的方式将cassandra镜像拉取下来：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>docker pull docker.io/cassandra</div></pre></td></tr></table></figure>
+<p>假设这里要部署的cassandra集群为两个节点，利用docker-compose来进行服务编排。<br>接着是创建一个<code>docker-compose.yml</code>文件，并设置好编排内容：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'2'</span></div><div class="line"><span class="attr">services:</span></div><div class="line"></div><div class="line"><span class="comment">###############################</span></div><div class="line"><span class="attr">   cassandra0:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">cassandra</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">cassandra0</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">     -</span> <span class="number">9042</span><span class="string">:9042</span></div><div class="line"><span class="bullet">     -</span> <span class="number">7199</span><span class="string">:7199</span></div><div class="line"><span class="attr">    mem_limit:</span> <span class="number">1024</span><span class="string">M</span></div><div class="line"></div><div class="line"><span class="comment">###############################</span></div><div class="line"><span class="attr">   cassandra1:</span></div><div class="line"><span class="attr">    image:</span> <span class="string">cassandra</span></div><div class="line"><span class="attr">    container_name:</span> <span class="string">cassandra1</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">     -</span> <span class="number">9142</span><span class="string">:9042</span></div><div class="line"><span class="attr">    links:</span></div><div class="line"><span class="attr">     - cassandra0:</span><span class="string">seed</span></div><div class="line"><span class="attr">    environment:</span></div><div class="line"><span class="bullet">     -</span> <span class="string">CASSANDRA_SEEDS=seed</span></div><div class="line"><span class="attr">    mem_limit:</span> <span class="number">1024</span><span class="string">M</span></div></pre></td></tr></table></figure>
+<p>yml文件设置好后在docker中启动canssandra的两个节点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>docker-compose up -d</div><div class="line">Creating cassandra0 ...</div><div class="line">Creating cassandra0 done</div><div class="line">Creating cassandra1 ...</div><div class="line">Creating cassandra1 done</div></pre></td></tr></table></figure>
+<p>容器节点起来后，检查一下cassandra的运行状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>docker exec cassandra0 nodetool status</div><div class="line">Datacenter: datacenter1</div><div class="line">=======================</div><div class="line">Status=Up/Down</div><div class="line">|/ State=Normal/Leaving/Joining/Moving</div><div class="line">--  Address     Load       Tokens       Owns (effective)  Host ID                               Rack</div><div class="line">UN  172.18.0.2  204.5 KiB  256          100.0%            d7363c7e-6365-4f43-9f0d-cb75797954f7  rack1</div><div class="line">UN  172.18.0.3  226.09 KiB  256          100.0%            0ef2f23d-8dbf-4bf0-a73e-f3cf0b65ff1b  rack1</div></pre></td></tr></table></figure>
+<p>可以看到两个节点的状态都是<code>UN</code>, UP-Normal, 运行正常。</p>
+<h2 id="在Cassandra中创建Jaeger相关表"><a href="#在Cassandra中创建Jaeger相关表" class="headerlink" title="在Cassandra中创建Jaeger相关表"></a>在Cassandra中创建Jaeger相关表</h2><p>这一步主要是先找到jaegertracing项目中用来初始化表的v001.cql.templ及create.sh脚本，<br>然后通过cqlsh命令来执行相关初始化操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>pip install cqlsh</div><div class="line"><span class="meta">$</span>cd $GOPATH/src/github.com/jaegertracing/jaeger/plugin/storage/cassandra/schema/</div><div class="line"><span class="meta">$</span>DATACENTER=dc1 REPLICATION_FACTOR=1 MODE=prod ./create.sh v001.cql.templ | cqlsh --cqlversion=3.4.4</div><div class="line">Using template file v001.cql.templ with parameters:</div><div class="line">    mode = prod</div><div class="line">    datacenter = dc1</div><div class="line">    keyspace = jaeger_v1_dc1</div><div class="line">    replication = &#123;'class': 'NetworkTopologyStrategy', 'dc1': '1' &#125;</div><div class="line">    trace_ttl = 172800</div><div class="line">    dependencies_ttl = 0</div></pre></td></tr></table></figure>
+<h2 id="部署Jaeger"><a href="#部署Jaeger" class="headerlink" title="部署Jaeger"></a>部署Jaeger</h2><p>有了存储服务后，最后一步我们来部署Jaeger相关的服务组件。</p>
+<h3 id="1-下载-Jaeger安装包"><a href="#1-下载-Jaeger安装包" class="headerlink" title="1. 下载 Jaeger安装包"></a>1. 下载 <a href="https://github.com/jaegertracing/jaeger/releases/download/v1.5.0/jaeger-1.5.0-linux-amd64.tar.gz" target="_blank" rel="external">Jaeger安装包</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$tar</span> -zxvf jaeger-1.5.0-linux-amd64.tar.gz -C /your_path/</div><div class="line"><span class="variable">$cd</span> /your_path/</div><div class="line"><span class="variable">$mv</span> jaeger-1.5.0-linux-amd64 jaeger</div><div class="line"><span class="variable">$cd</span> jaeger</div></pre></td></tr></table></figure>
+<h3 id="2-部署Collector-Agent-Query"><a href="#2-部署Collector-Agent-Query" class="headerlink" title="2. 部署Collector,Agent,Query"></a>2. 部署Collector,Agent,Query</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$mkdir</span> <span class="built_in">log</span></div><div class="line"><span class="variable">$nohup</span> ./jaeger-collector --cassandra.keyspace=jaeger_v1_dc1  --cassandra.servers=127.0.0.1 --collector.zipkin.http-port=9411 &gt;&gt; <span class="built_in">log</span>/collector.log 2&gt;&amp;1 &amp;</div><div class="line"><span class="variable">$nohup</span> ./jaeger-agent  --collector.host-port=127.0.0.1:14267 &gt;&gt; <span class="built_in">log</span>/agent.log 2&gt;&amp;1 &amp;</div><div class="line"><span class="variable">$nohup</span> ./jaeger-query --cassandra.keyspace jaeger_v1_dc1  --cassandra.servers 127.0.0.1 --query.static-files=./jaeger-ui-build/build &gt;&gt; <span class="built_in">log</span>/query.log 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure>
+<h3 id="3-打开UI查询页"><a href="#3-打开UI查询页" class="headerlink" title="3. 打开UI查询页"></a>3. 打开UI查询页</h3><p>所有组件都运行起来后，可以这样来访问查询页面， 如打开<code>http://yourIP:16686/</code>即可看到主界面：<br><img src="https://img-blog.csdn.net/20180618132747474?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L21veGlhb21vbW8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="JaegerUI"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/">[分布式trace]在Ubuntu17.10上部署jaeger</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">默默磨墨</a></p>
+        <p><span>发布时间:</span>2018-06-18, 16:56:24</p>
+        <p><span>最后更新:</span>2018-06-18, 17:06:26</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/" title="[分布式trace]在Ubuntu17.10上部署jaeger">http://blog.moguang.com/2018/06/18/archi/jaeger-deploy-on-ubuntu/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.moguang.com/2018/06/18/archi/jaeger-deploy-on-ubuntu/　　作者: 默默磨墨" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/06/22/archi/microservice-circuitbreaker/">
+                    微服务开发之熔断器
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/06/17/golang/grpc-jaeger/">
+                    grpc-jaeger调用链跟踪模块
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于Jaeger"><span class="toc-number">1.</span> <span class="toc-text">关于Jaeger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jaeger关键组件"><span class="toc-number">2.</span> <span class="toc-text">Jaeger关键组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署cassandra"><span class="toc-number">3.</span> <span class="toc-text">部署cassandra</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在Cassandra中创建Jaeger相关表"><span class="toc-number">4.</span> <span class="toc-text">在Cassandra中创建Jaeger相关表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署Jaeger"><span class="toc-number">5.</span> <span class="toc-text">部署Jaeger</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载-Jaeger安装包"><span class="toc-number">5.1.</span> <span class="toc-text">1. 下载 Jaeger安装包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-部署Collector-Agent-Query"><span class="toc-number">5.2.</span> <span class="toc-text">2. 部署Collector,Agent,Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-打开UI查询页"><span class="toc-number">5.3.</span> <span class="toc-text">3. 打开UI查询页</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"[分布式trace]在Ubuntu17.10上部署jaeger　| moxiaomomo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2142049';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/06/22/archi/microservice-circuitbreaker/" title="上一篇: 微服务开发之熔断器">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/06/17/golang/grpc-jaeger/" title="下一篇: grpc-jaeger调用链跟踪模块">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/ops/Nginx如何配置跨域-多域名/">Nginx如何配置跨域(多域名)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/19/ops/Centos7安装ElasticSearch6/">Centos7安装ElasticSearch6.4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/linux/Centos7快速搭建FTP服务/">Centos7快速搭建FTP服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/archi/CAS单点登录前后端分离/">CAS单点登录前后端分离</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/18/archi/microservice-SSO/">微服务开发之单点登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/29/java/springboot-gradle-mysql/">springboot+gradle下访问mysql用例</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/java/springboot-on-vscode/">VS Code下创建SpringBoot应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/archi/microservice-circuitbreaker/">微服务开发之熔断器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/18/archi/jaeger-deploy-on-ubuntu/">[分布式trace]在Ubuntu17.10上部署jaeger</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/17/golang/grpc-jaeger/">grpc-jaeger调用链跟踪模块</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/golang/token-bucket/">基于环形队列和令牌桶实现的限流模块</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/28/golang/goraft/">Go实现raft协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/golang/a-way-to-understand-goroutine/">[Golang]另一角度理解goroutine</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/network/Understand-TCP-IP-Stack3/">理解TCP/IP协议栈(3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/base64/">python之encode/decode</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/network/network-transport-layer/">network transport layer</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/python/python-map-function/">[python]map function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/golang/golang_function/">[golang]function</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/02/golang/golang_interface/">[golang]interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/07/22/about/about/">关于本站</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2015-2018 默默磨墨
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 3;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+             tags: ".article-tag a", 
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+             menu: ".header-menu a", 
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">-->
+<script async src="http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  </div>
+</body>
+</html>

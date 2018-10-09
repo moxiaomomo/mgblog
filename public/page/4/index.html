@@ -184,7 +184,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos-DevOps/">Centos, DevOps</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tracing/">tracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
                     </div>
                 </section>
                 
@@ -263,11 +263,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="[golang]array-slice-golang/golang_array-slice" class="article article-type-[golang]array-slice" itemscope itemprop="blogPost">
+    <article id="post-bigdata/hadoop-spark-errors" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/01/30/golang/golang_array-slice/" class="article-date">
-      <time datetime="2017-01-30T01:00:18.000Z" itemprop="datePublished">2017-01-30</time>
+      <a href="/2017/10/16/bigdata/hadoop-spark-errors/" class="article-date">
+      <time datetime="2017-10-16T06:55:21.000Z" itemprop="datePublished">2017-10-16</time>
 </a>
 
 
@@ -282,7 +282,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a>
+      <a class="article-title" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a>
     </h1>
   
 
@@ -292,83 +292,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1)基础特性"></a>1)基础特性</h4><ul>
-<li>array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度;</li>
-<li>数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝;</li>
-<li>作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低;</li>
-<li>数组长度也是Type一部分, 如[4]int和[2]int类型不一样.</li>
-</ul>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/01/30/golang/golang_array-slice/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-bigdata/deployment-spark-on-yarn" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/12/16/bigdata/deployment-spark-on-yarn/" class="article-date">
-      <time datetime="2016-12-16T15:10:04.000Z" itemprop="datePublished">2016-12-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="安装包准备"><a href="#安装包准备" class="headerlink" title="安装包准备"></a>安装包准备</h3><ul>
-<li>Oracle JDK<br>安装了elasticSearch的系统应该已经配置好了JDK环境; 推荐JDK7</li>
-<li>scala开发环境<br>spark依赖于scala运行, scala是开发spark统计程序的官方语言; 当前使用scala-2.11版本</li>
-<li>hadoop集群<br>hadoop-yarn为spark运算提供资源管理及hdfs存储; 当前使用apache hadoop-2.7.3版本</li>
-<li>spark集群<br>用于分布式运算; 当前使用apache spark 2.0.2版本</li>
-<li>ES-Hadoop插件<br>es-hadoop作为hadoop/spark集成elasticSearch的插件使用; 当前使用es-hadoop_5.1.1版本</li>
-</ul>
-<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>** 尚未找到docker对hadoop多机器多节点集群的快速部署方案, 暂时先手动部署</p>
+              <h2 id="hadoop-spark错误问题总结"><a href="#hadoop-spark错误问题总结" class="headerlink" title="hadoop-spark错误问题总结"></a>hadoop-spark错误问题总结</h2><h4 id="1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class"><a href="#1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class" class="headerlink" title="1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class"></a>1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</div><div class="line">    at org.elasticsearch.spark.rdd.AbstractEsRDDIterator.&lt;init&gt;(AbstractEsRDDIterator.scala:28)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDDIterator.&lt;init&gt;(ScalaEsRowRDD.scala:49)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDD.compute(ScalaEsRowRDD.scala:45)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDD.compute(ScalaEsRowRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:70)</div><div class="line">    at org.apache.spark.scheduler.Task.run(Task.scala:86)</div><div class="line">    at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:274)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</div><div class="line">    ... 1 more</div></pre></td></tr></table></figure></p>
           
       
     </div>
@@ -384,7 +308,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/12/16/bigdata/deployment-spark-on-yarn/#more">阅读全文 >></a>
+          <a href="/2017/10/16/bigdata/hadoop-spark-errors/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -403,11 +327,11 @@
 
 
   
-    <article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-script/shell-compare-files" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
-      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
+      <a href="/2017/09/28/script/shell-compare-files/" class="article-date">
+      <time datetime="2017-09-28T11:09:37.000Z" itemprop="datePublished">2017-09-28</time>
 </a>
 
 
@@ -422,7 +346,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a>
+      <a class="article-title" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a>
     </h1>
   
 
@@ -432,7 +356,70 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
+        <p>假设有一个数据集群, 它的每个节点的目录/data/下面有很多子目录, 子目录内包含很多文件; <br><br>每两个节点的/data/目录下所有文件理论上要保持一致(比如fastdfs的两副本模式)。<br></p>
+<p>现在需要快速的对每两台机器上的/data目录下的文件检测是否全部一致, 那么可以怎么做呢?<br><br>一个思路是利用shell实现, 每次将两台机器上的文件全部扫描并排序到一个文件内, 然后拉取到本地上进行对比。<br></p>
+<p>具体示例代码(同时解决了sudo密码验证的问题)如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># 每行两个要用于对比文件的ip</span></div><div class="line">ipPairs=(</div><div class="line">192.168.1.59 192.168.1.60</div><div class="line">192.168.1.81 192.168.1.86</div><div class="line">192.168.1.82 192.168.1.87</div><div class="line">)</div><div class="line"><span class="comment"># ssh用户/ssh端口/sudo密码</span></div><div class="line">username=<span class="string">"yourname"</span></div><div class="line">port=<span class="string">"yourport"</span></div><div class="line">sudoPasswd=<span class="string">"yourpassword"</span></div><div class="line"></div><div class="line"><span class="comment"># 检查列表长度是否为偶数</span></div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;#ipPairs[@]&#125;</span>%2 -eq 1 ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"invalid pair in ipPairs."</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>((i=0;i&lt;<span class="variable">$&#123;#ipPairs[@]&#125;</span>;i+=2))</div><div class="line"><span class="keyword">do</span></div><div class="line">    ipOne=<span class="variable">$&#123;ipPairs[$i]&#125;</span></div><div class="line">    ipTwo=<span class="variable">$&#123;ipPairs[$i+1]&#125;</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"ip1:"</span> <span class="variable">$ipOne</span> <span class="string">"ip2:"</span> <span class="variable">$ipTwo</span></div><div class="line"></div><div class="line">/usr/bin/expect &lt;&lt;-EOF</div><div class="line">    <span class="built_in">set</span> timeout 300</div><div class="line">    spawn ssh -t -p <span class="variable">$port</span> -l <span class="variable">$&#123;username&#125;</span> <span class="variable">$ipOne</span> &#123;sudo find /data/ -<span class="built_in">type</span> f | sort &gt; /tmp/<span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span>&#125;</div><div class="line">    expect &#123;</div><div class="line">        <span class="string">"(yes/no)? "</span> &#123; send <span class="string">"yes\n"</span> &#125;</div><div class="line">        <span class="string">"password for <span class="variable">$&#123;username&#125;</span>: "</span> &#123; send <span class="string">"<span class="variable">$&#123;sudoPasswd&#125;</span>\n"</span> &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    spawn ssh -t -p <span class="variable">$port</span> -l <span class="variable">$&#123;username&#125;</span> <span class="variable">$ipTwo</span> &#123;sudo find /data/ -<span class="built_in">type</span> f | sort &gt; /tmp/<span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span>&#125;</div><div class="line">    expect &#123;</div><div class="line">        <span class="string">"(yes/no)? "</span> &#123; send <span class="string">"yes\n"</span> &#125;</div><div class="line">        <span class="string">"password for <span class="variable">$&#123;username&#125;</span>: "</span> &#123; send <span class="string">"<span class="variable">$&#123;sudoPasswd&#125;</span>\n"</span> &#125;</div><div class="line">    &#125;</div><div class="line">interact</div><div class="line">expect eof</div><div class="line">EOF</div><div class="line"></div><div class="line">    scp -P <span class="variable">$port</span> <span class="variable">$&#123;username&#125;</span>@<span class="variable">$ipOne</span>:/tmp/<span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span></div><div class="line">    <span class="keyword">if</span> [ `ls -l <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> | awk <span class="string">'&#123; print $5 &#125;'</span>` -lt  1 ]</div><div class="line">    <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;ipOne&#125;</span>.log is empty."</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    scp -P <span class="variable">$port</span> <span class="variable">$&#123;username&#125;</span>@<span class="variable">$ipTwo</span>:/tmp/<span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span></div><div class="line">    <span class="keyword">if</span> [ `ls -l <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span> | awk <span class="string">'&#123; print $5 &#125;'</span>` -lt  1 ]</div><div class="line">    <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;ipTwo&#125;</span>.log is empty."</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"></div><div class="line">    <span class="comment"># 对比sha1</span></div><div class="line">    sha1sum <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span></div><div class="line"></div><div class="line">    <span class="comment"># 查找差集</span></div><div class="line">    comm -1 -3 <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span> &gt; <span class="variable">$&#123;ipTwo&#125;</span>_<span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-simple-uploadsrv" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/07/golang/golang-simple-uploadsrv/" class="article-date">
+      <time datetime="2017-09-07T10:51:21.000Z" itemprop="datePublished">2017-09-07</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/07/golang/golang-simple-uploadsrv/">[golang]简单文件上传服务</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>利用net/http库及gorilla/mux库实现了一个简单的文件上传服务,<br><br>示例如下:<br>
           
       
     </div>
@@ -448,7 +435,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/12/03/golang/golang_http-server/#more">阅读全文 >></a>
+          <a href="/2017/09/07/golang/golang-simple-uploadsrv/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -467,11 +454,11 @@
 
 
   
-    <article id="post-network/network-transport-layer" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python/python3-aiohttp" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/15/network/network-transport-layer/" class="article-date">
-      <time datetime="2016-08-15T03:33:04.000Z" itemprop="datePublished">2016-08-15</time>
+      <a href="/2017/09/05/python/python3-aiohttp/" class="article-date">
+      <time datetime="2017-09-05T10:10:02.000Z" itemprop="datePublished">2017-09-05</time>
 </a>
 
 
@@ -486,7 +473,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/network/network-transport-layer/">network transport layer</a>
+      <a class="article-title" href="/2017/09/05/python/python3-aiohttp/">[python3]使用aiohttp</a>
     </h1>
   
 
@@ -496,138 +483,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>UDP包结构, 如图所示:<br><br><img src="/img/udppackage.png" alt="UDP包结"><br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/15/network/network-transport-layer/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/golang-pprof性能分析工具" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/11/golang/golang-pprof性能分析工具/" class="article-date">
-      <time datetime="2016-08-11T10:53:57.000Z" itemprop="datePublished">2016-08-11</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="1-关于pprof"><a href="#1-关于pprof" class="headerlink" title="1. 关于pprof"></a>1. 关于pprof</h3><p>pprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。</p>
-<h3 id="2-源码示例"><a href="#2-源码示例" class="headerlink" title="2. 源码示例"></a>2. 源码示例</h3>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/11/golang/golang-pprof性能分析工具/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python/python-map-function" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/05/python/python-map-function/" class="article-date">
-      <time datetime="2016-04-05T15:19:29.000Z" itemprop="datePublished">2016-04-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/python/python-map-function/">[python]map function</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="1-内建方法map"><a href="#1-内建方法map" class="headerlink" title="1. 内建方法map"></a>1. 内建方法map</h3><p>内建map方法可以通过一个序列的方式来实现函数之间的映射, 并且串行执行。如:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"enter add func..."</span></div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"leave add func..."</span></div><div class="line">    <span class="keyword">return</span> x+y</div><div class="line"></div><div class="line">map(add, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</div></pre></td></tr></table></figure></p>
-<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">2016-04-05 15:01:49.382314 enter add func...</div><div class="line">2016-04-05 15:01:51.383387 leave add func...</div><div class="line">2016-04-05 15:01:51.383471 enter add func...</div><div class="line">2016-04-05 15:01:53.385584 leave add func...</div><div class="line">2016-04-05 15:01:53.385676 enter add func...</div><div class="line">2016-04-05 15:01:55.387388 leave add func...</div><div class="line">[5, 7, 9]</div></pre></td></tr></table></figure></p>
-<p>由上可见, 调用map, 相当于顺序调用了add(1,4), add(2,5)， add(3,6)方法; 一行代码实现了方法的迭代调用, 简单快捷。<br>那如果再优化一下，实现并行调用add方法， 应该怎么做呢？在python里也好实现, 利用multiprocessing模块就可以。</p>
+              <p>python3下asyncio可实现异步并发处理IO逻辑, 而aiohttp可实现异步请求http逻辑,<br><br>因此可结合asyncio及aiohttp库实现异步并发请求http的需求,<br>直接上示例代码:<br>
           
       
     </div>
@@ -643,7 +499,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/04/05/python/python-map-function/#more">阅读全文 >></a>
+          <a href="/2017/09/05/python/python3-aiohttp/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -662,11 +518,11 @@
 
 
   
-    <article id="post-golang/golang_pointer" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python/python-upload-download-large-file" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/05/golang/golang_pointer/" class="article-date">
-      <time datetime="2016-04-05T11:35:16.000Z" itemprop="datePublished">2016-04-05</time>
+      <a href="/2017/08/19/python/python-upload-download-large-file/" class="article-date">
+      <time datetime="2017-08-19T14:39:53.000Z" itemprop="datePublished">2017-08-19</time>
 </a>
 
 
@@ -681,7 +537,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a>
+      <a class="article-title" href="/2017/08/19/python/python-upload-download-large-file/">python upload/download large file</a>
     </h1>
   
 
@@ -691,7 +547,68 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="关于golang指针类型"><a href="#关于golang指针类型" class="headerlink" title="关于golang指针类型"></a>关于golang指针类型</h3><p>Golang保留了指针类型,支持指针操作。<br><br>可以使用操作符&amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。<br><br>unsafe.Pointer可以与任意指针类型转换, 可以将unsafe.Pointer转换为uintptr,然后做指针运算。<br><br>uintptr类型可以转换为整数。<br>
+        <p>对于大文件上传下载，可以通过requests库来流式处理，示例如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(url, local_fpath)</span>:</span></div><div class="line">    headers = &#123;</div><div class="line">        <span class="string">'content-type'</span>: <span class="string">'application/octet-stream'</span>,</div><div class="line">        <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">with</span> open(local_fpath, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</div><div class="line">        r = requests.post(url, headers=headers, data=f)</div><div class="line">        <span class="comment"># deal with r.headers.xxx</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url, local_fpath)</span>:</span></div><div class="line">    headers = &#123;</div><div class="line">        <span class="comment"># ...</span></div><div class="line">    &#125;</div><div class="line">    r = requests.get(url, stream=<span class="keyword">True</span>, headers=headers)</div><div class="line">    <span class="keyword">with</span> open(local_fpath, <span class="string">"wb"</span>) <span class="keyword">as</span> fd:</div><div class="line">        <span class="keyword">for</span> chunk <span class="keyword">in</span> r.iter_content(chunk_size=<span class="number">10240</span>):</div><div class="line">            <span class="keyword">if</span> chunk:</div><div class="line">                fd.write(chunk)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-python/python-pika-broken-pipe" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/19/python/python-pika-broken-pipe/" class="article-date">
+      <time datetime="2017-08-19T10:46:21.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/python/python-pika-broken-pipe/">python pika broken pipe</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在消费rabbitMQ队列时, 每次进入回调函数内需要进行一些比较耗时的操作;操作完成后给rabbitMQ server发送ack信号以dequeue本条消息。<br><br>问题就发生在发送ack操作时, 程序提示链接已被断开或socket error。<br>
           
       
     </div>
@@ -702,12 +619,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/04/05/golang/golang_pointer/#more">阅读全文 >></a>
+          <a href="/2017/08/19/python/python-pika-broken-pipe/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -726,11 +643,11 @@
 
 
   
-    <article id="post-golang/golang-工作池workerpool" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mysql/mysql_concurrent_query" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/15/golang/golang-工作池workerpool/" class="article-date">
-      <time datetime="2016-03-15T10:19:32.000Z" itemprop="datePublished">2016-03-15</time>
+      <a href="/2017/08/06/mysql/mysql_concurrent_query/" class="article-date">
+      <time datetime="2017-08-06T07:22:43.000Z" itemprop="datePublished">2017-08-06</time>
 </a>
 
 
@@ -745,7 +662,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a>
+      <a class="article-title" href="/2017/08/06/mysql/mysql_concurrent_query/">[mysql]python3并发访问分布式mysql表</a>
     </h1>
   
 
@@ -755,9 +672,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。</p>
-<p>创建一个goroutine工作池, 是一个比较合理的解决方案。</p>
-<h3 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h3>
+              <h3 id="场景说明"><a href="#场景说明" class="headerlink" title="场景说明"></a>场景说明</h3><p>假设有一个mysql表被水平切分，分散到多个host中，每个host拥有n个切分表。<br>如果需要并发去访问这些表，快速得到查询结果， 应该怎么做呢？<br>这里提供一种方案，利用python3的asyncio异步io库及aiomysql异步库去实现这个需求。<br>
           
       
     </div>
@@ -768,12 +683,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/03/15/golang/golang-工作池workerpool/#more">阅读全文 >></a>
+          <a href="/2017/08/06/mysql/mysql_concurrent_query/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -792,11 +707,11 @@
 
 
   
-    <article id="post-golang/golang-json-rpc" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="consul-bigdata/基于Docker的Consul-官方镜像-集群部署指南" class="article article-type-consul" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/12/golang/golang-json-rpc/" class="article-date">
-      <time datetime="2016-03-12T10:09:09.000Z" itemprop="datePublished">2016-03-12</time>
+      <a href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/" class="article-date">
+      <time datetime="2017-07-31T03:47:23.000Z" itemprop="datePublished">2017-07-31</time>
 </a>
 
 
@@ -811,7 +726,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/12/golang/golang-json-rpc/">[golang]json-rpc</a>
+      <a class="article-title" href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/">基于Docker的Consul(官方镜像)集群部署指南</a>
     </h1>
   
 
@@ -821,7 +736,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="关于JSON-RPC"><a href="#关于JSON-RPC" class="headerlink" title="关于JSON-RPC"></a>关于JSON-RPC</h4><p>JSON-RPC是一个远程调用协议, 还是轻量级的, 简单易用。<br>在请求远程调用的时候, 我们可以这样定义请求体:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"jsonrpc"</span>: <span class="string">"2.0"</span>,</div><div class="line">    <span class="attr">"method"</span>: <span class="string">"login"</span>,</div><div class="line">    <span class="attr">"params"</span>: &#123;<span class="attr">"name"</span>:<span class="string">"momo"</span>, <span class="attr">"passwd"</span>:<span class="string">"xxxxxx"</span>&#125;,</div><div class="line">    <span class="attr">"id"</span>: <span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+              <h3 id="关于Consul"><a href="#关于Consul" class="headerlink" title="关于Consul"></a>关于Consul</h3><p>Consul 是一个支持多数据中心分布式高可用的服务发现和配置共享的服务软件.<br><br>Consul 由 HashiCorp公司用Go语言开发, 基于Mozilla Public License 2.0的协议进行开源. <br><br>Consul 支持健康检查,并允许 HTTP 和 DNS 协议调用 API 存储键值对.<br><br>命令行超级好用的虚拟机管理软件 vgrant 也是 HashiCorp 公司开发的产品.<br><br>一致性协议采用 Raft 算法,用来保证服务的高可用. 使用 GOSSIP 协议管理成员和广播消息, 并且支持 ACL 访问控制.<br></p>
           
       
     </div>
@@ -832,12 +747,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/consul/">consul</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/03/12/golang/golang-json-rpc/#more">阅读全文 >></a>
+          <a href="/2017/07/31/bigdata/基于Docker的Consul-官方镜像-集群部署指南/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -856,11 +771,11 @@
 
 
   
-    <article id="post-golang/golang-异常处理" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-encode/base64" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/10/golang/golang-异常处理/" class="article-date">
-      <time datetime="2016-03-10T05:53:30.000Z" itemprop="datePublished">2016-03-10</time>
+      <a href="/2017/07/23/encode/base64/" class="article-date">
+      <time datetime="2017-07-23T04:46:25.000Z" itemprop="datePublished">2017-07-23</time>
 </a>
 
 
@@ -875,7 +790,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/10/golang/golang-异常处理/">[golang]异常处理</a>
+      <a class="article-title" href="/2017/07/23/encode/base64/">python之encode/decode</a>
     </h1>
   
 
@@ -885,7 +800,66 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="关于异常处理"><a href="#关于异常处理" class="headerlink" title="关于异常处理"></a>关于异常处理</h3><p>golang并不支持try-catch-finally机制，而是通过panic和defer函数来处理运行时异常。<br><br>一般情况下，golang中使用多值来返回错误；个别情况下才需要用到Exception异常处理: defer, panic, recover。</p>
+        <h2 id="python之encode-decode"><a href="#python之encode-decode" class="headerlink" title="python之encode/decode"></a>python之encode/decode</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding: utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> base64</div><div class="line"></div><div class="line">to_enc = <span class="string">'sampledata'</span></div><div class="line">enc_res = base64.b64encode(to_enc)</div><div class="line"><span class="keyword">print</span> enc_res</div><div class="line"></div><div class="line">dec_res = base64.b64decode(enc_res)</div><div class="line"><span class="keyword">print</span> dec_res</div></pre></td></tr></table></figure>
+<p>运行效果如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">root@XIAOMO:/tmp<span class="comment"># python27 b64.py</span></div><div class="line">c2FtcGxlZGF0YQ==</div><div class="line">sampledata</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-encode/centos_zh" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/23/encode/centos_zh/" class="article-date">
+      <time datetime="2017-07-22T17:25:42.000Z" itemprop="datePublished">2017-07-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/23/encode/centos_zh/">CentOS7 中文乱码问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="修改-etc-locale-conf"><a href="#修改-etc-locale-conf" class="headerlink" title="修改/etc/locale.conf"></a>修改/etc/locale.conf</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"en_US.UTF-8"</span></div></pre></td></tr></table></figure>
+<h2 id="修改-etc-sysconfig-i18n"><a href="#修改-etc-sysconfig-i18n" class="headerlink" title="修改/etc/sysconfig/i18n"></a>修改/etc/sysconfig/i18n</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=<span class="string">"zh_CN.UTF-8"</span></div></pre></td></tr></table></figure>
           
       
     </div>
@@ -895,13 +869,9 @@
       
 
       
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
       
         <p class="article-more-link">
-          <a href="/2016/03/10/golang/golang-异常处理/#more">阅读全文 >></a>
+          <a href="/2017/07/23/encode/centos_zh/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -922,7 +892,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -1009,8 +979,10 @@
     
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">-->
+<script async src="http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
+
   </div>
 </body>
 </html>

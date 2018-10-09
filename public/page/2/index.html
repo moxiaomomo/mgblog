@@ -184,7 +184,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos-DevOps/">Centos, DevOps</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tracing/">tracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
                     </div>
                 </section>
                 
@@ -263,11 +263,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-network/Understand-TCP-IP-Stack2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/token-bucket" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/06/network/Understand-TCP-IP-Stack2/" class="article-date">
-      <time datetime="2017-11-06T09:33:30.000Z" itemprop="datePublished">2017-11-06</time>
+      <a href="/2018/06/01/golang/token-bucket/" class="article-date">
+      <time datetime="2018-06-01T02:17:40.000Z" itemprop="datePublished">2018-06-01</time>
 </a>
 
 
@@ -282,7 +282,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/06/network/Understand-TCP-IP-Stack2/">理解TCP/IP协议栈(2)</a>
+      <a class="article-title" href="/2018/06/01/golang/token-bucket/">基于环形队列和令牌桶实现的限流模块</a>
     </h1>
   
 
@@ -292,81 +292,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>翻译自: <a href="https://www.cubrid.org/blog/understanding-tcp-ip-network-stack" target="_blank" rel="external">https://www.cubrid.org/blog/understanding-tcp-ip-network-stack</a></p>
-<h3 id="数据接收"><a href="#数据接收" class="headerlink" title="数据接收"></a>数据接收</h3><p>现在来看看数据是如何接收的. 数据接收就是网络协议栈处理到达数据的过程. 如Figure 3所示:<br><img src="http://blog.moguang.me/img/tcp_ip_stat2.png" alt="tcp_ip_stat2"><br>Figure 3: TCP/IP栈各层如何处理到达数据的过程.</p>
+              <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在分布式服务架构下，比如微服务架构，一般需要构建一个独立的gateway模块。gateway模块的主要作用包括流量控制，规则路由，负载均衡，鉴权，熔断等等；而gateway一般是stateless的，因此可自由弹性伸缩集群规模，以应对实际的访问场景。<br>本文主要介绍通过golang实现限流模块的一种方案，其关键点主要有两个：</p>
 <ul>
-<li>首先NIC将包写入它的内存. 它会通过CRC来检查包是否有效, 然后将数据发送到主机的内存缓冲区. 这个缓冲区已经由Driver向内核请求获取并且用来填充接收到的数据包. 当缓冲区开辟后, 驱动通知NIC对应的内存地址和大小. 当驱动没有可用的内存缓冲区而NIC不断接收数据时, NIC会丢掉接收到的数据包.<br>在发送数据到主机内存缓冲区后, NIC向主机系统发送一个中断信号.</li>
-<li>然后, Driver检查是否能处理新到达的数据包. 到这一步, 会用到driver-NIC通讯协议.
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/11/06/network/Understand-TCP-IP-Stack2/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-linux/devtech-overview" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/03/linux/devtech-overview/" class="article-date">
-      <time datetime="2017-11-03T05:54:12.000Z" itemprop="datePublished">2017-11-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/03/linux/devtech-overview/">操作系统与网络知识整理(持续更新)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h3><h4 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h4><ul>
-<li><p>操作系统的四个特性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. 并发: 同一时间间隔内支持执行多个任务, 对于一个核则是交替执行；</div><div class="line">2. 共享: 硬件资源或数据资源支持多个进程共享；</div><div class="line">3. 异步: 并发情况下， 一个程序会陆陆续续被执行，完成时间不可预知；</div><div class="line">4. 虚拟: 物理实体转化为逻辑实体，如虚拟内存。</div></pre></td></tr></table></figure>
-</li>
-<li><p>操作系统的基本功能</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. CPU管理, 作业调度</div><div class="line">2. 存储管理, 数据存取</div><div class="line">3. 设备管理, 与外围设备交互</div><div class="line">4. 接口管理, 向应用程序/用户提供交互接口</div></pre></td></tr></table></figure>
-</li>
+<li>环形队列(ring queue)</li>
+<li>令牌桶算法(token bucket)</li>
 </ul>
           
       
@@ -378,12 +307,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservice/">microservice</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/11/03/linux/devtech-overview/#more">阅读全文 >></a>
+          <a href="/2018/06/01/golang/token-bucket/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -402,11 +331,11 @@
 
 
   
-    <article id="post-bigdata/es-backup-restore-md" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/goraft" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/31/bigdata/es-backup-restore-md/" class="article-date">
-      <time datetime="2017-10-31T03:26:17.000Z" itemprop="datePublished">2017-10-31</time>
+      <a href="/2018/05/28/golang/goraft/" class="article-date">
+      <time datetime="2018-05-28T07:24:35.000Z" itemprop="datePublished">2018-05-28</time>
 </a>
 
 
@@ -421,7 +350,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/31/bigdata/es-backup-restore-md/">ElasticSearch数据备份与恢复</a>
+      <a class="article-title" href="/2018/05/28/golang/goraft/">Go实现raft协议</a>
     </h1>
   
 
@@ -431,12 +360,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>本文主要是记录了(Ubuntu环境)通过sshfs共享文件系统来进行快照方式备份数据。<br>假设ES集群有三个节点:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">192.168.1.10</div><div class="line">192.168.1.11</div><div class="line">192.168.1.12</div></pre></td></tr></table></figure></p>
-<h3 id="1-创建共享目录"><a href="#1-创建共享目录" class="headerlink" title="1. 创建共享目录"></a>1. 创建共享目录</h3><ul>
-<li><p>每个节点安装sshfs, 创建相同目录用于挂载共享目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get install fuse sshfs</div><div class="line">mkdir /mnt/backup</div></pre></td></tr></table></figure>
-</li>
-<li><p>选取其中一个节点的目录(非系统盘)作为共享目录, 设置其他节点免密码登录到该节点<br>假设选择的节点ip为192.168.1.10:</p>
+              <p>之前对raft算法是有所了解但无深究，偶然机会下读了下大牛的<a href="https://github.com/goraft/raft" target="_blank" rel="external">goraft代码</a> 后，决定自己实现一把。<br>目前代码基本完成，本人水平有限，代码基本能用，未经严格测试，欢迎指导：<a href="https://github.com/moxiaomomo/goRaft" target="_blank" rel="external">源码github地址</a><br>以下是项目说明README：</p>
+<h4 id="raft协议的go版本，实现功能包括："><a href="#raft协议的go版本，实现功能包括：" class="headerlink" title="raft协议的go版本，实现功能包括："></a>raft协议的go版本，实现功能包括：</h4><ul>
+<li>选主投票</li>
+<li>节点心跳</li>
+<li>日志同步</li>
+<li>成员变更</li>
+<li>日志压缩</li>
+</ul>
           
       
     </div>
@@ -447,12 +378,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservice/">microservice</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/10/31/bigdata/es-backup-restore-md/#more">阅读全文 >></a>
+          <a href="/2018/05/28/golang/goraft/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -471,11 +402,11 @@
 
 
   
-    <article id="post-network/Understand-TCP-IP-Stack" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python/curl-vs-python-requests" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/26/network/Understand-TCP-IP-Stack/" class="article-date">
-      <time datetime="2017-10-26T09:09:45.000Z" itemprop="datePublished">2017-10-26</time>
+      <a href="/2018/04/19/python/curl-vs-python-requests/" class="article-date">
+      <time datetime="2018-04-19T05:48:45.000Z" itemprop="datePublished">2018-04-19</time>
 </a>
 
 
@@ -490,7 +421,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/26/network/Understand-TCP-IP-Stack/">理解TCP/IP协议栈(1)</a>
+      <a class="article-title" href="/2018/04/19/python/curl-vs-python-requests/">shell curl 与 python requests</a>
     </h1>
   
 
@@ -500,12 +431,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>翻译自: <a href="https://www.cubrid.org/blog/understanding-tcp-ip-network-stack" target="_blank" rel="external">https://www.cubrid.org/blog/understanding-tcp-ip-network-stack</a></p>
-<p>目前我们的internet服务都是基于TCP/IP来开发的, 无法想像没有TCP/IP的Internet会是什么样子. 因此无论是在逻辑调整, 故障排除，还是发现新技术方面, 理解网络中数据的传输原理会帮助我们多方面提高服务性能表现.<br>本文会介绍基于Linux系统及硬件层数据流和控制流的网络协议栈体系.<br>TCP/IP重点特征<br>我应该怎么设计网络协议来保证数据的快速传输， 并保证数据有序不丢失？<br>TCP and IP<br>严格来说由于TCP和IP在不同层次上, 分开来描述它们也是可以的. 不过这里将他们描述为一个整体.</p>
-<ol>
-<li>面向连接<br>首先,  两个终端(本地和远程)建立了连接, 数据开始传输. 此处”TCP connection identifier”是两个终端的地址组合, 类型为<code>&lt;local IP address, local port number, remote IP address, remote port number&gt;</code>.</li>
-<li>双向字节流<br>双向的数据以字节流来进行通讯.</li>
-<li>按序传输<br>接收者按发送者发送顺序来接收数据. 因此数据是要求有序的, 一个32位int类型的数据用于标志次序.
+              <h3 id="shell-curl-与-python-requests"><a href="#shell-curl-与-python-requests" class="headerlink" title="shell curl 与 python requests"></a>shell curl 与 python requests</h3><p>偶然发现了curl和requests库的一个区别。场景是这样的–</p>
+<p>这样使用curl去发起post请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -v -X POST http://api.xx.com/api/yy.php --data &apos;params=&#123;&quot;sign&quot;:&quot;xxxx&quot;,&quot;data&quot;:[&#123;&quot;uid&quot;:110,&quot;remark&quot;:&quot;just4test&quot;&#125;]&#125;&apos;</div></pre></td></tr></table></figure></p>
+<p>后端接口服务能正常解析params参数并响应结果。但是当我改用python去请求时：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">data = &#123;<span class="string">"sign"</span>:<span class="string">"xxxx"</span>,<span class="string">"data"</span>:[&#123;<span class="string">"uid"</span>:<span class="number">110</span>,<span class="string">"remark"</span>:<span class="string">"just4test"</span>&#125;]&#125;</div><div class="line">reqbody = (<span class="string">'params=%s'</span>%json.dumps(data))</div><div class="line">res = requests.post(</div><div class="line">    <span class="string">'http://api.xx.com/api/yy.php'</span>,</div><div class="line">    data=reqbody)</div></pre></td></tr></table></figure>
+<p>接口无法解析params并返回错误。<br>
           
       
     </div>
@@ -516,12 +446,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/10/26/network/Understand-TCP-IP-Stack/#more">阅读全文 >></a>
+          <a href="/2018/04/19/python/curl-vs-python-requests/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -540,11 +470,11 @@
 
 
   
-    <article id="post-linux/UserSpace-vs-KernelSpace" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/parallel-download-file-md" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/25/linux/UserSpace-vs-KernelSpace/" class="article-date">
-      <time datetime="2017-10-25T06:42:48.000Z" itemprop="datePublished">2017-10-25</time>
+      <a href="/2018/01/03/golang/parallel-download-file-md/" class="article-date">
+      <time datetime="2018-01-03T09:43:52.000Z" itemprop="datePublished">2018-01-03</time>
 </a>
 
 
@@ -559,7 +489,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/25/linux/UserSpace-vs-KernelSpace/">[Linux]用户空间与内核空间</a>
+      <a class="article-title" href="/2018/01/03/golang/parallel-download-file-md/">golang并发下载文件</a>
     </h1>
   
 
@@ -569,14 +499,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>源文: <a href="http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html" target="_blank" rel="external">http://learnlinuxconcepts.blogspot.com/2014/02/kernel-space-and-user-space.html</a></p>
-<p>理解用户空间及内核空间对于增强理解Linux内核知识是非常重要的。</p>
-<ul>
-<li>这里的用户空间及内核空间对应于虚拟地址空间.</li>
-<li>每个linux中的进程占用独立的虚拟空间.</li>
-<li>在32位架构linux系统中, 用户空间至少对应3GB虚拟空间, 而内核空间至多占1GB空间.(普遍情况)</li>
-<li>内核空间的虚拟地址空间共享给所有进程使用.</li>
-<li>当一个进程活跃时, 要么处于用户态, 要么处于内核态.
+              <h4 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h4><p>假设有一个分布式文件系统，现需要从该系统中并发下载一部分文件到本地机器。<br>已知该文件系统的部分节点ip, 以及需要下载的文件fileID列表，并能通过这些信息来拼接下载地址。<br>其中节点ip列表保存在xx_node.txt， 要下载的fileID保存在xx_fileID.txt中。</p>
           
       
     </div>
@@ -587,12 +510,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/10/25/linux/UserSpace-vs-KernelSpace/#more">阅读全文 >></a>
+          <a href="/2018/01/03/golang/parallel-download-file-md/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -611,11 +534,11 @@
 
 
   
-    <article id="post-script/shell-curl-httpheader" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-script/parallel-shell-md" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/24/script/shell-curl-httpheader/" class="article-date">
-      <time datetime="2017-10-24T04:17:05.000Z" itemprop="datePublished">2017-10-24</time>
+      <a href="/2017/12/05/script/parallel-shell-md/" class="article-date">
+      <time datetime="2017-12-05T03:42:00.000Z" itemprop="datePublished">2017-12-05</time>
 </a>
 
 
@@ -630,7 +553,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/script/shell-curl-httpheader/">[shell]curl结果获取http header的问题</a>
+      <a class="article-title" href="/2017/12/05/script/parallel-shell-md/">使用parallel-ssh批量执行远程shell命令</a>
     </h1>
   
 
@@ -640,8 +563,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在通过curl请求http获取response header时， 发现字符串拼接一个问题。<br>比如以下程序:<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">hadoop@1:~$ ct=$(curl -s -I http://www.baidu.com | grep Content-Type | awk '&#123;print $2&#125;')</div><div class="line">hadoop@1:~$ echo $ct</div><div class="line">text/html</div><div class="line">hadoop@1:~$ echo $ct"_postfix"</div><div class="line">_postfixl</div></pre></td></tr></table></figure></p>
-<p>最后一行输出竟然是: <code>_postfixl</code>, 而不是期待的<code>text/html_postfix</code><br>细看结果应该是<code>_postfix</code> 直接覆盖了<code>text/html</code> 前面的内容。<br>http header是以<code>\r\n</code> 作为行分割符，与echo机制有什么冲突?<br>原因未解， 不过找到这样一种替代方法(如test.sh):<br>
+              <h3 id="使用parallel-ssh批量执行远程shell命令"><a href="#使用parallel-ssh批量执行远程shell命令" class="headerlink" title="使用parallel-ssh批量执行远程shell命令"></a>使用parallel-ssh批量执行远程shell命令</h3><h4 id="pssh使用场景"><a href="#pssh使用场景" class="headerlink" title="pssh使用场景"></a>pssh使用场景</h4><p>假设现在需要对数百台服务器节点进行配置更新或者执行一些简短command，而目前并没有完备的部署工具软件， 那可以选择向pssh这样的并行登录远程终端并执行指定命令的shell工具。<br>以前机器节点少的时候，直接用shell写个for循环来执行命令，也没什么问题。当节点数量多了之后，一个shell命令可能要消耗几秒， 这时才能感受到pssh这种并行方式的好处，省时省力。<br>
           
       
     </div>
@@ -657,7 +579,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/10/24/script/shell-curl-httpheader/#more">阅读全文 >></a>
+          <a href="/2017/12/05/script/parallel-shell-md/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -676,11 +598,11 @@
 
 
   
-    <article id="post-bigdata/flume-spark-streaming" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-bigdata/data-developing-md" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/19/bigdata/flume-spark-streaming/" class="article-date">
-      <time datetime="2017-10-19T05:51:01.000Z" itemprop="datePublished">2017-10-19</time>
+      <a href="/2017/12/01/bigdata/data-developing-md/" class="article-date">
+      <time datetime="2017-12-01T08:44:10.000Z" itemprop="datePublished">2017-12-01</time>
 </a>
 
 
@@ -695,7 +617,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/19/bigdata/flume-spark-streaming/">Spark Streaming从Flume读取数据流(pull模式)</a>
+      <a class="article-title" href="/2017/12/01/bigdata/data-developing-md/">大数据开发技术知识点</a>
     </h1>
   
 
@@ -705,141 +627,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="jar包准备"><a href="#jar包准备" class="headerlink" title="jar包准备"></a>jar包准备</h4><p>参考官方文档： <a href="http://spark.apache.org/docs/latest/streaming-flume-integration.html" target="_blank" rel="external">http://spark.apache.org/docs/latest/streaming-flume-integration.html</a></p>
-<p>当前测试flume使用到的jar包版本如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">spark-streaming-flume-sink_2.11-2.2.0.jar</div><div class="line">scala-library-2.11.8.jar</div><div class="line">commons-lang3-3.5.jar</div></pre></td></tr></table></figure></p>
-<p>这几个jar包下载后放到flume安装目录 <code>./flume/lib/</code> 中。</p>
-<p>spark streaming用到的jar版本如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark-streaming-flume-assembly_2.11-2.2.0.jar</div></pre></td></tr></table></figure></p>
-<p>在 <a href="http://search.maven.org" target="_blank" rel="external">http://search.maven.org</a> 下载后放到spark jar依赖目录。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/19/bigdata/flume-spark-streaming/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-bigdata/flume-kafka-deploy" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/16/bigdata/flume-kafka-deploy/" class="article-date">
-      <time datetime="2017-10-16T10:16:34.000Z" itemprop="datePublished">2017-10-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/16/bigdata/flume-kafka-deploy/">flume-kafka部署总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="部署准备"><a href="#部署准备" class="headerlink" title="部署准备"></a>部署准备</h3><p>配置日志收集系统(flume+kafka), 版本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apache-flume-1.8.0-bin.tar.gz</div><div class="line">kafka_2.11-0.10.2.0.tgz</div></pre></td></tr></table></figure></p>
-<p>假设部署在三个工作节点上:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">192.168.0.2</div><div class="line">192.168.0.3</div><div class="line">192.168.0.4</div></pre></td></tr></table></figure></p>
-<h3 id="flume配置说明"><a href="#flume配置说明" class="headerlink" title="flume配置说明"></a>flume配置说明</h3><p>假设flume的工作目录在/usr/local/flume,<br>监测某日志文件(如/tmp/testflume/chklogs/chk.log),<br>则新增配置: /usr/local/flume/conf/flume-kafka.conf<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/16/bigdata/flume-kafka-deploy/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-bigdata/hadoop-spark-errors" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/16/bigdata/hadoop-spark-errors/" class="article-date">
-      <time datetime="2017-10-16T06:55:21.000Z" itemprop="datePublished">2017-10-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/16/bigdata/hadoop-spark-errors/">hadoop-spark错误问题总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="hadoop-spark错误问题总结"><a href="#hadoop-spark错误问题总结" class="headerlink" title="hadoop-spark错误问题总结"></a>hadoop-spark错误问题总结</h2><h4 id="1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class"><a href="#1-Caused-by-java-lang-NoClassDefFoundError-scala-collection-GenTraversableOnce-class" class="headerlink" title="1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class"></a>1.Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</h4><p>具体错误日志:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Caused by: java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</div><div class="line">    at org.elasticsearch.spark.rdd.AbstractEsRDDIterator.&lt;init&gt;(AbstractEsRDDIterator.scala:28)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDDIterator.&lt;init&gt;(ScalaEsRowRDD.scala:49)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDD.compute(ScalaEsRowRDD.scala:45)</div><div class="line">    at org.elasticsearch.spark.sql.ScalaEsRowRDD.compute(ScalaEsRowRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)</div><div class="line">    at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)</div><div class="line">    at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)</div><div class="line">    at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:70)</div><div class="line">    at org.apache.spark.scheduler.Task.run(Task.scala:86)</div><div class="line">    at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:274)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)</div><div class="line">    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</div><div class="line">    ... 1 more</div></pre></td></tr></table></figure></p>
+              <h4 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">1) 理论概述</div><div class="line">分布式领域中CAP理论：</div><div class="line">① C：Consistency，一致性，数据一致更新，所有数据变动都是同步的。</div><div class="line">② A：Availability，可用性，系统具有好的响应性能。</div><div class="line">③ P：Partition tolerance，分区容错性。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择，也就是说无论任何消息丢失，系统都可用。</div><div class="line"></div><div class="line">该理论已被证明：任何分布式系统只可同时满足两点，无法三者兼顾。 因此，将精力浪费在思考如何设计能满足三者的完美系统上是愚钝的，应该根据应用场景进行适当取舍。</div><div class="line"></div><div class="line">2) 一致性分类</div><div class="line">一致性是指从系统外部读取系统内部的数据时，在一定约束条件下相同，即数据变动在系统内部各节点应该是同步的。根据一致性的强弱程度不同，可以将一致性级别分为如下几种：</div><div class="line">① 强一致性（strong consistency）。任何时刻，任何用户都能读取到最近一次成功更新的数据。</div><div class="line">② 单调一致性（monotonic consistency）。任何时刻，任何用户一旦读到某个数据在某次更新后的值，那么就不会再读到比这个值更旧的值。也就是说，可获取的数据顺序必是单调递增的。</div><div class="line">③ 会话一致性（session consistency）。任何用户在某次会话中，一旦读到某个数据在某次更新后的值，那么在本次会话中就不会再读到比这个值更旧的值。会话一致性是在单调一致性的基础上进一步放松约束，只保证单个用户单个会话内的单调性，在不同用户或同一用户不同会话间则没有保障。</div><div class="line">④ 最终一致性（eventual consistency）。用户只能读到某次更新后的值，但系统保证数据将最终达到完全一致的状态，只是所需时间不能保障。</div><div class="line">⑤ 弱一致性（weak consistency）。用户无法在确定时间内读到最新更新的值。</div></pre></td></tr></table></figure>
           
       
     </div>
@@ -855,7 +643,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/10/16/bigdata/hadoop-spark-errors/#more">阅读全文 >></a>
+          <a href="/2017/12/01/bigdata/data-developing-md/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -874,11 +662,11 @@
 
 
   
-    <article id="post-script/shell-compare-files" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-bigdata/distributed-video-convert" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/28/script/shell-compare-files/" class="article-date">
-      <time datetime="2017-09-28T11:09:37.000Z" itemprop="datePublished">2017-09-28</time>
+      <a href="/2017/11/29/bigdata/distributed-video-convert/" class="article-date">
+      <time datetime="2017-11-29T04:16:07.000Z" itemprop="datePublished">2017-11-29</time>
 </a>
 
 
@@ -893,7 +681,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/28/script/shell-compare-files/">[shell]批量对比两个host上的文件</a>
+      <a class="article-title" href="/2017/11/29/bigdata/distributed-video-convert/">分布式转码初步方案</a>
     </h1>
   
 
@@ -903,11 +691,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>假设有一个数据集群, 它的每个节点的目录/data/下面有很多子目录, 子目录内包含很多文件; <br><br>每两个节点的/data/目录下所有文件理论上要保持一致(比如fastdfs的两副本模式)。<br></p>
-<p>现在需要快速的对每两台机器上的/data目录下的文件检测是否全部一致, 那么可以怎么做呢?<br><br>一个思路是利用shell实现, 每次将两台机器上的文件全部扫描并排序到一个文件内, 然后拉取到本地上进行对比。<br></p>
-<p>具体示例代码(同时解决了sudo密码验证的问题)如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># 每行两个要用于对比文件的ip</span></div><div class="line">ipPairs=(</div><div class="line">192.168.1.59 192.168.1.60</div><div class="line">192.168.1.81 192.168.1.86</div><div class="line">192.168.1.82 192.168.1.87</div><div class="line">)</div><div class="line"><span class="comment"># ssh用户/ssh端口/sudo密码</span></div><div class="line">username=<span class="string">"yourname"</span></div><div class="line">port=<span class="string">"yourport"</span></div><div class="line">sudoPasswd=<span class="string">"yourpassword"</span></div><div class="line"></div><div class="line"><span class="comment"># 检查列表长度是否为偶数</span></div><div class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;#ipPairs[@]&#125;</span>%2 -eq 1 ]];</div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"invalid pair in ipPairs."</span></div><div class="line">    <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>((i=0;i&lt;<span class="variable">$&#123;#ipPairs[@]&#125;</span>;i+=2))</div><div class="line"><span class="keyword">do</span></div><div class="line">    ipOne=<span class="variable">$&#123;ipPairs[$i]&#125;</span></div><div class="line">    ipTwo=<span class="variable">$&#123;ipPairs[$i+1]&#125;</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"ip1:"</span> <span class="variable">$ipOne</span> <span class="string">"ip2:"</span> <span class="variable">$ipTwo</span></div><div class="line"></div><div class="line">/usr/bin/expect &lt;&lt;-EOF</div><div class="line">    <span class="built_in">set</span> timeout 300</div><div class="line">    spawn ssh -t -p <span class="variable">$port</span> -l <span class="variable">$&#123;username&#125;</span> <span class="variable">$ipOne</span> &#123;sudo find /data/ -<span class="built_in">type</span> f | sort &gt; /tmp/<span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span>&#125;</div><div class="line">    expect &#123;</div><div class="line">        <span class="string">"(yes/no)? "</span> &#123; send <span class="string">"yes\n"</span> &#125;</div><div class="line">        <span class="string">"password for <span class="variable">$&#123;username&#125;</span>: "</span> &#123; send <span class="string">"<span class="variable">$&#123;sudoPasswd&#125;</span>\n"</span> &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    spawn ssh -t -p <span class="variable">$port</span> -l <span class="variable">$&#123;username&#125;</span> <span class="variable">$ipTwo</span> &#123;sudo find /data/ -<span class="built_in">type</span> f | sort &gt; /tmp/<span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span>&#125;</div><div class="line">    expect &#123;</div><div class="line">        <span class="string">"(yes/no)? "</span> &#123; send <span class="string">"yes\n"</span> &#125;</div><div class="line">        <span class="string">"password for <span class="variable">$&#123;username&#125;</span>: "</span> &#123; send <span class="string">"<span class="variable">$&#123;sudoPasswd&#125;</span>\n"</span> &#125;</div><div class="line">    &#125;</div><div class="line">interact</div><div class="line">expect eof</div><div class="line">EOF</div><div class="line"></div><div class="line">    scp -P <span class="variable">$port</span> <span class="variable">$&#123;username&#125;</span>@<span class="variable">$ipOne</span>:/tmp/<span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span></div><div class="line">    <span class="keyword">if</span> [ `ls -l <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> | awk <span class="string">'&#123; print $5 &#125;'</span>` -lt  1 ]</div><div class="line">    <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;ipOne&#125;</span>.log is empty."</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    scp -P <span class="variable">$port</span> <span class="variable">$&#123;username&#125;</span>@<span class="variable">$ipTwo</span>:/tmp/<span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span></div><div class="line">    <span class="keyword">if</span> [ `ls -l <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span> | awk <span class="string">'&#123; print $5 &#125;'</span>` -lt  1 ]</div><div class="line">    <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;ipTwo&#125;</span>.log is empty."</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"></div><div class="line">    <span class="comment"># 对比sha1</span></div><div class="line">    sha1sum <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span></div><div class="line"></div><div class="line">    <span class="comment"># 查找差集</span></div><div class="line">    comm -1 -3 <span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span> <span class="variable">$&#123;ipTwo&#125;</span>.<span class="built_in">log</span> &gt; <span class="variable">$&#123;ipTwo&#125;</span>_<span class="variable">$&#123;ipOne&#125;</span>.<span class="built_in">log</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
-
+              <h4 id="背景说明"><a href="#背景说明" class="headerlink" title="背景说明"></a>背景说明</h4><p>现有的转码方案是一个转码worker处理整个视频的不同清晰度的转码，如果一个视频很大，那这个视频转码将非常耗时。<br>因此需要改进方案，要求对大多数格式的视频可以进行切片后并行转码，以此提高一个视频的转码效率。</p>
+<h4 id="技术预研"><a href="#技术预研" class="headerlink" title="技术预研"></a>技术预研</h4><p>目前搜到的参考资料，基本都是针对某几个特定格式的分布式转码方案。<br>当前视频转码基本都依赖于ffmpeg， 目前存在一个问题：<br>暂时没有找到一个合适的方法去无缝切割多种编码格式的视频，然后分别对切割出来的分片进行转码； 这个过程部分格式正常部分异常(请原谅我是非科班出身)。<br>计划先用low一点的方案实现，ffmpeg可以在一个完整的视频上，指定视频区间来进行转码，暂时测试了大多数格式的效果都OK；<br>那就每个worker的视频源都是同一个视频文件，然后并行对不同区间的视频段进行转码，所以就有了下面这个初步方案。</p>
+          
       
     </div>
     
@@ -917,9 +703,214 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/视频/">视频</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a href="/2017/11/29/bigdata/distributed-video-convert/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-memory-management" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/16/golang/golang-memory-management/" class="article-date">
+      <time datetime="2017-11-16T02:04:16.000Z" itemprop="datePublished">2017-11-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/16/golang/golang-memory-management/">[golang]golang内存管理</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>最近粗略看了下golang内存初始化相关的代码，结合大牛们的一些源码分析，自己整理了一下学习总结。</p>
+<h4 id="几个关键数据结构"><a href="#几个关键数据结构" class="headerlink" title="几个关键数据结构"></a>几个关键数据结构</h4><ul>
+<li>mspan<br>由mheap管理的页面，记录了所分配的块大小和起始地址等</li>
+<li>mcache<br>与P(可看做cpu)绑定的线程级别的本地缓存</li>
+<li>mcenter<br>全局空间的缓存，收集了各种大小(67种)的span列表</li>
+<li>mheap<br>分配内存的堆分配器，以8kb进行页管理</li>
+<li>fixalloc<br>固定尺寸的堆外对象空闲列表分配器，用来管理分配器的存储
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/11/16/golang/golang-memory-management/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-tech-keys" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/14/golang/golang-tech-keys/" class="article-date">
+      <time datetime="2017-11-14T05:41:50.000Z" itemprop="datePublished">2017-11-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/14/golang/golang-tech-keys/">golang知识点整理(持续更新)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <ul>
+<li>对golang的整体理解<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Go是一种编译型语言，结合了解释型语言的优点(如调试效率，跨平台)，动态类型语言的优点(如开发效率)，以及静态类型的优点(如安全性)；</div><div class="line">Go是静态类型语言，类型系统没有层级，因此无需在类型关系定义上耗费过多时间；</div><div class="line">Go是垃圾回收型的语言，并为并发执行与通信提供了基本的支持；</div><div class="line">Go目标是要成为一种现在的系统语言，不过目前更多用来构建支持高性能高并发web服务。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/11/14/golang/golang-tech-keys/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-tech-examination" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/14/golang/golang-tech-examination/" class="article-date">
+      <time datetime="2017-11-14T00:44:28.000Z" itemprop="datePublished">2017-11-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/14/golang/golang-tech-examination/">golang笔试题整理</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <figure class="highlight golang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span> <span class="params">(result <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		result++</div><div class="line">	&#125;()</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span> <span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	t := <span class="number">3</span></div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</div><div class="line">		t = t + <span class="number">3</span></div><div class="line">	&#125;()</div><div class="line">	<span class="keyword">return</span> t</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span> <span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(r <span class="keyword">int</span>)</span></span> &#123;</div><div class="line">		r = r + <span class="number">2</span></div><div class="line">	&#125;(r)</div><div class="line">	<span class="keyword">return</span> <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	fmt.Println(f1())</div><div class="line">	fmt.Println(f2())</div><div class="line">	fmt.Println(f3())</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 考点：defer的一些坑</span></div><div class="line"><span class="comment">// return xxx可以改写成一下规则：</span></div><div class="line"><span class="comment">// 返回值 = xxx</span></div><div class="line"><span class="comment">// 调用defer函数</span></div><div class="line"><span class="comment">// 空的return</span></div><div class="line"></div><div class="line"><span class="comment">// 输出：</span></div><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="comment">// 3</span></div><div class="line"><span class="comment">// 1</span></div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/11/14/golang/golang-tech-examination/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -939,7 +930,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -1026,8 +1017,10 @@
     
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">-->
+<script async src="http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
+
   </div>
 </body>
 </html>

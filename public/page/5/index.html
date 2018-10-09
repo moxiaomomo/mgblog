@@ -184,7 +184,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos-DevOps/">Centos, DevOps</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-kernel/">OS kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigdata/">bigdata</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consul/">consul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch-备份恢复/">elasticsearch 备份恢复</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-spark-streaming/">flume spark_streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flume-kafka/">flume-kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-kernel/">linux kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservice/">microservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/">networking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tracing/">tracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视频/">视频</a></li></ul>
                     </div>
                 </section>
                 
@@ -263,11 +263,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-golang/golang_channel" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang_gRPC" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/04/golang/golang_channel/" class="article-date">
-      <time datetime="2016-03-04T01:00:11.000Z" itemprop="datePublished">2016-03-04</time>
+      <a href="/2017/02/09/golang/golang_gRPC/" class="article-date">
+      <time datetime="2017-02-09T02:10:53.000Z" itemprop="datePublished">2017-02-09</time>
 </a>
 
 
@@ -282,7 +282,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/04/golang/golang_channel/">[golang]channel管道类型</a>
+      <a class="article-title" href="/2017/02/09/golang/golang_gRPC/">[golang]gRPC通信协议</a>
     </h1>
   
 
@@ -292,12 +292,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在unix系统中, 管道是进程间通信的一种方式。那golang的channel和系统的管道有什么区别？</p>
-<h3 id="什么是channel"><a href="#什么是channel" class="headerlink" title="什么是channel"></a>什么是channel</h3><p>官方文档有个channel的定义:</p>
-<blockquote>
-<p>   A channel provides a mechanism for concurrently executing functions to communicate<br>   by sending and receiving values of a specified element type.<br>   The value of an uninitialized channel is nil.</p>
-</blockquote>
-<p>channel应该可以理解为: 一种为并行执行而提供函数间通信的机制, 通过传递send和recieve特定类型的值来实现。没有初始化值的channel对象, 默认为nil。<br>
+              <h4 id="关于gRPC"><a href="#关于gRPC" class="headerlink" title="关于gRPC"></a>关于gRPC</h4><p>gRPC是google公司面向移动应用, 基于http2.0协议标准而设计, 基于Protocol Buffers而开发的一种开源RPC框架。<br><br>ProtoBuf可以用于通讯协议、数据存储等一些语言/平台无关的数据序列化, 号称高性能, 通用性强, 具体可以看下这里的分析：<br><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/" target="_blank" rel="external">Google Protocol Buffer 的使用和原理</a><br><br>gRPC提供了一种相对简单的方法来精确地定义服务, 和为ios/andoird/后台服务自动生成可靠的数据结构功能库; 通过它可以节省带宽和CPU资源, 降低TCP连接次数, 和延长电池寿命。<br>
           
       
     </div>
@@ -313,7 +308,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/03/04/golang/golang_channel/#more">阅读全文 >></a>
+          <a href="/2017/02/09/golang/golang_gRPC/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -332,11 +327,11 @@
 
 
   
-    <article id="post-golang/golang_goroutine" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-golang/golang_map-set" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/03/golang/golang_goroutine/" class="article-date">
-      <time datetime="2016-03-03T01:34:55.000Z" itemprop="datePublished">2016-03-03</time>
+      <a href="/2017/02/01/golang/golang_map-set/" class="article-date">
+      <time datetime="2017-02-01T11:13:13.000Z" itemprop="datePublished">2017-02-01</time>
 </a>
 
 
@@ -351,7 +346,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/03/golang/golang_goroutine/">[golang]goroutine学习小结</a>
+      <a class="article-title" href="/2017/02/01/golang/golang_map-set/">[golang]map/set类型</a>
     </h1>
   
 
@@ -361,81 +356,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>关于gorountine的特性, 我还是借鉴以下这篇文章来学习和总结一下, 至于一些用法在下一节channel再进行小结。</p>
-<p>源地址:<br><a href="http://www.infoq.com/cn/articles/knowledge-behind-goroutine" title="goroutine" target="_blank" rel="external">goroutine背后的系统知识</a></p>
-<p>节选(goroutine的特性):</p>
-<blockquote>
-<p>1.Go语言通过goroutine提供了目前为止所有(我所了解的)语言里对于并发编程的最清晰最直接的支持，Go语言的文档里对其特性也描述的非常全面甚至超过了，在这里，基于我们上面的系统知识介绍，列举一下goroutine的特性，算是小结：<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/03/golang/golang_goroutine/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-golang/golang_function" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/02/07/golang/golang_function/" class="article-date">
-      <time datetime="2016-02-07T02:07:46.000Z" itemprop="datePublished">2016-02-07</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/07/golang/golang_function/">[golang]function</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>golang函数是不支持嵌套(但是可以使用匿名函数实现嵌套)、默认参数、重载, 但支持:</p>
-<ul>
-<li>不定长度的变参</li>
-<li>多返回值(类似python的返回元组?)</li>
-<li>显式命名返回值参数</li>
-<li>匿名函数</li>
-<li>函数闭包</li>
+              <h3 id="map类型"><a href="#map类型" class="headerlink" title="map类型"></a>map类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1. 基础特性"></a>1. 基础特性</h4><ul>
+<li>map是一种无序的键值对的集合; 所以可以类似数组/slice一样进行迭代</li>
+<li>map的值可以使内建类型, 也可以是struct类型</li>
+<li>内部使用hash表实现, map的hash表包含了一个collection of buckets（桶集合）</li>
 </ul>
           
       
@@ -452,7 +376,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/02/07/golang/golang_function/#more">阅读全文 >></a>
+          <a href="/2017/02/01/golang/golang_map-set/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -471,11 +395,11 @@
 
 
   
-    <article id="post-golang/golang_interface" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="[golang]array-slice-golang/golang_array-slice" class="article article-type-[golang]array-slice" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/02/golang/golang_interface/" class="article-date">
-      <time datetime="2016-01-02T07:22:43.000Z" itemprop="datePublished">2016-01-02</time>
+      <a href="/2017/01/30/golang/golang_array-slice/" class="article-date">
+      <time datetime="2017-01-30T01:00:18.000Z" itemprop="datePublished">2017-01-30</time>
 </a>
 
 
@@ -490,7 +414,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/02/golang/golang_interface/">[golang]interface</a>
+      <a class="article-title" href="/2017/01/30/golang/golang_array-slice/">golang数组与切片</a>
     </h1>
   
 
@@ -500,11 +424,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>第一次接触golang, 应该是2013那年在某沙龙听许大神在介绍golang特性。<br><br>那时候据说interface可以说是golang中最具特色、设计精妙的特性之一。<br><br>现在计划写个demo， 重新学习一下interface的设计模式。</p>
-<h3 id="什么是interface"><a href="#什么是interface" class="headerlink" title="什么是interface"></a>什么是interface</h3><ul>
-<li>在golang中, interface简单可认为是一组函数的组合, 通过interface可以定义对象的一组行为。</li>
-<li>interface定义了一组方法, 如果某个对象实现了某个interface的所有方法， 则我们可以认为这个对象实现了这个接口。</li>
-<li>由此可见, 不像C++、java， golang实现接口并不需要显式的implements。。。</li>
+              <h3 id="array类型"><a href="#array类型" class="headerlink" title="array类型"></a>array类型</h3><h4 id="1-基础特性"><a href="#1-基础特性" class="headerlink" title="1)基础特性"></a>1)基础特性</h4><ul>
+<li>array为固定长度的数组, 其内存分配为连续的, 使用前需确定长度;</li>
+<li>数组为值类型, 赋值操作的新变量是原数组的一份完整拷贝;</li>
+<li>作为函数的传递参数, 实际也是数组的一份拷贝, 效率也就比传递指针低;</li>
+<li>数组长度也是Type一部分, 如[4]int和[2]int类型不一样.</li>
 </ul>
           
       
@@ -521,7 +445,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/01/02/golang/golang_interface/#more">阅读全文 >></a>
+          <a href="/2017/01/30/golang/golang_array-slice/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -540,11 +464,11 @@
 
 
   
-    <article id="post-about/about" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-bigdata/deployment-spark-on-yarn" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/07/22/about/about/" class="article-date">
-      <time datetime="2015-07-22T14:31:49.000Z" itemprop="datePublished">2015-07-22</time>
+      <a href="/2016/12/16/bigdata/deployment-spark-on-yarn/" class="article-date">
+      <time datetime="2016-12-16T15:10:04.000Z" itemprop="datePublished">2016-12-16</time>
 </a>
 
 
@@ -559,7 +483,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/22/about/about/">关于本站</a>
+      <a class="article-title" href="/2016/12/16/bigdata/deployment-spark-on-yarn/">[deployment]spark on yarn</a>
     </h1>
   
 
@@ -569,9 +493,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>本站主要记录了我的一些技术笔记， 及生活上的一些感悟。</p>
-<p>Life is short, let’s programing.</p>
-
+              <h3 id="安装包准备"><a href="#安装包准备" class="headerlink" title="安装包准备"></a>安装包准备</h3><ul>
+<li>Oracle JDK<br>安装了elasticSearch的系统应该已经配置好了JDK环境; 推荐JDK7</li>
+<li>scala开发环境<br>spark依赖于scala运行, scala是开发spark统计程序的官方语言; 当前使用scala-2.11版本</li>
+<li>hadoop集群<br>hadoop-yarn为spark运算提供资源管理及hdfs存储; 当前使用apache hadoop-2.7.3版本</li>
+<li>spark集群<br>用于分布式运算; 当前使用apache spark 2.0.2版本</li>
+<li>ES-Hadoop插件<br>es-hadoop作为hadoop/spark集成elasticSearch的插件使用; 当前使用es-hadoop_5.1.1版本</li>
+</ul>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>** 尚未找到docker对hadoop多机器多节点集群的快速部署方案, 暂时先手动部署</p>
+          
       
     </div>
     
@@ -580,6 +510,403 @@
       
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bigdata/">bigdata</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/12/16/bigdata/deployment-spark-on-yarn/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang_http-server" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/03/golang/golang_http-server/" class="article-date">
+      <time datetime="2016-12-03T06:11:45.000Z" itemprop="datePublished">2016-12-03</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/03/golang/golang_http-server/">[golang]HTTP webserver</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>golang对http网络模块有比较完备的标准库支持, 如下示例:</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/12/03/golang/golang_http-server/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-network/network-transport-layer" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/15/network/network-transport-layer/" class="article-date">
+      <time datetime="2016-08-15T03:33:04.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/15/network/network-transport-layer/">network transport layer</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>UDP包结构, 如图所示:<br><br><img src="/img/udppackage.png" alt="UDP包结"><br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/networking/">networking</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/08/15/network/network-transport-layer/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-pprof性能分析工具" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/11/golang/golang-pprof性能分析工具/" class="article-date">
+      <time datetime="2016-08-11T10:53:57.000Z" itemprop="datePublished">2016-08-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/11/golang/golang-pprof性能分析工具/">[golang]pprof性能分析工具</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="1-关于pprof"><a href="#1-关于pprof" class="headerlink" title="1. 关于pprof"></a>1. 关于pprof</h3><p>pprof是golang程序一个性能分析的工具，可以查看堆栈、cpu信息等。</p>
+<h3 id="2-源码示例"><a href="#2-源码示例" class="headerlink" title="2. 源码示例"></a>2. 源码示例</h3>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/08/11/golang/golang-pprof性能分析工具/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-python/python-map-function" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/05/python/python-map-function/" class="article-date">
+      <time datetime="2016-04-05T15:19:29.000Z" itemprop="datePublished">2016-04-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/05/python/python-map-function/">[python]map function</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="1-内建方法map"><a href="#1-内建方法map" class="headerlink" title="1. 内建方法map"></a>1. 内建方法map</h3><p>内建map方法可以通过一个序列的方式来实现函数之间的映射, 并且串行执行。如:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"enter add func..."</span></div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> datetime.now(), <span class="string">"leave add func..."</span></div><div class="line">    <span class="keyword">return</span> x+y</div><div class="line"></div><div class="line">map(add, [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</div></pre></td></tr></table></figure></p>
+<p>运行效果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">2016-04-05 15:01:49.382314 enter add func...</div><div class="line">2016-04-05 15:01:51.383387 leave add func...</div><div class="line">2016-04-05 15:01:51.383471 enter add func...</div><div class="line">2016-04-05 15:01:53.385584 leave add func...</div><div class="line">2016-04-05 15:01:53.385676 enter add func...</div><div class="line">2016-04-05 15:01:55.387388 leave add func...</div><div class="line">[5, 7, 9]</div></pre></td></tr></table></figure></p>
+<p>由上可见, 调用map, 相当于顺序调用了add(1,4), add(2,5)， add(3,6)方法; 一行代码实现了方法的迭代调用, 简单快捷。<br>那如果再优化一下，实现并行调用add方法， 应该怎么做呢？在python里也好实现, 利用multiprocessing模块就可以。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/04/05/python/python-map-function/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang_pointer" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/05/golang/golang_pointer/" class="article-date">
+      <time datetime="2016-04-05T11:35:16.000Z" itemprop="datePublished">2016-04-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/05/golang/golang_pointer/">[golang]指针类型</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="关于golang指针类型"><a href="#关于golang指针类型" class="headerlink" title="关于golang指针类型"></a>关于golang指针类型</h3><p>Golang保留了指针类型,支持指针操作。<br><br>可以使用操作符&amp;取变量地址，使用操作符*通过指针变量间接访问目标对象。<br><br>unsafe.Pointer可以与任意指针类型转换, 可以将unsafe.Pointer转换为uintptr,然后做指针运算。<br><br>uintptr类型可以转换为整数。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/04/05/golang/golang_pointer/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-golang/golang-工作池workerpool" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/15/golang/golang-工作池workerpool/" class="article-date">
+      <time datetime="2016-03-15T10:19:32.000Z" itemprop="datePublished">2016-03-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/15/golang/golang-工作池workerpool/">[golang]工作池workerpool</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在并发量比较高的场景中, 服务程序既要快速处理请求, 也要限制并行处理的gorontine量, 否则会造成系统资源的浪费或负载过高。</p>
+<p>创建一个goroutine工作池, 是一个比较合理的解决方案。</p>
+<h3 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h3>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/03/15/golang/golang-工作池workerpool/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -599,7 +926,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -686,8 +1013,10 @@
     
 </script>
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+<!--<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">-->
+<script async src="http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
+
   </div>
 </body>
 </html>
