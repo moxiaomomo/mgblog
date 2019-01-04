@@ -189,6 +189,11 @@ friends:
 #是否开启“关于我”。
 aboutme: 后端开发，数据分析
 #aboutme: false
+#
+
+author_name: MoGuang All Rights Reserved
+author_cnname: Ī�� ��Ȩ����
+
 
 # Open link in a new tab | 是否在新窗口打开链接
 ## `global` 0: Set separately, 1: Open all in new 2: Open all in current
